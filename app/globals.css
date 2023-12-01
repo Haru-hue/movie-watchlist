@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Questrial&display=swap');
 
 :root {
   --foreground-rgb: 0, 0, 0;
@@ -11,7 +12,7 @@
 @media (prefers-color-scheme: dark) {
   :root {
     --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
+    --background-start-rgb: 12, 19, 36;
     --background-end-rgb: 0, 0, 0;
   }
 }
@@ -24,4 +25,19 @@ body {
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb));
+}
+
+.rating {
+  background-color: rgb(0, 0, 0, .5);
+  background-blend-mode: difference;
+  z-index: 999;
+}
+
+@layer components {
+  .list-box {
+    @apply bg-[#171930] p-8 rounded-xl
+  }
+  .rating {
+    @apply absolute right-0 top-9 rounded-l-full px-2 py-1 text-xl font-bold text-[#DC606B]
+  }
 }
