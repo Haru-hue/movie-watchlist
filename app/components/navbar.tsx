@@ -1,27 +1,35 @@
 "use client"
 import { Icon } from '@iconify/react';
+import { Dispatch, SetStateAction } from 'react';
+import { Sidebar, Menu, MenuItem } from 'react-pro-sidebar';
 
-function Navbar() {
+type NavbarProps = {
+  isOpen: boolean,
+  setIsOpen: Dispatch<SetStateAction<boolean>>,
+}
+
+function Navbar({ isOpen, setIsOpen }: NavbarProps) {
   return (
-    <div className="flex flex-col justify-between min-h-screen p-6 text-2xl">
-      <div className="navigation space-y-6">
-        <Icon icon="fluent:chevron-right-24-regular" />
-        <div className="flex space-x-2 items-center">
-        <Icon icon="mingcute:movie-line" />
-        <p>Movies</p>
+    <div className="flex ">
+      <Sidebar collapsed={isOpen} backgroundColor='#121528' rootStyles={{
+        border: 'none',
+        position: 'fixed',
+        height: '100%'
+      }} >
+         <Menu className='flex justify-center py-6'>
+           <Icon className='cursor-pointer text-3xl' icon="fluent:chevron-right-24-regular" onClick={() => setIsOpen(!isOpen)} />
+         </Menu>
+        <Menu>
+          <MenuItem icon={<Icon className='text-3xl' icon="mingcute:movie-line" />}>Movies</MenuItem>
+          <MenuItem icon={ <Icon className='text-3xl' icon="clarity:clock-line" />}>History</MenuItem>
+          <MenuItem icon={<Icon className='text-3xl' icon="solar:star-outline" />}>Favourites</MenuItem>
+        </Menu>
+        <div className='absolute bottom-6'>
+          <Menu>
+            <MenuItem  icon={ <Icon className='text-3xl' icon="ri:moon-line" />}>Footer</MenuItem>
+          </Menu>
         </div>
-        <div className="flex space-x-2 items-center">
-        <Icon icon="clarity:clock-line" />
-        <p>History</p>
-        </div>
-        <div className="flex space-x-2 items-center">
-        <Icon icon="solar:star-outline" />
-        <p>Favourites</p>
-        </div>
-      </div>
-      <div className="footer">
-      <Icon icon="ri:moon-line" />
-      </div>
+      </Sidebar>
     </div>
   )
 }
