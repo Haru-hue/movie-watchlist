@@ -15,9 +15,7 @@ function Header() {
             <Icon icon="iconoir:search" />
             </div>
           </div>
-          <div className="userIcon">
-            Usernam
-          </div>
+          <Icon icon="ep:user" className="text-2xl" />
       </section>
     </div>
   );
