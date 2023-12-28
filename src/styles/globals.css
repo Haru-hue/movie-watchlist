@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Questrial&display=swap');
 
 :root {
   --foreground-rgb: 0, 0, 0;
@@ -11,17 +12,82 @@
 @media (prefers-color-scheme: dark) {
   :root {
     --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
+    --background-start-rgb: 12, 17, 36;
     --background-end-rgb: 0, 0, 0;
   }
 }
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  background: rgb(var(--background-start-rgb));
+}
+
+.rating {
+  background-color: rgb(0, 0, 0, .5);
+  background-blend-mode: difference;
+  z-index: 999;
+}
+
+.progressBar {
+  background: linear-gradient(to right, #800080, #FFC0CB);
+}
+
+.movieLine {
+  background: linear-gradient(to right, #ef4444, var(--background-start-rgb));
+}
+
+.movieBG {
+  background: url('./../assets/movieBG.jpg');
+}
+
+.react-3d-carousel .slider-container .slider-left {
+  right: 110% !important;
+}
+
+.react-3d-carousel .slider-container .slider-right {
+  left: 110% !important;
+}
+
+.react-3d-carousel .slider-container .slider-right div, .react-3d-carousel .slider-container .slider-left div {
+  background: rgb(0, 0, 0, .5) !important;
+}
+
+.embla {
+  overflow: hidden;
+}
+.embla__container, .embla-thumbs__container {
+  display: flex;
+}
+.embla__slide {
+  flex: 0 0 100%;
+  min-width: 0;
+}
+
+.embla-thumbs__slide {
+  flex: 0 0 22.5%;
+  min-width: 0;
+}
+
+@layer components {
+  .list-box {
+    @apply bg-[#171930] p-6 rounded-xl
+  }
+  .rating {
+    @apply absolute right-12 top-9 rounded-l-full px-2 py-1 text-xl font-bold text-[#DC606B]
+  }
+  .homeLayout {
+    @apply flex flex-col gap-6 p-6
+  }
+  .progressBar {
+    @apply h-2.5 rounded-full
+  }
+  .carouselImg {
+    @apply h-96 w-full object-cover object-center rounded-xl
+  }
+  .searchBox {
+    @apply py-3 px-4 pe-11 block w-full border-gray-200 shadow-sm text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600 rounded-3xl
+  }
+  .movieBanner {
+    @apply h-[25vh] w-max
+  }
 }

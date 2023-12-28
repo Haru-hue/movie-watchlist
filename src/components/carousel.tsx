@@ -1,6 +1,10 @@
 import { useEffect, useState } from "react";
 import { getNewMovies } from "../lib/getMovies";
-import { Carousel as Carousal } from "3d-react-carousel-ts";
+import dynamic from "next/dynamic";
+import Slider from "react-slick"
+const Carousal = dynamic(() => import('3d-react-carousel-ts').then(mod => mod.Carousel), {
+  ssr: false // This will load the component only on client-side
+});
 
 export const Carousel = () => {
   const [carouselImages, setCarouselImages] = useState<string[]>([]);
