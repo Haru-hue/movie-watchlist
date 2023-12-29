@@ -94,4 +94,10 @@ interface Movie {
     ]
   }
   
-  type Crew = "Directing" | "Production" | "Crew"
+type Crew = "Directing" | "Production" | "Crew"
+
+  interface userInfo {
+    username: string;
+    email: string;
+    avatar_url: string;
+  }

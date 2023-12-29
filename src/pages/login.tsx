@@ -1,12 +1,11 @@
-import SignUpForm from '@/layouts/registerLayout'
-import React from 'react'
+import { LoginForm } from "@/layouts/registerLayout";
 
 function login() {
   return (
     <main className="flex justify-center items-center h-screen w-full">
-        <SignUpForm/>
+      <LoginForm/>
     </main>
-  )
+  );
 }
 
-export default login
+export default login;
