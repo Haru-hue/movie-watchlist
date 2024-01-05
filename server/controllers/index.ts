@@ -1,17 +1,23 @@
 import { GraphQLError } from "graphql";
 import bcrypt from "bcrypt";
+import { sendEmail } from "../hooks";
 
 export const addUser = async (args: any, context: any) => {
   const { name, email, password, username } = args;
   const hashedPassword = await bcrypt.hash(password, 10);
 
+  const verificationCode = Math.floor(Math.random() * 9000);
+
   try {
+    sendEmail(email, verificationCode);
+
     const newUser = await context.prisma.user.create({
       data: {
         name,
         email,
         password: hashedPassword,
         username,
+        verificationCode,
       },
     });
 
@@ -35,13 +41,13 @@ export const updateUser = async (args: any, context: any) => {
 
   try {
     const existingUser = await context.prisma.user.findFirst({
-        where: {
-          id: parseInt(id),
-        },
-      });
+      where: {
+        id: parseInt(id),
+      },
+    });
 
     if (!Boolean(existingUser)) {
-        throw new GraphQLError("User does not exist")
+      throw new GraphQLError("User does not exist");
     }
 
     const updatedUser = await context.prisma.user.update({
@@ -54,8 +60,8 @@ export const updateUser = async (args: any, context: any) => {
         password,
         username,
         watchlist: {
-            set: [...existingUser.watchlist, ...watchlist]
-        }
+          set: [...existingUser.watchlist, ...watchlist],
+        },
       },
     });
     return {
@@ -104,26 +110,64 @@ export const deleteUser = async (args: any, context: any) => {
 };
 
 export const findUser = async (args: any, context: any) => {
-    const { email, password } = args;
-  
-    const existingUser = await context.prisma.user.findUnique({ 
-      where: { email },
-    });
-  
-    if (!existingUser) {
-      throw new GraphQLError("There is no e-mail associated with that account");
-    }
-  
-    const isValidPassword = bcrypt.compareSync(password, existingUser.password);
-  
-    if (!isValidPassword) {
-      throw new GraphQLError('Invalid password');
-    }
-  
-    return {
-      success: true,
-      message: 'Login successful',
-      user: existingUser,
-    };
+  const { email, password } = args;
+
+  const existingUser = await context.prisma.user.findUnique({
+    where: { email },
+  });
+
+  if (!existingUser) {
+    throw new GraphQLError("There is no e-mail associated with that account");
+  }
+
+  const isValidPassword = bcrypt.compareSync(password, existingUser.password);
+
+  if (!isValidPassword) {
+    throw new GraphQLError("Invalid password");
+  }
+
+  return {
+    success: true,
+    message: "Login successful",
+    user: existingUser,
   };
-  
+};
+
+export const verifyUser = async (args: any, context: any) => {
+  const { email, verificationCode } = args;
+
+  try {
+    const existingUser = await context.prisma.user.findUnique({
+      where: {
+        email,
+      },
+    });
+
+    if (!existingUser) {
+      throw new GraphQLError("Invalid e-mail address");
+    }
+
+    if (existingUser.verificationCode === verificationCode) {
+      await context.prisma.user.update({
+        where: { email },
+        data: { verificationCode: null },
+      });
+
+      return {
+        message: "User verified successfully",
+        success: true,
+      };
+    } else {
+      await context.prisma.user.delete({
+        where: { email },
+      });
+    }
+  } catch (error) {
+    throw new GraphQLError("An error occurred", {
+      extensions: {
+        message: "Invalid verification code",
+        success: false,
+      },
+    });
+  }
+};

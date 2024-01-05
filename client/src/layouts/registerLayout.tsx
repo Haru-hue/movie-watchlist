@@ -6,6 +6,26 @@ import { useMemo, useState } from "react";
 import { setTestProfile } from "@/features/userProfile";
 
 export function SignUpForm() {
+  const [userDetails, setUserDetails] = useState({
+    name: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+  })
+
+  type formDetails = 'name' | 'email' | 'password' | 'confirmPassword'
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>, name: formDetails) => {
+    setUserDetails((prev) => {
+      return {
+        ...prev,
+        [name]: event.target.value
+      }
+    })
+  }
+
+  console.log(userDetails)
+
   return (
     <div className="flex w-[50vw] text-black">
       <div className="bg-white p-10 rounded-lg shadow-md w-1/2">
@@ -17,6 +37,8 @@ export function SignUpForm() {
             <input
               className="mt-1 p-2 w-full border border-gray-300 rounded-md"
               type="text"
+              value={userDetails.name}
+              onChange={(e) => handleChange(e, 'name')}
             />
           </div>
           <div>
@@ -24,6 +46,8 @@ export function SignUpForm() {
             <input
               className="mt-1 p-2 w-full border border-gray-300 rounded-md"
               type="email"
+              value={userDetails.email}
+              onChange={(e) => handleChange(e, 'email')}
             />
           </div>
           <div className="flex justify-between">
@@ -32,6 +56,8 @@ export function SignUpForm() {
               <input
                 className="mt-1 p-2 w-full border border-gray-300 rounded-md"
                 type="password"
+                value={userDetails.password}
+                onChange={(e) => handleChange(e, 'password')}
               />
             </div>
             <div>
@@ -39,6 +65,8 @@ export function SignUpForm() {
               <input
                 className="mt-1 p-2 w-full border border-gray-300 rounded-md"
                 type="password"
+                value={userDetails.confirmPassword}
+                onChange={(e) => handleChange(e, 'confirmPassword')}
               />
             </div>
           </div>
