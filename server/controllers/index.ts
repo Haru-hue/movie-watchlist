@@ -1,22 +1,18 @@
 import { GraphQLError } from "graphql";
 import bcrypt from "bcrypt";
-import { sendEmail } from "../hooks";
 
 export const addUser = async (args: any, context: any) => {
-  const { name, email, password, username } = args;
+  const { name, email, password } = args;
   const hashedPassword = await bcrypt.hash(password, 10);
 
-  const verificationCode = Math.floor(Math.random() * 9000);
+  const verificationCode = Math.floor(Math.random() * 9000) + 1000;
 
   try {
-    sendEmail(email, verificationCode);
-
-    const newUser = await context.prisma.user.create({
+    await context.prisma.user.create({
       data: {
         name,
         email,
         password: hashedPassword,
-        username,
         verificationCode,
       },
     });
@@ -24,7 +20,7 @@ export const addUser = async (args: any, context: any) => {
     return {
       success: true,
       message: "User created successfully",
-      user: newUser,
+      verificationCode,
     };
   } catch (err) {
     throw new GraphQLError("An error occured", {
@@ -157,11 +153,7 @@ export const verifyUser = async (args: any, context: any) => {
         message: "User verified successfully",
         success: true,
       };
-    } else {
-      await context.prisma.user.delete({
-        where: { email },
-      });
-    }
+    } 
   } catch (error) {
     throw new GraphQLError("An error occurred", {
       extensions: {

@@ -5,7 +5,7 @@ import type { AppProps } from 'next/app'
 import { Provider } from 'react-redux'
 
 const client = new ApolloClient({
-  uri: 'http://localhost:8080/graphql',
+  uri: 'http://localhost:8000/graphql',
   cache: new InMemoryCache()
 })
 

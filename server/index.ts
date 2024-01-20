@@ -11,7 +11,7 @@ const server = new ApolloServer({
   schema,
   context: {
     prisma
-  }
+  },
 });
 
 (async () => {
