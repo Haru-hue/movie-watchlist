@@ -18,3 +18,37 @@ export const VERIFY_USER = gql`
     }
   }
 `;
+
+export const UPDATE_USER = gql`
+  mutation (
+    $email: String!
+    $name: String
+    $password: String
+    $watchlist: [String]
+    $username: String
+  ) {
+    updateUser(
+      name: $name
+      password: $password
+      email: $email
+      watchlist: $watchlist
+      username: $username
+    ) {
+      message
+      success
+    }
+  }
+`;
+
+export const GET_USER = gql`
+  query User(
+    $email: String!
+  ) {
+    user(email: $email) {
+      name
+      email
+      watchlist
+      username
+    }
+  }
+`

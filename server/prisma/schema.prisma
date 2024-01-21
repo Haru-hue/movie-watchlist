@@ -18,4 +18,6 @@ model User {
   password String
   verificationCode Int?
   watchlist String[]
+  avatarURL String?
+  backgroundURL String?
 }

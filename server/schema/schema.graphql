@@ -1,6 +1,6 @@
 type Query {
   info: String!
-  user(id: ID!): User
+  user(email: String!): User
   allUsers: [User]!
   login(email: String!, password: String!): UserResponse
 }
@@ -12,14 +12,15 @@ type Mutation {
     password: String!
   ): temporaryUser
   updateUser(
-    id: ID!
     name: String
-    email: String
+    email: String!
     password: String
     username: String
     watchlist: [String]
+    avatarURL: String
+    backgroundURL: String
   ): UserResponse
-  deleteUser(id: ID!): Response
+  deleteUser(email: String!): Response
   verifyUser(email: String!, verificationCode: Int!): Response
 }
 
@@ -31,6 +32,8 @@ type User {
   password: String!
   verificationCode: Int
   watchlist: [String]
+  avatarURL: String
+  backgroundURL: String
 }
 
 type UserResponse {

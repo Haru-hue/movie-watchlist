@@ -1,23 +1,25 @@
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { useMutation, useQuery } from "@apollo/client";
-import { REGISTER, VERIFY_USER } from "@/utils";
+import { REGISTER, UPDATE_USER, VERIFY_USER } from "@/utils";
 import { createRef, useState } from "react";
 import { sendEmail } from "@/utils/sendEmail";
 import toast, { Toaster } from "react-hot-toast";
+import { useAppDispatch, useAppSelector } from "@/hooks";
+import { setUserProfile } from "@/features/userProfile";
+import Router, { useRouter } from "next/router";
 
-interface RegisterForm {
-  userDetails: UserDetails;
-}
 
 interface registerFlow {
   handleProgress: (progress: number) => void;
 }
 
 export const FormPage = ({ handleProgress }: registerFlow) => {
-  const [addUser, { data }] = useMutation(REGISTER, {
+  const dispatch = useAppDispatch()
+
+  const [addUser] = useMutation(REGISTER, {
     fetchPolicy: "no-cache",
     onCompleted: (data) => {
-      localStorage.setItem("email", JSON.stringify(userDetails.email));
+      dispatch(setUserProfile(userDetails.email))
       const emailData: EmailParams = {
         to_name: userDetails.name,
         to_email: userDetails.email,
@@ -147,10 +149,10 @@ export const FormPage = ({ handleProgress }: registerFlow) => {
 };
 
 export const VerificationPage = ({ handleProgress }: registerFlow) => {
+  const email = useAppSelector((state) => state.users.email)
   const [verifyUser] = useMutation(VERIFY_USER, {
     fetchPolicy: 'no-cache',
     onCompleted: (data) => {
-      localStorage.removeItem("email")
       toast.success(data?.verifyUser?.message, { duration: 5000});
       setTimeout(() => handleProgress(2), 5000);
     },
@@ -166,26 +168,26 @@ export const VerificationPage = ({ handleProgress }: registerFlow) => {
   const [verificationCode, setVerificationCode] = useState(["", "", "", ""]);
   const inputRefs = Array(4)
     .fill(0)
-    .map((_, i) => createRef<HTMLInputElement>());
+    .map((_) => createRef<HTMLInputElement>());
 
-  const handleInputChange =
+    const handleInputChange =
     (index: number) => (event: React.ChangeEvent<HTMLInputElement>) => {
       const value = event.target.value;
-      if (value === "" || (value.length === 1 && !isNaN(Number(value)))) {
+      if (value.length === 1 && !isNaN(Number(value))) {
         setVerificationCode((prevState) => {
           const newState = [...prevState];
           newState[index] = value;
           return newState;
         });
-
-        if (index < 3 && value !== "") {
+  
+        if (index < 3) {
           inputRefs[index + 1].current?.focus();
         }
       }
     };
+ 
 
   const handleVerify = () => {
-    const email = typeof window !== 'undefined' && localStorage.getItem('email') !== null ? JSON.parse(localStorage.getItem('email') || '') : null;
     const verificationNumber = parseInt(verificationCode.join(''))
     verifyUser({
       variables: {
@@ -229,8 +231,42 @@ export const VerificationPage = ({ handleProgress }: registerFlow) => {
 };
 
 export const Username = () => {
+  const email = useAppSelector((state) => state.users.email)
+  const router = useRouter()
+  const [updateUser] = useMutation(UPDATE_USER, {
+    fetchPolicy: 'no-cache',
+    onCompleted: () => {
+      toast.success('Success', { duration: 5000});
+      router.push('/profile')
+    },
+    onError: (error) => {
+      console.error(error);
+      if (error.graphQLErrors) {
+        error.graphQLErrors.map(({ message }: any) => {
+          toast.error(message);
+        });
+      }
+    },
+  });
+  const [username, setUsername] = useState('')
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setUsername(e.target.value)
+  }
+
+  const handleSubmit = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    updateUser({
+      variables: {
+        email,
+        username
+      }
+    })
+  }
+
   return (
     <div className="bg-[#1D2939] justify-center p-6">
+      <Toaster/>
       <span className="text-center">
         <h3 className="font-bold text-2xl">Enter a username</h3>
         <p>Your username is how friends can see your profile</p>
@@ -240,8 +276,15 @@ export const Username = () => {
         <input
           className="p-1 w-full border-b-[1px] bg-transparent"
           type="text"
+          onChange={e => handleChange(e)}
         />
       </div>
+      <button
+        className="bg-blue-400 w-full p-2 rounded-lg mt-4"
+        onClick={handleSubmit}
+      >
+        Continue
+      </button>
     </div>
   );
 };
