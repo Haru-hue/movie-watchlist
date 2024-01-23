@@ -3,8 +3,8 @@ import { Icon } from "@iconify/react/dist/iconify.js";
 import Link from "next/link";
 
 function Header() {
-  const user = useAppSelector((state) => state.users.userInfo);
-  console.log(user.username === '')
+  // const user = useAppSelector((state) => state.users.userInfo);
+  // console.log(user.username === '')
 
   return (
     <div className="flex items-center justify-between">
@@ -20,9 +20,9 @@ function Header() {
             <Icon icon="iconoir:search" />
           </div>
         </div>
-        <Link href={user.username === '' ? `/login` : "/profile"}>
+        {/* <Link href={user.username === '' ? `/login` : "/profile"}>
           <Icon icon="ep:user" className="text-2xl" />
-        </Link>
+        </Link> */}
       </section>
     </div>
   );

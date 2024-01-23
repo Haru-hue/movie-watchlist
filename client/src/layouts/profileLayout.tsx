@@ -11,14 +11,14 @@ function ProfileLayout() {
     variables: { email: user },
   });
 
-  if (loading) return "Loading...";
-  if (error) return `Error! ${error.message}`;
+  // if (loading) return "Loading...";
+  // if (error) return `Error! ${error.message}`;
 
   console.log(data);
 
   return (
     <section className="p-10">
-      <UserBox name={data?.user?.name} username={data?.user?.username} />
+      <UserBox name={data?.user?.name || 'Joshua'} username={data?.user?.username || 'mob'} />
     </section>
   );
 }
