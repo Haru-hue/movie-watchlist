@@ -61,6 +61,7 @@ interface MovieData {
   credits?: MovieCredits;
   gallery?: MovieGallery;
   recommendations?: Movie[];
+  video?: any
 }
 
 interface MovieCredits {
@@ -87,7 +88,12 @@ interface MovieCredits {
 
 interface MovieGallery {
   id: number;
-  backdrops: [
+  backdrops?: [
+    {
+      file_path: string;
+    }
+  ];
+  posters?: [
     {
       file_path: string;
     }
@@ -114,4 +120,8 @@ interface EmailParams {
   to_email: string;
   message: string;
   [key: string]: string;
+}
+
+interface FileWithImage extends File {
+  image?: string;
 }

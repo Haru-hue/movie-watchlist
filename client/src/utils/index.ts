@@ -26,6 +26,8 @@ export const UPDATE_USER = gql`
     $password: String
     $watchlist: [String]
     $username: String
+    $avatarURL: String
+    $backgroundURL: String
   ) {
     updateUser(
       name: $name
@@ -33,6 +35,8 @@ export const UPDATE_USER = gql`
       email: $email
       watchlist: $watchlist
       username: $username
+      avatarURL: $avatarURL
+      backgroundURL: $backgroundURL
     ) {
       message
       success

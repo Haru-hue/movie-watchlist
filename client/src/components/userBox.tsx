@@ -1,15 +1,36 @@
 import { useImageDropzone } from "@/hooks/useImageDropzone";
+import { UPDATE_USER } from "@/utils";
+import { extractBase64 } from "@/utils/convertBase64";
 import getFirstLetters from "@/utils/getFirstLetter";
+import { useMutation } from "@apollo/client";
 import { Icon } from "@iconify/react/dist/iconify.js";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
+import { Toaster, toast } from "react-hot-toast";
+
+interface DropdownProps {
+  setMode: Dispatch<SetStateAction<string>>;
+}
 
 function UserBox({ name, username }: { name: string; username: string }) {
-  const [mode, setMode] = useState("");
-  const [selectedImage, setSelectedImage] = useState<{
-    [key: string]: string | undefined;
-  }>({
+  const email = 'ukojoshy@gmail.com';
+  const [mode, setMode] = useState<string>("");
+  const [selectedImage, setSelectedImage] = useState<any>({
     avatarURL: "",
     backgroundImageURL: "",
+  });
+  const [updateUser] = useMutation(UPDATE_USER, {
+    fetchPolicy: 'no-cache',
+    onCompleted: () => {
+      toast.success('User updated succesfully', { duration: 5000});
+    },
+    onError: (error) => {
+      console.error(error);
+      if (error.graphQLErrors) {
+        error.graphQLErrors.map(({ message }: any) => {
+          toast.error(message);
+        });
+      }
+    },
   });
 
   const avatarDropzone = useImageDropzone({
@@ -21,50 +42,74 @@ function UserBox({ name, username }: { name: string; username: string }) {
     name: "backgroundImageURL",
   });
 
+  const handleUpdateProfile = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    setMode('')
+    const updatedFiles = extractBase64([selectedImage.backgroundImageURL, selectedImage.avatarURL])
+    updateUser({
+      variables: {
+        email,
+        avatarURL: updatedFiles[1],
+        backgroundURL: updatedFiles[0]
+      }
+    })
+  }
+
   return (
     <section className="border border-blue-400 rounded-2xl">
+      <Toaster/>
       <div className="flex flex-col">
         <div
-          {...backgroundImageURL.getRootProps()}
+          {...(mode === "edit" ? backgroundImageURL.getRootProps() : {})}
           style={{
             backgroundImage: selectedImage.backgroundImageURL
-              ? `url(${selectedImage.backgroundImageURL})`
+              ? `url(${selectedImage.backgroundImageURL?.image})`
               : "",
           }}
           className={`w-full h-60 bg-slate-400 rounded-t-2xl ${
             selectedImage.backgroundImageURL === "" ? "movieBG" : ""
           }`}
         >
-          <div className="absolute right-16 top-16 bg-[#1D2939] rounded-full p-4">
-            <input {...backgroundImageURL.getInputProps()} />
-            <Icon className="text-4xl cursor-pointer" icon="bi:camera-fill" />
-          </div>
+          {mode === "edit" && (
+            <div className="absolute right-16 top-16 bg-[#1D2939] rounded-full p-4">
+              <input {...backgroundImageURL.getInputProps()} />
+              <Icon className="text-4xl cursor-pointer" icon="bi:camera-fill" />
+            </div>
+          )}
         </div>
         <div
-          {...avatarDropzone.getRootProps()}
+          {...(mode === "edit" ? avatarDropzone.getRootProps() : {})}
           style={{
             backgroundImage: selectedImage.avatarURL
-              ? `url(${selectedImage.avatarURL})`
+              ? `url(${selectedImage.avatarURL?.image})`
               : "",
           }}
           className="w-32 h-32 bg-red-400 bg-cover bg-center absolute mt-40 ml-12 rounded-full flex justify-center items-center"
         >
-          <div className="absolute -right-2 top-0 bg-[#1D2939] rounded-full p-3">
-            <input {...avatarDropzone.getInputProps()} />
-            <Icon className="text-2xl cursor-pointer" icon="bi:camera-fill" />
-          </div>
+          {mode === "edit" && (
+            <div className="absolute -right-2 top-0 bg-[#1D2939] rounded-full p-3">
+              <input {...avatarDropzone.getInputProps()} />
+              <Icon className="text-2xl cursor-pointer" icon="bi:camera-fill" />
+            </div>
+          )}
           {!selectedImage.avatarURL && (
             <span className="text-6xl font-bold">{getFirstLetters(name)}</span>
           )}
         </div>
-        <div className="flex items-center justify-between ml-36 mt-6 px-10 mb-20">
+        <div className={`flex items-center justify-between ml-36 mt-6 px-10 ${mode === 'edit' ? 'mb-8' : 'mb-16'}`}>
           <span>
             <h2 className="text-3xl font-bold">{name}</h2>
             <p>@{username}</p>
           </span>
-
-          <Dropdown />
+          <Dropdown setMode={setMode} />
         </div>
+        {mode === "edit" ? (
+          <button className="border border-white self-end mb-8 mr-8 px-4 py-2 rounded-lg uppercase" onClick={handleUpdateProfile}>
+            Done
+          </button>
+        ) : (
+          ""
+        )}
       </div>
     </section>
   );
@@ -72,7 +117,7 @@ function UserBox({ name, username }: { name: string; username: string }) {
 
 export default UserBox;
 
-const Dropdown = () => {
+const Dropdown = ({ setMode }: DropdownProps) => {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <div className="relative inline-block text-left">
@@ -91,13 +136,16 @@ const Dropdown = () => {
             aria-orientation="vertical"
             aria-labelledby="options-menu"
           >
-            <a
-              href="#"
+            <div
               className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
               role="menuitem"
+              onClick={() => {
+                setMode("edit");
+                setIsOpen(false);
+              }}
             >
               Edit Profile
-            </a>
+            </div>
             <a
               href="#"
               className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"

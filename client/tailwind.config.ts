@@ -15,7 +15,15 @@ const config: Config = {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic':
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+          'gradient-overlay': "linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1))"
       },
+      colors: {
+        'light-white': 'rgba(255, 255, 255, 0.1)',
+        'gradient': 'radial-gradient(#800080, #FFC0CB)'
+      },
+      textColor: {
+        'gradient': 'radial-gradient(#800080, #FFC0CB)'
+      }
     },
   },
   plugins: [],

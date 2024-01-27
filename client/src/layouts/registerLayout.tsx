@@ -3,7 +3,7 @@ import { useAppDispatch } from "@/hooks";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
-import { setTestProfile } from "@/features/userProfile";
+// import { setTestProfile } from "@/features/userProfile";
 import { FormPage, Username, VerificationPage } from "@/components/register";
 import ScrollToTop from "@/utils/scrollToTop";
 
@@ -26,7 +26,7 @@ export function SignUpForm() {
   ];
 
   return (
-    <div className="flex w-[50vw] justify-center">
+    <div className="flex w-[50vw] movieBG rounded-3xl bg-contain justify-center">
       {subPages[step]}
     </div>
   );
@@ -58,20 +58,20 @@ export function LoginForm() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    dispatch(setTestProfile(userDetails.email));
+    // dispatch(setTestProfile(userDetails.email));
     router.push("/profile");
   };
 
   return (
-    <div className="flex w-[50vw] text-black">
-      <div className="bg-white p-10 rounded-lg shadow-md w-1/2">
+    <div className="flex w-[50vw] movieBG rounded-3xl bg-contain justify-center">
+      <div className="p-10 rounded-3xl bg-[#1D2939] shadow-md w-1/2">
         <h2 className="text-2xl font-bold">Log In</h2>
         <p>Log in to your account</p>
-        <form className="flex flex-col gap-10 pt-6">
+        <form className="flex flex-col gap-6 pt-6">
           <div>
-            <label className="block text-gray-700">Email Address</label>
+            <label className="text-gray-400">Email Address</label>
             <input
-              className="mt-1 p-2 w-full border border-gray-300 rounded-md"
+              className="p-1 w-full border-b-[1px] bg-transparent"
               type="email"
               onChange={(event) => handleChange(event, "email")}
             />
@@ -79,13 +79,13 @@ export function LoginForm() {
           <div>
             <label className="block text-gray-700">Password</label>
             <input
-              className="mt-1 p-2 w-full border border-gray-300 rounded-md"
+              className="p-1 w-full border-b-[1px] bg-transparent"
               type="password"
               onChange={(event) => handleChange(event, "password")}
             />
           </div>
           <button
-            className="w-full py-2 px-4 bg-blue-600 text-white rounded-md mt-4"
+            className="w-full py-3 px-4 bg-blue-600 text-white rounded-md mt-4"
             disabled={!isFilled}
             onClick={(e) => handleSubmit(e)}
           >
@@ -94,7 +94,7 @@ export function LoginForm() {
         </form>
         <p className="mt-4">
           Don't have an account?{" "}
-          <a className="text-blue-600" href="#">
+          <a className="text-blue-600" href="/register">
             Sign up
           </a>
         </p>
@@ -103,14 +103,14 @@ export function LoginForm() {
           <span className="px-2 text-gray-500">Or</span>
           <hr className="flex-grow border-gray-300" />
         </div>
-        <button className="w-full py-2 px-4 border border-black rounded-md mt-4">
+        <button className="w-full py-3 px-4 bg-white rounded-md mt-4 text-black">
           <div className="flex items-center justify-center gap-4">
             <Icon icon="flat-color-icons:google" className="text-3xl" />
-            <p className="font-semibold">Log in with Google</p>
+            <p>Log in with Google</p>
           </div>
         </button>
       </div>
-      <div className="movieBG bg-contain w-1/2"></div>
+      <div className="w-1/2"></div>
     </div>
   );
 }

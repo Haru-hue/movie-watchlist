@@ -1,4 +1,5 @@
 import express from "express";
+import bodyParser from "body-parser";
 import { ApolloServer } from "apollo-server-express";
 import cors from "cors";
 import schema from "./schema";
@@ -17,6 +18,9 @@ const server = new ApolloServer({
 (async () => {
   await server.start();
   app.use("*", cors());
+  app.use(bodyParser.json({limit: '10mb'}));
+  app.use(bodyParser.urlencoded({limit: '10mb', extended: true}));
+
   server.applyMiddleware({ app, path: "/graphql" });
 
   app.listen({ port: 8000 }, () => {

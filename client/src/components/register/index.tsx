@@ -1,32 +1,34 @@
 import { Icon } from "@iconify/react/dist/iconify.js";
-import { useMutation, useQuery } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 import { REGISTER, UPDATE_USER, VERIFY_USER } from "@/utils";
 import { createRef, useState } from "react";
 import { sendEmail } from "@/utils/sendEmail";
 import toast, { Toaster } from "react-hot-toast";
 import { useAppDispatch, useAppSelector } from "@/hooks";
 import { setUserProfile } from "@/features/userProfile";
-import Router, { useRouter } from "next/router";
-
+import { useRouter } from "next/router";
+import { useGoogleLogin } from "@react-oauth/google";
+import getGoogleUserDetails from "@/lib/getGoogleUserDetails";
 
 interface registerFlow {
   handleProgress: (progress: number) => void;
 }
 
 export const FormPage = ({ handleProgress }: registerFlow) => {
-  const dispatch = useAppDispatch()
-
+  const dispatch = useAppDispatch();
   const [addUser] = useMutation(REGISTER, {
     fetchPolicy: "no-cache",
     onCompleted: (data) => {
-      dispatch(setUserProfile(userDetails.email))
+      dispatch(setUserProfile(userDetails.email));
       const emailData: EmailParams = {
         to_name: userDetails.name,
         to_email: userDetails.email,
         message: data?.addUser?.verificationCode,
       };
       sendEmail(emailData);
-      toast.success("A verification code has been sent to your e-mail", { duration: 5000});
+      toast.success("A verification code has been sent to your e-mail", {
+        duration: 5000,
+      });
       setTimeout(() => handleProgress(1), 5000);
     },
     onError: (error) => {
@@ -45,6 +47,14 @@ export const FormPage = ({ handleProgress }: registerFlow) => {
     confirmPassword: "",
   });
 
+  const registerWithGoogle = useGoogleLogin({
+    onSuccess: async (data) => {
+      const userData = await getGoogleUserDetails(data);
+      console.log(userData);
+    },
+    onError: (err) => console.log(err),
+  });
+
   type formDetails = "name" | "email" | "password" | "confirmPassword";
 
   const handleChange = (
@@ -60,19 +70,19 @@ export const FormPage = ({ handleProgress }: registerFlow) => {
   };
 
   const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault()
+    e.preventDefault();
     addUser({
       variables: {
         name: userDetails.name,
         email: userDetails.email,
         password: userDetails.password,
       },
-    })
+    });
   };
   return (
     <>
       <Toaster />
-      <div className="bg-[#1D2939] p-10 rounded-lg shadow-md w-1/2">
+      <div className="bg-[#1D2939] p-10 rounded-3xl shadow-md w-1/2">
         <h2 className="text-2xl font-bold">Sign Up</h2>
         <p>Create an account to continue</p>
         <form className="flex flex-col gap-10 pt-6">
@@ -114,20 +124,16 @@ export const FormPage = ({ handleProgress }: registerFlow) => {
               />
             </div>
           </div>
-          <div>
-            <input className="mr-2" type="checkbox" />
-            <label className="">I agree to the Terms and Conditions</label>
-          </div>
         </form>
         <button
-          className="w-full py-2 px-4 bg-blue-600 text-white rounded-md mt-4"
+          className="w-full py-3 px-4 bg-blue-600 text-white rounded-md mt-8"
           onClick={handleSubmit}
         >
           Sign Up
         </button>
         <p className="mt-4">
           Already have an account?{" "}
-          <a className="text-blue-600" href="#">
+          <a className="text-blue-600" href="/login">
             Sign In
           </a>
         </p>
@@ -136,24 +142,27 @@ export const FormPage = ({ handleProgress }: registerFlow) => {
           <span className="px-2 text-gray-500">Or</span>
           <hr className="flex-grow border-gray-300" />
         </div>
-        <button className="w-full py-2 px-4 bg-white rounded-md mt-4 text-black">
+        <button
+          className="w-full py-2 px-4 bg-white rounded-md mt-4 text-black"
+          onClick={() => registerWithGoogle()}
+        >
           <div className="flex items-center justify-center gap-4">
             <Icon icon="flat-color-icons:google" className="text-3xl" />
-            <p className="font-semibold">Sign Up with Google</p>
+            <p>Sign Up with Google</p>
           </div>
         </button>
       </div>
-      <div className="movieBG bg-contain w-1/2"></div>
+      <div className="w-1/2"></div>
     </>
   );
 };
 
 export const VerificationPage = ({ handleProgress }: registerFlow) => {
-  const email = useAppSelector((state) => state.users.email)
+  const email = useAppSelector((state) => state.users.email);
   const [verifyUser] = useMutation(VERIFY_USER, {
-    fetchPolicy: 'no-cache',
+    fetchPolicy: "no-cache",
     onCompleted: (data) => {
-      toast.success(data?.verifyUser?.message, { duration: 5000});
+      toast.success(data?.verifyUser?.message, { duration: 5000 });
       setTimeout(() => handleProgress(2), 5000);
     },
     onError: (error) => {
@@ -170,7 +179,7 @@ export const VerificationPage = ({ handleProgress }: registerFlow) => {
     .fill(0)
     .map((_) => createRef<HTMLInputElement>());
 
-    const handleInputChange =
+  const handleInputChange =
     (index: number) => (event: React.ChangeEvent<HTMLInputElement>) => {
       const value = event.target.value;
       if (value.length === 1 && !isNaN(Number(value))) {
@@ -179,16 +188,16 @@ export const VerificationPage = ({ handleProgress }: registerFlow) => {
           newState[index] = value;
           return newState;
         });
-  
+
         if (index < 3) {
           inputRefs[index + 1].current?.focus();
         }
       }
     };
- 
 
-  const handleVerify = () => {
-    const verificationNumber = parseInt(verificationCode.join(''))
+  const handleVerify = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    const verificationNumber = parseInt(verificationCode.join(""));
     verifyUser({
       variables: {
         email,
@@ -198,13 +207,13 @@ export const VerificationPage = ({ handleProgress }: registerFlow) => {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center p-6 bg-[#1D2939] rounded-3xl gap-8">
-      <Toaster/>
-      <span className="text-center">
+    <div className="flex flex-col justify-center items-center p-10 bg-[#1D2939] rounded-3xl gap-8 w-3/5">
+      <Toaster />
+      <span className="flex flex-col text-center pt-10 gap-2">
         <h2 className="text-3xl font-bold">Verification Code</h2>
         <p>Enter the code sent to your e-mail address</p>
       </span>
-      <div className="flex justify-center items-center space-x-6">
+      <div className="flex justify-center items-center space-x-6 py-10">
         {verificationCode.map((code, index) => (
           <input
             key={index}
@@ -218,26 +227,27 @@ export const VerificationPage = ({ handleProgress }: registerFlow) => {
         ))}
       </div>
       <button
-        className="bg-blue-400 w-full p-4 rounded-lg"
+        className="bg-blue-600 w-full p-5 rounded-lg font-semibold"
         onClick={handleVerify}
       >
         Verify
       </button>
-      <p>
-        Didn't receive a code? <span className="font-bold">Resend code</span>
+      <p className="mb-8">
+        Didn't receive a code?{" "}
+        <span className="font-bold cursor-pointer">Resend code</span>
       </p>
     </div>
   );
 };
 
 export const Username = () => {
-  const email = useAppSelector((state) => state.users.email)
-  const router = useRouter()
+  const email = useAppSelector((state) => state.users.email);
+  const router = useRouter();
   const [updateUser] = useMutation(UPDATE_USER, {
-    fetchPolicy: 'no-cache',
+    fetchPolicy: "no-cache",
     onCompleted: () => {
-      toast.success('Success', { duration: 5000});
-      router.push('/profile')
+      toast.success("Success", { duration: 5000 });
+      router.push("/profile");
     },
     onError: (error) => {
       console.error(error);
@@ -248,39 +258,39 @@ export const Username = () => {
       }
     },
   });
-  const [username, setUsername] = useState('')
+  const [username, setUsername] = useState("");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setUsername(e.target.value)
-  }
+    setUsername(e.target.value);
+  };
 
   const handleSubmit = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     updateUser({
       variables: {
         email,
-        username
-      }
-    })
-  }
+        username,
+      },
+    });
+  };
 
   return (
-    <div className="bg-[#1D2939] justify-center p-6">
-      <Toaster/>
-      <span className="text-center">
+    <div className="bg-[#1D2939] justify-center p-10 rounded-lg w-1/2">
+      <Toaster />
+      <span className="flex flex-col text-center pt-8 gap-2">
         <h3 className="font-bold text-2xl">Enter a username</h3>
         <p>Your username is how friends can see your profile</p>
       </span>
-      <div className="pt-4">
+      <div className="py-10">
         <label className="uppercase text-slate-400">Username</label>
         <input
           className="p-1 w-full border-b-[1px] bg-transparent"
           type="text"
-          onChange={e => handleChange(e)}
+          onChange={(e) => handleChange(e)}
         />
       </div>
       <button
-        className="bg-blue-400 w-full p-2 rounded-lg mt-4"
+        className="bg-blue-600 w-full p-4 rounded-lg mt-4"
         onClick={handleSubmit}
       >
         Continue

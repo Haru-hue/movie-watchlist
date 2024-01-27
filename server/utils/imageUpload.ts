@@ -11,7 +11,7 @@ cloudinary.config({
 
 const imageUpload = async (image: string) => {
     const result = await cloudinary.uploader.upload(image)
-    const imageURL = await result.secure_url
+    const imageURL = result.secure_url
     return imageURL
 }
 

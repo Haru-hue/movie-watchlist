@@ -11,6 +11,7 @@
   "dependencies": {
     "@apollo/client": "^3.8.8",
     "@emailjs/browser": "^3.12.1",
+    "@react-oauth/google": "^0.12.1",
     "@reduxjs/toolkit": "^2.0.1",
     "@types/react-slick": "^0.23.13",
     "3d-react-carousel-ts": "^1.1.0",
@@ -23,6 +24,7 @@
     "react-dom": "^18",
     "react-dropzone": "^14.2.3",
     "react-hot-toast": "^2.4.1",
+    "react-modal-video": "^2.0.1",
     "react-redux": "^9.0.4",
     "react-slick": "^0.29.0",
     "slick-carousel": "^1.8.1"
@@ -32,6 +34,7 @@
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "@types/react-modal-video": "^1.2.3",
     "autoprefixer": "^10.0.1",
     "eslint": "^8",
     "eslint-config-next": "14.0.4",
