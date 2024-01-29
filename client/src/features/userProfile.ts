@@ -1,4 +1,3 @@
-import { RootState } from "@/store/store";
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {

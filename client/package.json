@@ -16,6 +16,7 @@
     "@types/react-slick": "^0.23.13",
     "3d-react-carousel-ts": "^1.1.0",
     "axios": "^1.6.3",
+    "classnames": "^2.5.1",
     "dayjs": "^1.11.10",
     "embla-carousel-react": "^8.0.0-rc17",
     "next": "14.0.4",
@@ -24,7 +25,9 @@
     "react-dom": "^18",
     "react-dropzone": "^14.2.3",
     "react-hot-toast": "^2.4.1",
+    "react-loader-spinner": "^6.1.6",
     "react-modal-video": "^2.0.1",
+    "react-paginate": "^8.2.0",
     "react-redux": "^9.0.4",
     "react-slick": "^0.29.0",
     "slick-carousel": "^1.8.1"

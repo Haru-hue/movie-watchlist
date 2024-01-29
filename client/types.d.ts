@@ -82,6 +82,7 @@ interface MovieCredits {
       profile_path: string;
       department: Crew;
       job: string;
+      known_for_department: string;
     }
   ];
 }
@@ -124,4 +125,8 @@ interface EmailParams {
 
 interface FileWithImage extends File {
   image?: string;
+}
+
+interface LayoutProps {
+  children: React.ReactNode
 }

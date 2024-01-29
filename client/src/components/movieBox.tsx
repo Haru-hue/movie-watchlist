@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 const truncateString = (str: string, num: number): string => {
   if (str.length <= num) {
     return str;
@@ -9,15 +11,19 @@ export const MovieBox = (props: MovieBox) => {
   return (
     <div className="flex flex-col space-y-4">
       <div className="relative">
-        <img
-          className="rounded-xl w-64 h-80 object-cover"
-          src={`https://image.tmdb.org/t/p/original/${props.image}`}
-          alt={props.title}
-        />
+        <Link href={`/movie/${props.id}`}>
+          <img
+            className="rounded-xl w-64 h-80 object-cover"
+            src={`https://image.tmdb.org/t/p/original/${props.image}`}
+            alt={props.title}
+          />
+        </Link>
         <p className="rating">{props.rating.toFixed(1)}</p>
       </div>
       <div className="flex flex-col space-y-2">
-        <h3 className="font-bold text-lg">{props.title}</h3>
+        <a href={`/movie/${props.id}`}>
+          <h3 className="font-bold text-lg">{props.title}</h3>
+        </a>
         <p className="text-slate-500 text-sm">
           {truncateString(props.overview, 35)}
         </p>
@@ -32,13 +38,17 @@ export const RecBox = (props: MovieBox) => {
 
   return (
     <div className="flex space-x-4">
-      <img
-        className="rounded-xl w-[45%]"
-        src={`https://image.tmdb.org/t/p/original/${props.image}`}
-        alt={props.title}
-      />
+      <Link className="contents" href={`/movie/${props.id}`}>
+        <img
+          className="rounded-xl w-[45%]"
+          src={`https://image.tmdb.org/t/p/original/${props.image}`}
+          alt={props.title}
+        />
+      </Link>
       <div className="flex flex-col space-y-4 pt-4">
-        <h3 className="font-bold text-xl">{props.title}</h3>
+        <a href={`/movie/${props.id}`}>
+          <h3 className="font-bold text-xl">{props.title}</h3>
+        </a>
         <div className="flex items-center space-x-4">
           <div className="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
             <div className="progressBar" style={{ width: `${progressRating}%` }}></div>

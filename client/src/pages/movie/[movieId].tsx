@@ -1,18 +1,28 @@
-import PageLayout from "@/layouts/pageLayout";
+import Spinner from "@/components/Spinner";
+import PageLayout from "@/layouts/movieLayout";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
 function MoviePage() {
   const [movieId, setMovieId] = useState<number | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
 
   useEffect(() => {
-    if (router.query.movieId) {
-      setMovieId(Number(router.query.movieId));
+    if (router.isReady) {
+      setIsLoading(true);
+      if (router.query.movieId) {
+        setMovieId(Number(router.query.movieId));
+        setIsLoading(false);
+      }
     }
-  }, [router.query]);
+  }, [router.isReady, router.query]);
 
-  return movieId !== null ? <PageLayout movieId={movieId} /> : null;
+  return isLoading ? (
+    <Spinner/>
+  ) : (
+    movieId !== null && <PageLayout movieId={movieId} />
+  );
 }
 
 export default MoviePage;

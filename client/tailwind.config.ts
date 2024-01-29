@@ -23,6 +23,10 @@ const config: Config = {
       },
       textColor: {
         'gradient': 'radial-gradient(#800080, #FFC0CB)'
+      },
+      gridTemplateColumns: {
+        sidebar: "300px auto", //for sidebar layout
+        "sidebar-collapsed": "64px auto", //for collapsed sidebar layout
       }
     },
   },

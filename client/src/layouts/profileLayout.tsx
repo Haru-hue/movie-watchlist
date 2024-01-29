@@ -1,7 +1,10 @@
+import Spinner from "@/components/Spinner";
 import UserBox from "@/components/userBox";
 import { useAppSelector } from "@/hooks";
 import { GET_USER } from "@/utils";
 import { useQuery } from "@apollo/client";
+import Layout from "./templates/layout";
+import { toast, Toaster } from "react-hot-toast";
 
 function ProfileLayout() {
   const user = useAppSelector(
@@ -11,14 +14,21 @@ function ProfileLayout() {
     variables: { email: user },
   });
 
-  // if (loading) return "Loading...";
-  // if (error) return `Error! ${error.message}`;
-
-  console.log(data);
+  
 
   return (
-    <section className="p-10">
-      <UserBox name={data?.user?.name || 'Joshua'} username={data?.user?.username || 'mob'} />
+    <section>
+      <Toaster/>
+      {loading ? (
+        <Spinner />
+      ) : (
+        <Layout>
+          <UserBox
+            name={data?.user?.name || "Joshua"}
+            username={data?.user?.username || "mob"}
+          />
+        </Layout>
+      )}
     </section>
   );
 }
