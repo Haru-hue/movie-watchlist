@@ -2,12 +2,15 @@ import { useEffect, useState } from "react";
 import { getNewMovies } from "../lib/getMovies";
 import dynamic from "next/dynamic";
 import Link from "next/link";
+import Spinner from "./Spinner";
 const Carousal = dynamic(
   () => import("3d-react-carousel-ts").then((mod) => mod.Carousel),
   {
-    ssr: false, 
+    ssr: false,
+    loading: () => <Spinner/>,
   }
 );
+
 
 export const Carousel = () => {
   const [carouselImages, setCarouselImages] = useState<string[]>([]);

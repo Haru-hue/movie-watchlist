@@ -6,6 +6,12 @@ import { useEffect, useMemo, useState } from "react";
 // import { setTestProfile } from "@/features/userProfile";
 import { FormPage, Username, VerificationPage } from "@/components/register";
 import ScrollToTop from "@/utils/scrollToTop";
+import { useGoogleLogin } from "@react-oauth/google";
+import getGoogleUserDetails from "@/lib/getGoogleUserDetails";
+import { useMutation, useQuery } from "@apollo/client";
+import { FIND_USER, GET_USER } from "@/utils";
+import { setUserProfile } from "@/features/userProfile";
+import toast, { Toaster } from "react-hot-toast";
 
 export function SignUpForm() {
   const [step, setStep] = useState<number>(0);
@@ -33,12 +39,36 @@ export function SignUpForm() {
 }
 
 export function LoginForm() {
+  const router = useRouter();
+  const dispatch = useAppDispatch();
   const [userDetails, setUserDetails] = useState({
     email: "",
     password: "",
   });
-  const router = useRouter();
-  const dispatch = useAppDispatch();
+  const [findUser] = useMutation(FIND_USER, {
+    fetchPolicy: "no-cache",
+    onCompleted: (data) => {
+      console.log(data);
+      toast.success(data.findUser.message, {
+        duration: 3000,
+      });
+      dispatch(
+        setUserProfile({
+          email: data.findUser.user.email,
+          avatarURL: data.findUser.user.avatarURL,
+        })
+      );
+      setTimeout(() => router.push('/'), 3000);
+    },
+    onError: (error) => {
+      console.error(error);
+      if (error.graphQLErrors) {
+        error.graphQLErrors.map(({ message }: any) => {
+          toast.error(message);
+        });
+      }
+    },
+  });
 
   const handleChange = (
     event: React.ChangeEvent<HTMLInputElement>,
@@ -52,6 +82,18 @@ export function LoginForm() {
     });
   };
 
+  const loginWithGoogle = useGoogleLogin({
+    onSuccess: async (data) => {
+      const userData = await getGoogleUserDetails(data);
+      findUser({
+        variables: {
+          email: userData.email,
+        },
+      });
+    },
+    onError: (err) => console.log(err),
+  });
+
   const isFilled = useMemo(() => {
     return userDetails.email !== "" && userDetails.password !== "";
   }, [userDetails]);
@@ -64,6 +106,7 @@ export function LoginForm() {
 
   return (
     <div className="flex w-[50vw] movieBG rounded-3xl bg-contain justify-center">
+      <Toaster />
       <div className="p-10 rounded-3xl bg-[#1D2939] shadow-md w-1/2">
         <h2 className="text-2xl font-bold">Log In</h2>
         <p>Log in to your account</p>
@@ -104,7 +147,10 @@ export function LoginForm() {
           <hr className="flex-grow border-gray-300" />
         </div>
         <button className="w-full py-3 px-4 bg-white rounded-md mt-4 text-black">
-          <div className="flex items-center justify-center gap-4">
+          <div
+            className="flex items-center justify-center gap-4"
+            onClick={() => loginWithGoogle()}
+          >
             <Icon icon="flat-color-icons:google" className="text-3xl" />
             <p>Log in with Google</p>
           </div>

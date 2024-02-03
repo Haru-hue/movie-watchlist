@@ -4,12 +4,15 @@ import { Icon } from "@iconify/react/dist/iconify.js";
 import Link from "next/link";
 
 function Header() {
+  const user = useAppSelector((state) => state.users);
   const movie = useAppSelector((state) => state.movie.term);
-  const dispatch = useAppDispatch()
+  const dispatch = useAppDispatch();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(setMovieTerm(e.target.value))
-  }
+    dispatch(setMovieTerm(e.target.value));
+  };
+
+  console.log(user.avatarURL);
 
   return (
     <div className="flex items-center justify-between p-6">
@@ -29,9 +32,16 @@ function Header() {
             <Icon icon="iconoir:search" />
           </div>
         </div>
-        {/* <Link href={user.username === '' ? `/login` : "/profile"}>
-          <Icon icon="ep:user" className="text-2xl" />
-        </Link> */}
+        <Link className="contents" href={user.email === "" ? `/login` : "/profile"}>
+          {user.avatarURL === "" ? (
+            <Icon icon="ep:user" className="text-2xl" />
+          ) : (
+            <img
+              src={user.avatarURL}
+              className="w-16 h-16 object-cover rounded-full"
+            />
+          )}
+        </Link>
       </section>
     </div>
   );

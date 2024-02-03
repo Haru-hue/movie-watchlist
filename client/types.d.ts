@@ -130,3 +130,16 @@ interface FileWithImage extends File {
 interface LayoutProps {
   children: React.ReactNode
 }
+
+type NavItem = {
+  label: string
+  link: string
+  icon: React.ReactNode
+}
+
+interface UserProfile {
+  name: string
+  username: string
+  avatarURL: string
+  backgroundURL: string
+}

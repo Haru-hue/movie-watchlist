@@ -11,12 +11,12 @@ interface DropdownProps {
   setMode: Dispatch<SetStateAction<string>>;
 }
 
-function UserBox({ name, username }: { name: string; username: string }) {
+function UserBox(props: UserProfile) {
   const email = 'ukojoshy@gmail.com';
   const [mode, setMode] = useState<string>("");
   const [selectedImage, setSelectedImage] = useState<any>({
-    avatarURL: "",
-    backgroundImageURL: "",
+    avatarURL: props.avatarURL,
+    backgroundImageURL: props.backgroundURL,
   });
   const [updateUser] = useMutation(UPDATE_USER, {
     fetchPolicy: 'no-cache',
@@ -55,15 +55,21 @@ function UserBox({ name, username }: { name: string; username: string }) {
     })
   }
 
+  console.log(props)
+
   return (
-    <section className="border border-blue-400 rounded-2xl">
+    <section className="border border-blue-400 rounded-2xl mx-10">
       <Toaster/>
       <div className="flex flex-col">
         <div
           {...(mode === "edit" ? backgroundImageURL.getRootProps() : {})}
           style={{
             backgroundImage: selectedImage.backgroundImageURL
-              ? `url(${selectedImage.backgroundImageURL?.image})`
+              ? `url(${
+                  typeof selectedImage.backgroundImageURL === "string"
+                    ? selectedImage.backgroundImageURL
+                    : selectedImage.backgroundImageURL?.image
+                })`
               : "",
           }}
           className={`w-full h-60 bg-slate-400 rounded-t-2xl ${
@@ -81,7 +87,11 @@ function UserBox({ name, username }: { name: string; username: string }) {
           {...(mode === "edit" ? avatarDropzone.getRootProps() : {})}
           style={{
             backgroundImage: selectedImage.avatarURL
-              ? `url(${selectedImage.avatarURL?.image})`
+              ? `url(${
+                  typeof selectedImage.avatarURL === "string"
+                    ? selectedImage.avatarURL
+                    : selectedImage.avatarURL?.image
+                })`
               : "",
           }}
           className="w-32 h-32 bg-red-400 bg-cover bg-center absolute mt-40 ml-12 rounded-full flex justify-center items-center"
@@ -93,13 +103,13 @@ function UserBox({ name, username }: { name: string; username: string }) {
             </div>
           )}
           {!selectedImage.avatarURL && (
-            <span className="text-6xl font-bold">{getFirstLetters(name)}</span>
+            <span className="text-6xl font-bold">{getFirstLetters(props.name)}</span>
           )}
         </div>
         <div className={`flex items-center justify-between ml-36 mt-6 px-10 ${mode === 'edit' ? 'mb-8' : 'mb-16'}`}>
           <span>
-            <h2 className="text-3xl font-bold">{name}</h2>
-            <p>@{username}</p>
+            <h2 className="text-3xl font-bold">{props.name}</h2>
+            <p>@{props.username}</p>
           </span>
           <Dropdown setMode={setMode} />
         </div>

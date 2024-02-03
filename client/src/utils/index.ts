@@ -53,6 +53,23 @@ export const GET_USER = gql`
       email
       watchlist
       username
+      avatarURL
+      backgroundURL
+    }
+  }
+`
+
+export const FIND_USER = gql`
+  mutation findUser (
+    $email: String!
+  ) {
+    findUser(email: $email) {
+      message
+      success
+      user {
+        email
+        avatarURL
+      }
     }
   }
 `

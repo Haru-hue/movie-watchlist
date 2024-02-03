@@ -18,9 +18,8 @@ function MovieDetails(props: MovieInformation) {
     (crew) => crew.job === "Director"
   );
   const writers = props.movieData.credits?.crew
-  .filter((crew) => crew.known_for_department === "Writing")
-  .filter((v, i, a) => a.findIndex(t => (t.id === v.id)) === i);
-
+    .filter((crew) => crew.known_for_department === "Writing")
+    .filter((v, i, a) => a.findIndex((t) => t.id === v.id) === i);
 
   const moviePoster = props.movieData.data?.poster_path;
 
@@ -123,12 +122,15 @@ function MovieDetails(props: MovieInformation) {
           alt={props.movieData.data?.title}
         />
         <CircularProgress percentage={progressRating} />
-        <button
-          className="uppercase border-2 py-2 px-4 rounded-lg text-nowrap"
-          // onClick={handleSeeMoreClick}
-        >
-          Add to watchlist
-        </button>
+        <div className="flex items-center gap-2">
+          <button
+            className="uppercase border-2 py-2 px-4 rounded-lg text-nowrap"
+            // onClick={handleSeeMoreClick}
+          >
+            Add to watchlist
+          </button>
+          <Icon icon="material-symbols-light:kid-star-outline" />
+        </div>
         <div className="flex flex-col pt-20 justify-center items-center">
           <p className="font-bold text-xl pb-10">Trailers and videos</p>
           <div className="flex flex-col items-center justify-center gap-2">

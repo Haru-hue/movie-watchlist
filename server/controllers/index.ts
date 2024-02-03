@@ -156,3 +156,17 @@ export const verifyUser = async (args: Args, context: Context) => {
     });
   }
 };
+
+export const googleFindUser = async (args: Args, context: Context) => {
+  const { email } = args;
+
+  const existingUser = await context.prisma.user.findUnique({
+    where: { email },
+  });
+
+  if (!existingUser) {
+    throw new GraphQLError("There is no e-mail associated with that account");
+  }
+
+  return existingUser
+};

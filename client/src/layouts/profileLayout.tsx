@@ -7,14 +7,12 @@ import Layout from "./templates/layout";
 import { toast, Toaster } from "react-hot-toast";
 
 function ProfileLayout() {
-  const user = useAppSelector(
-    (state) => state.users.email || "ukojoshy@gmail.com"
-  );
+  const user = useAppSelector((state) => state.users);
   const { data, loading, error } = useQuery(GET_USER, {
-    variables: { email: user },
-  });
+    variables: { email: user.email },
+  }); 
 
-  
+  console.log(data, user);
 
   return (
     <section>
@@ -24,8 +22,10 @@ function ProfileLayout() {
       ) : (
         <Layout>
           <UserBox
-            name={data?.user?.name || "Joshua"}
-            username={data?.user?.username || "mob"}
+            name={data?.user?.name || ''}
+            username={data?.user?.username || ""}
+            avatarURL={data?.user?.avatarURL || ''}
+            backgroundURL={data?.user?.backgroundURL || ''}
           />
         </Layout>
       )}

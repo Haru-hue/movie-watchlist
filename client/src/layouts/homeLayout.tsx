@@ -48,6 +48,8 @@ export default function HomeLayout() {
     fetchNewMovies();
   }, []);
 
+  console.log(movies.recommended.length)
+
   return (
     <div>
       {isLoading ? (

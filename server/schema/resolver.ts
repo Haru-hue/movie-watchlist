@@ -2,6 +2,7 @@ import {
   addUser,
   deleteUser,
   findUser,
+  googleFindUser,
   updateUser,
   verifyUser,
 } from "../controllers";
@@ -12,19 +13,8 @@ const resolvers = {
     allUsers: async (_parent: any, _args: Args, context: Context) => {
       return await context.prisma.user.findMany();
     },
-    user: async (_parent: any, args: Args, context: Context) => {
-      return await context.prisma.user.findUnique({
-        where: {
-          email: args.email,
-        },
-      });
-    },
-    login: async (_parent: any, args: Args, context: Context) =>
-      findUser(args, context),
-  },
-  User: {
-    id: (parent: { id: number }) => parent.id,
-    name: (parent: { name: string }) => parent.name,
+    user: async (_parent: any, args: Args, context: Context) =>
+      googleFindUser(args, context),
   },
   Mutation: {
     addUser: async (_parent: any, args: Args, context: Context, _info: any) =>
@@ -39,6 +29,10 @@ const resolvers = {
       deleteUser(args, context),
     verifyUser: async (_parent: any, args: Args, context: Context) =>
       verifyUser(args, context),
+    login: async (_parent: any, args: Args, context: Context) =>
+      findUser(args, context),
+    findUser: async (_parent: any, args: Args, context: Context) =>
+      googleFindUser(args, context),
   },
 };
 

@@ -4,7 +4,6 @@ import getSearchDetails from '@/lib/getSearchDetails'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import NoImage from '@/assets/NoImage.png'
-import ReactPaginate from 'react-paginate';
 
 function SearchLayout() {
   const searchTerm = useAppSelector((state) => state.movie.term)

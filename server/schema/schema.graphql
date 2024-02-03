@@ -2,7 +2,6 @@ type Query {
   info: String!
   user(email: String!): User
   allUsers: [User]!
-  login(email: String!, password: String!): UserResponse
 }
 
 type Mutation {
@@ -22,6 +21,8 @@ type Mutation {
   ): UserResponse
   deleteUser(email: String!): Response
   verifyUser(email: String!, verificationCode: Int!): Response
+  login(email: String!, password: String!): UserResponse
+  findUser(email: String!): UserResponse
 }
 
 type User {

@@ -26,3 +26,4 @@ type User = {
   backgroundURL: String
   [key: string]: string;
 };
+

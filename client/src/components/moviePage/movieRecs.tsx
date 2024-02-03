@@ -18,7 +18,7 @@ function MovieRecsList({ movieRecs }: any) {
         <h1 className="font-bold text-3xl py-10">People like this</h1>
         <div className="grid grid-cols-6 gap-10 max-w-fit">
           {movieRecs?.slice(0, numMovieRecs).map((movie: any) => (
-            <Link href={`/movie/${movie?.id}`}>
+            <Link href={`/movie/${movie?.id}`} key={movie?.id}>
                 <div className="flex flex-col max-w-fit gap-1" key={movie?.id}>
                   <img
                     src={`https://image.tmdb.org/t/p/original/${movie?.poster_path}`}
