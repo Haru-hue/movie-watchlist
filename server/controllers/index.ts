@@ -168,5 +168,9 @@ export const googleFindUser = async (args: Args, context: Context) => {
     throw new GraphQLError("There is no e-mail associated with that account");
   }
 
-  return existingUser
+  return {
+    message: 'Login successful',
+    success: true,
+    user: existingUser
+  }
 };

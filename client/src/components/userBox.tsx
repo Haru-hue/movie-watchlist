@@ -4,7 +4,7 @@ import { extractBase64 } from "@/utils/convertBase64";
 import getFirstLetters from "@/utils/getFirstLetter";
 import { useMutation } from "@apollo/client";
 import { Icon } from "@iconify/react/dist/iconify.js";
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import { Toaster, toast } from "react-hot-toast";
 
 interface DropdownProps {
@@ -18,9 +18,11 @@ function UserBox(props: UserProfile) {
     avatarURL: props.avatarURL,
     backgroundImageURL: props.backgroundURL,
   });
+  const previousImage = useRef<{ avatarURL?: string; backgroundImageURL?: string } | null>(null);
   const [updateUser] = useMutation(UPDATE_USER, {
     fetchPolicy: 'no-cache',
-    onCompleted: () => {
+    onCompleted: (data) => {
+      console.log(data)
       toast.success('User updated succesfully', { duration: 5000});
     },
     onError: (error) => {
@@ -42,20 +44,28 @@ function UserBox(props: UserProfile) {
     name: "backgroundImageURL",
   });
 
+  useEffect(() => {
+    previousImage.current = selectedImage
+  }, [selectedImage])
+  const prevSelectedImage = previousImage.current
+
   const handleUpdateProfile = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     setMode('')
-    const updatedFiles = extractBase64([selectedImage.backgroundImageURL, selectedImage.avatarURL])
-    updateUser({
-      variables: {
-        email,
-        avatarURL: updatedFiles[1],
-        backgroundURL: updatedFiles[0]
-      }
-    })
+    const variables: any = { email };
+    if (selectedImage.avatarURL !== props.avatarURL) {
+      const avatarURL = extractBase64(selectedImage.avatarURL);
+      variables.avatarURL = avatarURL;
+    }
+    if (selectedImage.backgroundImageURL !== props.backgroundURL) {
+      const backgroundURL = extractBase64(selectedImage.backgroundImageURL);
+      variables.backgroundURL = backgroundURL;
+    }
+    console.log(variables)
+    updateUser({ variables });
   }
 
-  console.log(props)
+  // console.log(props, prevSelectedImage)
 
   return (
     <section className="border border-blue-400 rounded-2xl mx-10">

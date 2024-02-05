@@ -13,8 +13,11 @@ const resolvers = {
     allUsers: async (_parent: any, _args: Args, context: Context) => {
       return await context.prisma.user.findMany();
     },
-    user: async (_parent: any, args: Args, context: Context) =>
-      googleFindUser(args, context),
+    user: async (_parent: any, args: Args, context: Context) => {
+      return await context.prisma.user.findUnique({
+        where: { email: args.email },
+      });
+    },
   },
   Mutation: {
     addUser: async (_parent: any, args: Args, context: Context, _info: any) =>

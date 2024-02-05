@@ -57,7 +57,7 @@ export default function HomeLayout() {
       ) : (
         <Layout>
           <div className="homeLayout ml-6">
-            <Carousel />
+            {/* <Carousel /> */}
             <div className="flex space-x-6">
               <section className="list-box w-[70%]">
                 <h4 className="text-slate-500 pb-6">New Movies</h4>

@@ -11,5 +11,5 @@ export const getBase64FromUrl = async (url: string | URL | Request) => {
   });
 };
 
-export const extractBase64 = (arr: FileWithImage[]) =>
-  arr.map(file => (file?.image !== undefined ? file.image : null));
+export const extractBase64 = (file: FileWithImage) =>
+  file?.image !== undefined ? file.image : null;

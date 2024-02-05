@@ -14,11 +14,11 @@ export const NavItems: NavItem[] = [
     {
         label: 'Recently Viewed',
         link: '/history',
-        icon: <Icon className='text-3xl' icon="clarity:clock-line" />
+        icon: <Icon className='text-3xl' icon="ph:clock-clockwise-light" />
     },
     {
         label: 'Favourites',
         link: '/favourites',
-        icon: <Icon className='text-4xl' icon="material-symbols-light:kid-star-outline" />
+        icon: <Icon className='text-3xl' icon="material-symbols-light:kid-star-outline" />
     }
 ]

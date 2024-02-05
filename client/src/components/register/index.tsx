@@ -50,7 +50,13 @@ export const FormPage = ({ handleProgress }: registerFlow) => {
   const registerWithGoogle = useGoogleLogin({
     onSuccess: async (data) => {
       const userData = await getGoogleUserDetails(data);
-      console.log(userData);
+      addUser({
+        variables: {
+          name: userData.name,
+          email: userData.email,
+          password: userData.id,
+        },
+      });
     },
     onError: (err) => console.log(err),
   });
