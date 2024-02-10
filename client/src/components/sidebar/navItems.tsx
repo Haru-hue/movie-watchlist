@@ -7,9 +7,9 @@ export const NavItems: NavItem[] = [
         icon: <Icon className='text-3xl' icon="ri:movie-2-line" />
     },
     {
-        label: 'Upcoming',
-        link: '/upcoming',
-        icon: <Icon className='text-3xl' icon="arcticons:jiotv" />
+        label: 'Browse',
+        link: '/browse',
+        icon: <Icon className='text-3xl' icon="arcticons:youtube-tv" />
     },
     {
         label: 'Recently Viewed',

@@ -7,6 +7,7 @@ import { setMovieTerm } from "@/features/movieTerm";
 import classNames from "classnames";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import Sidebar from "@/components/sidebar";
+import SearchModal from "@/components/searchModal";
 
 function Layout({ children }: LayoutProps) {
   const router = useRouter();
@@ -30,6 +31,7 @@ function Layout({ children }: LayoutProps) {
         />
         <div>
           <Header />
+          {searchTerm && <SearchModal/>}
           {children}
         </div>
       </div>

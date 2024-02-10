@@ -12,14 +12,12 @@ function Header() {
     dispatch(setMovieTerm(e.target.value));
   };
 
-  console.log(user.avatarURL);
-
   return (
     <div className="flex items-center justify-between p-6">
       <Link href={`/`}>
         <p>Movie</p>
       </Link>
-      <section className="flex w-1/4 items-center space-x-4">
+      <section className="flex w-1/4 items-center gap-8">
         <div className="relative w-full">
           <input
             type="text"
@@ -28,7 +26,7 @@ function Header() {
             onChange={(e) => handleChange(e)}
             value={movie}
           />
-          <div className="absolute inset-y-0 end-0 flex items-center pointer-events-none z-20 pe-4">
+          <div className="absolute inset-y-0 end-0 flex items-center pointer-events-none pe-4">
             <Icon icon="iconoir:search" />
           </div>
         </div>

@@ -27,7 +27,7 @@ body {
 .rating {
   background-color: rgb(0, 0, 0, .75);
   background-blend-mode: difference;
-  z-index: 999;
+  /* z-index: 999; */
 }
 
 .progressBar {
