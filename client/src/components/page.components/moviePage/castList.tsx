@@ -21,11 +21,11 @@ function CastList({ cast }: any) {
             <div className="flex flex-col max-w-fit gap-1" key={crew?.id}>
               <img
                 src={crew?.profile_path ? `https://image.tmdb.org/t/p/original/${crew?.profile_path}`: NoImage.src}
-                className="w-56 h-full object-cover"
+                className="w-72 object-cover"
                 alt=""
               />
-              <p className="text-xl">{crew?.name}</p>
-              <span className="text-slate-400">as {crew?.character}</span>
+              <p className="text-lg 2xl:text-xl whitespace-nowrap">{crew?.name}</p>
+              <span className="text-slate-400 whitespace-nowrap">as {crew?.character}</span>
             </div>
           ))}
         </div>

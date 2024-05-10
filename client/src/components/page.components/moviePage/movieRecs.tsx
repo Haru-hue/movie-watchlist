@@ -1,14 +1,15 @@
+import { useNumItemsToShow } from "@/hooks/useNumItemsToShow";
 import Link from "next/link";
 import React, { useState } from "react";
 
 function MovieRecsList({ movieRecs }: any) {
-  const [numMovieRecs, setNumMovieRecs] = useState(6);
+  const [numItemsToShow, setNumItemsToShow] = useNumItemsToShow(6);
 
   const handleSeeMoreClick = () => {
-    if (numMovieRecs >= movieRecs.length) {
-      setNumMovieRecs(6);
+    if (numItemsToShow >= movieRecs.length) {
+      setNumItemsToShow(6);
     } else {
-      setNumMovieRecs(movieRecs.length);
+      setNumItemsToShow(movieRecs.length);
     }
   };
 
@@ -16,16 +17,16 @@ function MovieRecsList({ movieRecs }: any) {
     <div>
       <section>
         <h1 className="font-bold text-3xl py-10">People like this</h1>
-        <div className="grid grid-cols-6 gap-10 max-w-fit">
-          {movieRecs?.slice(0, numMovieRecs).map((movie: any) => (
+        <div className="grid grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-10">
+          {movieRecs?.slice(0, numItemsToShow).map((movie: any) => (
             <Link href={`/movie/${movie?.id}`} key={movie?.id}>
                 <div className="flex flex-col max-w-fit gap-1" key={movie?.id}>
                   <img
                     src={`https://image.tmdb.org/t/p/original/${movie?.poster_path}`}
-                    className="w-full h-80 object-cover"
+                    className="w-full object-cover"
                     alt=""
                   />
-                  <p className="text-lg font-light">{movie?.title}</p>
+                  <p className="font-light max-w-sm">{movie?.title}</p>
                 </div>
             </Link>
           ))}
@@ -37,7 +38,7 @@ function MovieRecsList({ movieRecs }: any) {
           className="uppercase border-2 py-2 px-4 rounded-lg text-nowrap"
           onClick={handleSeeMoreClick}
         >
-          {numMovieRecs >= movieRecs?.length ? "Show less" : "See more"}
+          {numItemsToShow >= movieRecs?.length ? "Show less" : "See more"}
         </button>
       </div>
     </div>

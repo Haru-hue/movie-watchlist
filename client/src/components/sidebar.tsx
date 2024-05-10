@@ -23,7 +23,7 @@ function Sidebar({ collapseSidebar, setCollapseSidebar }: SideBarProps) {
       >
         <div
           className={cn({
-            "flex items-center border-b border-b-indigo-800 w-full": true,
+            "flex items-center border-b border-b-indigo-900 w-full": true,
             "p-4 justify-between": collapseSidebar,
             "py-4 justify-center": !collapseSidebar,
           })}

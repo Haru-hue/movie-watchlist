@@ -93,3 +93,19 @@ body {
     @apply h-screen 2xl:h-[75vh] w-full bg-cover
   }
 }
+
+.grid-cols-custom {
+  grid-template-columns: repeat(auto-fill, minmax(0, 1fr));
+}
+
+@media screen and (min-width: 1024px) {
+  .grid-cols-custom {
+    grid-template-columns: repeat(auto-fill, minmax(0, 1fr));
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  .grid-cols-custom {
+    grid-template-columns: repeat(auto-fill, minmax(0, 1fr));
+  }
+}

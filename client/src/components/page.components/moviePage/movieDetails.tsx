@@ -49,7 +49,7 @@ function MovieDetails(props: MovieInformation) {
           </span>
         </span>
       </div>
-      <div className="grid grid-cols-3 gap-12 w-1/3 ">
+      <div className="grid grid-cols-2 2xl:grid-cols-3 gap-12 w-1/3 ">
         <span className="flex flex-col">
           <p className="text-slate-400 uppercase">Genre</p>
           <div className="flex gap-1 flex-wrap">
@@ -115,7 +115,7 @@ function MovieDetails(props: MovieInformation) {
           </span>
         )}
       </div>
-      <div className="flex flex-col items-center space-y-2 absolute right-0 top-40 mr-10 bg-[#171930] p-6 max-w-sm">
+      <div className="flex flex-col items-center space-y-2 absolute right-0 top-40 mr-10 bg-[#171930] p-6 max-w-xs 2xl:max-w-sm z-50">
         <img
           className="p-10"
           src={`https://image.tmdb.org/t/p/original/${moviePoster}`}

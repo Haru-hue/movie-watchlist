@@ -21,6 +21,7 @@ interface MovieBox {
   rating: number;
   title: string;
   overview: string;
+  showRating?: boolean;
 }
 
 interface MovieDetails {
@@ -143,3 +144,12 @@ interface UserProfile {
   avatarURL: string
   backgroundURL: string
 }
+
+type MovieProps = {
+  new?: Movie[];
+  trated?: Movie[];
+  recommended?: Movie[];
+  upcoming?: Movie[];
+};
+
+type MovieKeys = 'popular' | 'top_rated' | 'upcoming' | 'new';

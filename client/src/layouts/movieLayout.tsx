@@ -1,13 +1,13 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import getMovieDetails from "@/lib/getMovieDetails";
 import ModalVideo from "react-modal-video";
-import CastList from "@/components/moviePage/castList";
-import ImageGrid from "@/components/moviePage/imageGrid";
-import MovieRecsList from "@/components/moviePage/movieRecs";
+import CastList from "@/components/page.components/moviePage/castList";
+import ImageGrid from "@/components/page.components/moviePage/imageGrid";
+import MovieRecsList from "@/components/page.components/moviePage/movieRecs";
 import Spinner from "@/components/Spinner";
-import MovieDetails from "@/components/moviePage/movieDetails";
+import MovieDetails from "@/components/page.components/moviePage/movieDetails";
 import Layout from "./templates/layout";
+import getMovieDetails from "@/apis/movie";
 
 export default function PageLayout({ movieId }: { movieId: number }) {
   const [isOpen, setIsOpen] = useState({
@@ -15,7 +15,6 @@ export default function PageLayout({ movieId }: { movieId: number }) {
     open: false,
   });
   const [movieData, setMovieData] = useState<MovieData>({});
-
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -79,7 +78,7 @@ export default function PageLayout({ movieId }: { movieId: number }) {
               handleVideoOpen={handleVideoOpen}
             />
           </div>
-          <section className="p-10 max-w-[75%]">
+          <section className="p-10 max-w-4xl 2xl:max-w-[75%]">
             <CastList cast={movieData?.credits?.cast} />
             <ImageGrid images={movieData?.gallery?.backdrops} />
             <MovieRecsList movieRecs={movieData?.recommendations} />

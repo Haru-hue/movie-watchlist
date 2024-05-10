@@ -13,14 +13,7 @@ import { useAppSelector } from "@/hooks";
 import Spinner from "@/components/Spinner";
 import Layout from "./templates/layout";
 
-type MovieProps = {
-  new: Movie[];
-  trated: Movie[];
-  recommended: Movie[];
-};
-
 export default function HomeLayout() {
-  const movie = useAppSelector((state) => state.movie.term);
   const [movies, setMovies] = useState<MovieProps>({
     new: [],
     trated: [],
@@ -47,8 +40,6 @@ export default function HomeLayout() {
     };
     fetchNewMovies();
   }, []);
-
-  console.log(movies.recommended.length)
 
   return (
     <div>
