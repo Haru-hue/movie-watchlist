@@ -3,7 +3,7 @@ import Link from "next/link";
 import React, { useState } from "react";
 
 function MovieRecsList({ movieRecs }: any) {
-  const [numItemsToShow, setNumItemsToShow] = useNumItemsToShow(6);
+  const {numItemsToShow, setNumItemsToShow} = useNumItemsToShow(6);
 
   const handleSeeMoreClick = () => {
     if (numItemsToShow >= movieRecs.length) {

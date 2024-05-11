@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 
 export function useNumItemsToShow(initialValue: number) {
-  const [numItemsToShow, setNumItemsToShow] = useState(6);
+  const [numItemsToShow, setNumItemsToShow] = useState(initialValue ?? 6);
 
   useEffect(() => {
     const updateNumItemsToShow = () => {
@@ -22,5 +22,5 @@ export function useNumItemsToShow(initialValue: number) {
     return () => window.removeEventListener("resize", updateNumItemsToShow);
   }, []);
 
-  return [numItemsToShow, setNumItemsToShow];
+  return { numItemsToShow, setNumItemsToShow };
 }

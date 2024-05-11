@@ -122,14 +122,13 @@ function MovieDetails(props: MovieInformation) {
           alt={props.movieData.data?.title}
         />
         <CircularProgress percentage={progressRating} />
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-4">
           <button
             className="uppercase border-2 py-2 px-4 rounded-lg text-nowrap"
-            // onClick={handleSeeMoreClick}
           >
             Add to watchlist
           </button>
-          <Icon icon="material-symbols-light:kid-star-outline" />
+          <Icon className="text-4xl cursor-pointer" icon="iconoir:star" />
         </div>
         <div className="flex flex-col pt-20 justify-center items-center">
           <p className="font-bold text-xl pb-10">Trailers and videos</p>

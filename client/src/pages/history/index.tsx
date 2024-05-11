@@ -3,7 +3,6 @@ import HistoryLayout from '@/layouts/historyLayout'
 
 function history() {
     const { history } = usePreviousRoute()
-    
     return <HistoryLayout movies={history}/>
 }
 

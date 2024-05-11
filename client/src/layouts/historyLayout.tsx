@@ -1,9 +1,9 @@
 import React, { use, useEffect, useState } from "react";
 import Layout from "./templates/layout";
-import getMovieDetails from "@/lib/getMovieDetails";
 import Spinner from "@/components/Spinner";
 import Link from "next/link";
 import NoImage from "@/assets/NoImage.png";
+import getMovieDetails from "@/apis/movie";
 
 function HistoryLayout({ movies }: { movies: string[] }) {
   const [isLoading, setIsLoading] = useState(false);

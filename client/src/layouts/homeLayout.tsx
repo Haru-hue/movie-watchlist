@@ -4,14 +4,10 @@ import { useState, useEffect } from "react";
 import { Carousel } from "@/components/carousel";
 import { MovieBox, RecBox } from "@/components/movieBox";
 import getColor from "@/lib/getColor";
-import {
-  getNewMovies,
-  getRecommendedMovies,
-  getTRatedMovies,
-} from "../lib/getMovies";
 import { useAppSelector } from "@/hooks";
 import Spinner from "@/components/Spinner";
 import Layout from "./templates/layout";
+import { getMovies } from "@/apis/movie";
 
 export default function HomeLayout() {
   const [movies, setMovies] = useState<MovieProps>({
@@ -25,15 +21,15 @@ export default function HomeLayout() {
   useEffect(() => {
     const fetchNewMovies = async () => {
       setIsLoading(true);
-      const newMovies = await getNewMovies();
-      const recMovies = await getRecommendedMovies();
-      const tMovies = await getTRatedMovies();
+      const [newMovies, recMovies, upcomingMovies] = await Promise.all(
+        (['new', 'popular', 'upcoming'] as MovieKeys[]).map((key) => getMovies(key))
+      )
       setMovies((prev) => {
         return {
           ...prev,
           new: newMovies,
-          trated: tMovies,
           recommended: recMovies,
+          upcoming: upcomingMovies,
         };
       });
       setIsLoading(false);
@@ -53,7 +49,7 @@ export default function HomeLayout() {
               <section className="list-box w-[70%]">
                 <h4 className="text-slate-500 pb-6">New Movies</h4>
                 <div className="grid grid-cols-4 gap-4" id="newMovies">
-                  {movies.new.slice(0, 4).map((movie) => (
+                  {movies.new && movies.new.slice(0, 4).map((movie) => (
                     <div key={movie.id}>
                       <MovieBox
                         id={movie.id}
@@ -72,7 +68,7 @@ export default function HomeLayout() {
                 </h4>
                 <div id="tRatedMovies">
                   <div className="flex flex-col space-y-11 pt-8">
-                    {movies.trated.slice(0, 5).map((movie, index: number) => (
+                    {movies.trated && movies.trated.slice(0, 5).map((movie, index: number) => (
                       <Link href={`/movie/${movie.id}`}>
                         <div
                           className="flex items-center justify-between font-bold"
@@ -97,7 +93,7 @@ export default function HomeLayout() {
                 Recommended Movies
               </h4>
               <div className="grid grid-cols-3 gap-8">
-                {movies.recommended
+                {movies.recommended && movies.recommended
                   .slice(2)
                   .slice(0, 6)
                   .map((movie) => (
