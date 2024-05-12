@@ -1,8 +1,10 @@
-import { usePreviousRoute } from '@/hooks/useRouteHistory'
 import HistoryLayout from '@/layouts/historyLayout'
 
 function history() {
-    const { history } = usePreviousRoute()
+    let history = []
+    if (typeof window !== 'undefined') {
+        history = JSON.parse(window.sessionStorage.getItem('navigationHistory') || '[]')
+    }
     return <HistoryLayout movies={history}/>
 }
 

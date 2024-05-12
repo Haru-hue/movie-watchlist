@@ -30,7 +30,7 @@ function HistoryLayout({ movies }: { movies: string[] }) {
           {movies.length >= 1 ? (
             <div className="p-6">
               <h3 className="text-4xl font-bold">Recently Viewed</h3>
-              <div className="grid grid-cols-6 gap-10 py-10">
+              <div className="grid grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-10 py-10">
                 {recentMovies?.map((movie: any) => (
                   <Link href={`/movie/${movie?.id}`}>
                     <div
