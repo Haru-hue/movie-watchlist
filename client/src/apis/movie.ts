@@ -1,11 +1,11 @@
 import getData from "@/utils/getData";
 
-export const getMovies = async (key: string, endpoint?: string) => {
-  const url = endpoint
-    ? `https://api.themoviedb.org/3/movie/${key}/${endpoint}`
-    : `https://api.themoviedb.org/3/movie/${key}`;
+export const getMovies = async (key: string, params?: string) => {
+  const queryString = params ?? "";
   try {
-    const response = await getData(url);
+    const response = await getData(
+      `https://api.themoviedb.org/3/movie/${key}${queryString}`
+    );
     const newMovies = await response.results;
     return newMovies;
   } catch (error) {
