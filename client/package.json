@@ -1,5 +1,5 @@
 {
-  "name": "movie-watchlist",
+  "name": "client",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -9,47 +9,18 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@apollo/client": "^3.8.8",
-    "@emailjs/browser": "^3.12.1",
-    "@react-oauth/google": "^0.12.1",
-    "@reduxjs/toolkit": "^2.0.1",
-    "@types/react-paginate": "^7.1.4",
-    "@types/react-slick": "^0.23.13",
-    "3d-react-carousel-ts": "^1.1.0",
-    "axios": "^1.6.3",
-    "classnames": "^2.5.1",
-    "dayjs": "^1.11.10",
-    "embla-carousel-react": "^8.0.0-rc17",
-    "next": "14.0.4",
-    "next-redux-wrapper": "^8.1.0",
     "react": "^18",
-    "react-click-away-listener": "^2.2.3",
     "react-dom": "^18",
-    "react-dropzone": "^14.2.3",
-    "react-hot-toast": "^2.4.1",
-    "react-loader-spinner": "^6.1.6",
-    "react-modal-video": "^2.0.1",
-    "react-paginate": "^8.2.0",
-    "react-redux": "^9.0.4",
-    "react-slick": "^0.29.0",
-    "slick-carousel": "^1.8.1"
+    "next": "14.2.4"
   },
   "devDependencies": {
-    "@iconify/react": "^4.1.1",
+    "typescript": "^5",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
-    "@types/react-modal-video": "^1.2.3",
-    "autoprefixer": "^10.0.1",
-    "eslint": "^8",
-    "eslint-config-next": "14.0.4",
     "postcss": "^8",
-    "tailwindcss": "^3.3.0",
-    "typescript": "^5"
-  },
-  "description": "This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).",
-  "main": "next.config.js",
-  "keywords": [],
-  "author": "",
-  "license": "ISC"
+    "tailwindcss": "^3.4.1",
+    "eslint": "^8",
+    "eslint-config-next": "14.2.4"
+  }
 }
