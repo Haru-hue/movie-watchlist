@@ -1,19 +1,20 @@
 import getData from "@/utils/getData";
 
-export async function getMovies(key: string) {
+export const getMovies = async (key: string, endpoint?: string) => {
+  const url = endpoint
+    ? `https://api.themoviedb.org/3/movie/${key}/${endpoint}`
+    : `https://api.themoviedb.org/3/movie/${key}`;
   try {
-    const response = await getData(
-      `https://api.themoviedb.org/3/movie/${key}`
-    );
+    const response = await getData(url);
     const newMovies = await response.results;
     return newMovies;
   } catch (error) {
     console.error(error);
     return null;
   }
-}
+};
 
-export default async function getMovieDetails(id: number, endpoint?: string) {
+export const getMovieDetails = async (id: number, endpoint?: string) => {
   const url = endpoint
     ? `https://api.themoviedb.org/3/movie/${id}/${endpoint}`
     : `https://api.themoviedb.org/3/movie/${id}`;
@@ -25,4 +26,17 @@ export default async function getMovieDetails(id: number, endpoint?: string) {
     console.error(error);
     return null;
   }
-}
+};
+
+export const getTrendingMovies = async (endpoint?: string) => {
+  try {
+    const response = await getData(
+      `https://api.themoviedb.org/3/trending/movie/day?language=en-US${endpoint}`
+    );
+    const movies = await response.results;
+    return movies;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};

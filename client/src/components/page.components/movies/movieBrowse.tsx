@@ -1,9 +1,8 @@
-import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { getMovies } from "@/apis/movie";
 import Spinner from "@/components/Spinner";
 import Link from "next/link";
-import LayoutView from "./view";
+import LayoutView from "../../layouts/view";
 
 export const MovieBrowseLayout = ({ movieKey }: { movieKey: string }) => {
   const movies = useQuery({
