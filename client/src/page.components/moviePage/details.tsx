@@ -2,6 +2,7 @@ import { formatReleaseDate, formatRuntime } from "@/utils/formatDateorTime";
 import { MovieBookmark } from "./bookmark";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { useState } from "react";
+import { formatToCurrency } from "@/utils/formatAmount";
 
 export const MovieDetails = ({ movieData, handleVideoOpen }: any) => {
   const [isOpen, setIsOpen] = useState({
@@ -11,7 +12,7 @@ export const MovieDetails = ({ movieData, handleVideoOpen }: any) => {
   const directors = movieData.misc[0].crew.filter(
     (crew) => crew.job === "Director"
   );
-
+  const movieTrailer = movieData.misc[3]?.results[0].key
   return (
     <div className="flex h-full items-end p-20 gap-10">
       <div className="flex gap-8 flex-col w-1/3">
@@ -21,7 +22,7 @@ export const MovieDetails = ({ movieData, handleVideoOpen }: any) => {
           <p className="uppercase">Watch Trailer</p>
           <span
             className="p-3 flex items-center justify-center rounded-full border-2 cursor-pointer"
-            onClick={() => handleVideoOpen(movieData.video?.[0]?.key)}
+            onClick={() => handleVideoOpen(movieTrailer)}
           >
             <Icon icon="solar:play-bold" />
           </span>
@@ -79,7 +80,7 @@ export const MovieDetails = ({ movieData, handleVideoOpen }: any) => {
         </span>
         <span className="flex flex-col">
           <p className="text-slate-400 uppercase">Revenue</p>
-          <p>{movieData.revenue}</p>
+          <p>{formatToCurrency(movieData.runtime)}</p>
         </span>
       </div>
       <MovieBookmark movieData={movieData} handleVideoOpen={handleVideoOpen} />

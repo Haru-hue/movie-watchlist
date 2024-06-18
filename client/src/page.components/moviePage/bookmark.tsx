@@ -4,7 +4,7 @@ import CircularProgress from "./circularProgressBar";
 import { Icon } from "@iconify/react/dist/iconify.js";
 
 export const MovieBookmark = ({ movieData, handleVideoOpen }: any) => {
-  const allVideos = movieData.misc[4].results;
+  const allVideos = movieData.misc[3].results;
   const [isHovered, setIsHovered] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
   const icon = isHovered || isClicked ? "iconoir:star-solid" : "iconoir:star";

@@ -1,5 +1,5 @@
 'use client'
-import { MovieBrowseLayout } from "@/components/page.components/movies/movieBrowse";
+import { MovieBrowseLayout } from "@/page.components/movies/movieBrowse";
 
 const AllNewMovies = () => {
   return <MovieBrowseLayout movieKey='upcoming' />;

@@ -39,7 +39,7 @@ export const AllMovies = () => {
     return () => window.removeEventListener("resize", updateNumItemsToShow);
   }, []);
 
-  const isLoading = allMovies.every(query => query.isLoading) && trendingMovies.isLoading
+  const isLoading = allMovies.every(query => query.isLoading) || trendingMovies.isLoading
 
   return (
     <div>

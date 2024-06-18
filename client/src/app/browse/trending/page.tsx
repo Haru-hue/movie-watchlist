@@ -1,5 +1,5 @@
 'use client'
-import { TrendingMovies } from "@/components/page.components/movies/trending";
+import { TrendingMovies } from "@/page.components/movies/trending";
 
 const AllTrendingMovies = () => {
   return <TrendingMovies/>;

@@ -2,7 +2,10 @@
 import { getMovieDetails } from "@/apis/movie";
 import Spinner from "@/components/Spinner";
 import { LayoutView } from "@/components/layouts";
+import CastList from "@/page.components/moviePage/castList";
 import { MovieDetails } from "@/page.components/moviePage/details";
+import ImageGrid from "@/page.components/moviePage/imageGrid";
+import MovieRecsList from "@/page.components/moviePage/movieRecs";
 import { useQueries, useQuery } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
 import { useState } from "react";
@@ -45,6 +48,7 @@ function MoviePage() {
     setIsOpen((prev) => ({ ...prev, open: false }));
   };
 
+
   return (
     <section>
       {isLoading ? (
@@ -61,7 +65,7 @@ function MoviePage() {
             className="movieBanner"
             style={{
               backgroundImage: `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
-          url('https://image.tmdb.org/t/p/original/${movieInfo.data.poster_path})`,
+          url('https://image.tmdb.org/t/p/original/${movieInfo.data?.poster_path})`,
             }}
           >
             <MovieDetails
@@ -69,6 +73,11 @@ function MoviePage() {
               handleVideoOpen={handleVideoOpen}
             />
           </div>
+          <section className="p-10 max-w-4xl 2xl:max-w-[75%]">
+            <CastList cast={movieData.misc[0]?.cast} />
+            <ImageGrid images={movieData.misc[1]?.backdrops} />
+            <MovieRecsList movieRecs={movieData.misc[2]?.results} />
+          </section>
         </LayoutView>
       )}
     </section>
@@ -80,7 +89,6 @@ export default MoviePage;
 const movieDetails = [
   "credits",
   "images",
-  "recommendations",
   "similar",
   "videos",
 ];

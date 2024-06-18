@@ -1,5 +1,7 @@
+'use client'
 import cn from "classnames";
 import { ReactNode, useState } from "react";
+import { Sidebar } from "../Sidebar";
 
 export default function LayoutView ({ children }: { children: ReactNode}) {
   // const router = useRouter();
@@ -17,10 +19,10 @@ export default function LayoutView ({ children }: { children: ReactNode}) {
           "transition-[grid-template-columns] duration-300 ease-in-out": true,
         })}
       >
-        {/* <Sidebar
+        <Sidebar
             collapseSidebar={collapseSidebar}
             setCollapseSidebar={setCollapseSidebar}
-          /> */}
+          />
         <div className="pb-4">
           {/* <Header /> */}
           {/* {searchTerm && <SearchModal/>} */}

@@ -1,4 +1,4 @@
-import { useNumItemsToShow } from "@/hooks/useNumItemsToShow";
+import { useNumItemsToShow } from "@/utils/hooks/useNumItemsToShow";
 import Link from "next/link";
 import React, { useState } from "react";
 

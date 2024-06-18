@@ -16,3 +16,9 @@ interface Movie {
   vote_average: number;
   vote_count: number;
 }
+
+type SideBarProps = {
+  collapseSidebar: boolean;
+  navItems?: NavItem[];
+  setCollapseSidebar: Dispatch<SetStateAction<boolean>>;
+};
