@@ -14,10 +14,10 @@ export const getMovies = async (key: string, params?: string) => {
   }
 };
 
-export const getMovieDetails = async (id: number, endpoint?: string) => {
+export const getMovieDetails = async (id: any, endpoint?: string) => {
   const url = endpoint
-    ? `https://api.themoviedb.org/3/movie/${id}/${endpoint}`
-    : `https://api.themoviedb.org/3/movie/${id}`;
+    ? `https://api.themoviedb.org/3/movie/${parseInt(id)}/${endpoint}`
+    : `https://api.themoviedb.org/3/movie/${parseInt(id)}`;
   try {
     const movieDetails = await getData(url);
     const movie = await movieDetails;

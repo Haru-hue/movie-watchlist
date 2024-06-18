@@ -5,7 +5,7 @@ import Link from "next/link";
 import LayoutView from "../../layouts/view";
 import ReactPaginate from "react-paginate";
 import { useState } from "react";
-import { useParams, usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 export const MovieBrowseLayout = ({ movieKey }: { movieKey: string }) => {
   const router = useRouter();
