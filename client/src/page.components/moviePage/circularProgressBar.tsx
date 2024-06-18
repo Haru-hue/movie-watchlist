@@ -34,7 +34,7 @@ function CircularProgress({percentage}: {percentage: number}) {
           strokeDashoffset={strokeDashoffset}
         />
         <text fontWeight={600} x="50" y="50"fontSize="16" fill='white' textAnchor="middle" alignmentBaseline="middle">
-          {rating}
+          {rating.toFixed(1)}
         </text>
       </svg>
     </div>

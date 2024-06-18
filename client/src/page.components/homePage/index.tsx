@@ -1,11 +1,11 @@
 "use client";
 import { getMovies } from "@/apis/movie";
-import Spinner from "@/components/Spinner";
 import { LayoutView } from "@/components/layouts";
 import { useQueries } from "@tanstack/react-query";
 import { MovieBox, RecBox } from "./movieBox";
 import Link from "next/link";
 import getColor from "@/utils/getColor";
+import { Spinner } from "@/components/common/Loader";
 
 export default function HomePage() {
   const allMovies = useQueries({
@@ -31,7 +31,7 @@ export default function HomePage() {
               <section className="list-box w-[70%]">
                 <h4 className="text-slate-500 pb-6">New Movies</h4>
                 <div className="grid grid-cols-4 gap-4" id="newMovies">
-                  {allMovies[0].data.slice(0, 4).map((movie) => (
+                  {allMovies[0]?.data?.slice(0, 4).map((movie: Movie) => (
                     <MovieBox movieData={movie} />
                   ))}
                 </div>
@@ -42,9 +42,8 @@ export default function HomePage() {
                 </h4>
                 <div id="tRatedMovies">
                   <div className="flex flex-col space-y-11 pt-8">
-                    {allMovies[1].data
-                      .slice(0, 5)
-                      .map((movie, index: number) => (
+                    {allMovies[1]?.data?.slice(0, 5)
+                      .map((movie: Movie, index: number) => (
                         <Link href={`/movie/${movie.id}`}>
                           <div
                             className="flex items-center justify-between font-bold"
@@ -71,7 +70,7 @@ export default function HomePage() {
                 Recommended Movies
               </h4>
               <div className="grid grid-cols-3 gap-8">
-                {allMovies[2].data.slice(0, 6).map((movie) => (
+                {allMovies[2]?.data?.slice(0, 6).map((movie: Movie) => (
                   <RecBox movieData={movie} />
                 ))}
               </div>

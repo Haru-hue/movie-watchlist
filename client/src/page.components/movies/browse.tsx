@@ -1,5 +1,5 @@
 import { getMovies, getTrendingMovies } from "@/apis/movie";
-import Spinner from "@/components/Spinner";
+import Spinner from "@/components/common/Loader";
 import { LayoutView } from "@/components/layouts";
 import { useQueries, useQuery } from "@tanstack/react-query";
 import Image from "next/image";

@@ -1,18 +1,14 @@
 import { formatReleaseDate, formatRuntime } from "@/utils/formatDateorTime";
 import { MovieBookmark } from "./bookmark";
 import { Icon } from "@iconify/react/dist/iconify.js";
-import { useState } from "react";
 import { formatToCurrency } from "@/utils/formatAmount";
+import { Key, ReactElement, JSXElementConstructor, ReactNode, ReactPortal, AwaitedReactNode } from "react";
 
 export const MovieDetails = ({ movieData, handleVideoOpen }: any) => {
-  const [isOpen, setIsOpen] = useState({
-    key: "",
-    open: false,
-  });
-  const directors = movieData.misc[0].crew.filter(
-    (crew) => crew.job === "Director"
+  const directors = movieData.misc[0]?.crew.filter(
+    (crew: { job: string }) => crew.job === "Director"
   );
-  const movieTrailer = movieData.misc[3]?.results[0].key
+  const movieTrailer = movieData.misc[3]?.results[0]?.key
   return (
     <div className="flex h-full items-end p-20 gap-10">
       <div className="flex gap-8 flex-col w-1/3">
@@ -32,7 +28,7 @@ export const MovieDetails = ({ movieData, handleVideoOpen }: any) => {
         <span className="flex flex-col">
           <p className="text-slate-400 uppercase">Genre</p>
           <div className="flex gap-1 flex-wrap">
-            {movieData.genres.map((genre, index: number, array: []) => (
+            {movieData.genres.map((genre: { id: Key; name: string }, index: number, array: []) => (
               <div key={genre.id}>
                 <p>
                   {genre.name}
@@ -50,7 +46,7 @@ export const MovieDetails = ({ movieData, handleVideoOpen }: any) => {
           <p className="text-slate-400 uppercase">Country</p>
           <span className="flex gap-1 flex-wrap">
             {movieData.production_countries?.map(
-              (country, index: number, array: []) => (
+              (country: { id: Key; iso_3166_1: string }, index: number, array: []) => (
                 <div key={country.id}>
                   <p>
                     {country.iso_3166_1}
@@ -68,7 +64,7 @@ export const MovieDetails = ({ movieData, handleVideoOpen }: any) => {
         <span className="flex flex-col">
           <p className="text-slate-400 uppercase">Director</p>
           <span className="flex gap-1 flex-wrap">
-            {directors?.map((crew, index: number, array: []) => (
+            {directors?.map((crew: { id: Key; name: string }, index: number, array: []) => (
               <span key={crew.id}>
                 <p className="text-nowrap">
                   {crew.name}
@@ -80,7 +76,7 @@ export const MovieDetails = ({ movieData, handleVideoOpen }: any) => {
         </span>
         <span className="flex flex-col">
           <p className="text-slate-400 uppercase">Revenue</p>
-          <p>{formatToCurrency(movieData.runtime)}</p>
+          <p>{formatToCurrency(movieData.revenue)}</p>
         </span>
       </div>
       <MovieBookmark movieData={movieData} handleVideoOpen={handleVideoOpen} />

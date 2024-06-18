@@ -1,6 +1,6 @@
 "use client";
 import { getMovieDetails } from "@/apis/movie";
-import Spinner from "@/components/Spinner";
+import { Spinner } from "@/components/common/Loader";
 import { LayoutView } from "@/components/layouts";
 import CastList from "@/page.components/moviePage/castList";
 import { MovieDetails } from "@/page.components/moviePage/details";
