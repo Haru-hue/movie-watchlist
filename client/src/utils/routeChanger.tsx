@@ -8,10 +8,10 @@ export function RouteChangeListener() {
 
   useEffect(() => {
     if (moviePages) {
-      const navigationHistory = JSON.parse(sessionStorage.getItem('navigationHistory') || '[]');
+      const navigationHistory = JSON.parse(localStorage.getItem('navigationHistory') || '[]');
       if (!navigationHistory.includes(pathname)) {
         navigationHistory.push(pathname);
-        sessionStorage.setItem('navigationHistory', JSON.stringify(navigationHistory));
+        localStorage.setItem('navigationHistory', JSON.stringify(navigationHistory));
       }
     }
   }, [pathname]);

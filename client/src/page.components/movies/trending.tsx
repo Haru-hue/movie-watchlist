@@ -1,8 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import { getTrendingMovies } from "@/apis/movie";
-import Spinner from "@/components/common/Loader";
 import Link from "next/link";
 import { LayoutView } from "@/components/layouts";
+import { Spinner } from "@/components/common/Loader";
 
 export const TrendingMovies = () => {
   const movies = useQuery({
@@ -23,8 +23,7 @@ export const TrendingMovies = () => {
                 className="grid grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-4"
                 id="newMovies"
               >
-                {movies &&
-                  movies?.data.map((movie: Movie) => (
+                {movies?.data.map((movie: Movie) => (
                     <Link
                       className="max-w-fit"
                       key={movie.id}

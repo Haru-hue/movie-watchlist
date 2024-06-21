@@ -1,8 +1,7 @@
 import { getMovies, getTrendingMovies } from "@/apis/movie";
-import Spinner from "@/components/common/Loader";
+import { Spinner } from "@/components/common/Loader";
 import { LayoutView } from "@/components/layouts";
 import { useQueries, useQuery } from "@tanstack/react-query";
-import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
@@ -61,7 +60,7 @@ export const AllMovies = () => {
                 className="grid grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-4"
                 id="trendingMovies"
               >
-                {trendingMovies.data.slice(0, numItemsToShow).map((movie: any) => (
+                {trendingMovies?.data?.slice(0, numItemsToShow).map((movie: any) => (
                   <Link
                     className="max-w-fit"
                     key={movie.id}
@@ -90,7 +89,7 @@ export const AllMovies = () => {
                 className="grid grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-4"
                 id="newMovies"
               >
-                {allMovies[0].data.slice(0, numItemsToShow).map((movie) => (
+                {allMovies[0]?.data?.slice(0, numItemsToShow).map((movie: Movie) => (
                   <Link
                     className="max-w-fit"
                     key={movie.id}
@@ -119,7 +118,7 @@ export const AllMovies = () => {
                 className="grid grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-4"
                 id="newMovies"
               >
-                {allMovies[1].data.slice(0, numItemsToShow).map((movie) => (
+                {allMovies[1]?.data?.slice(0, numItemsToShow).map((movie: Movie) => (
                   <Link
                     className="max-w-fit"
                     key={movie.id}

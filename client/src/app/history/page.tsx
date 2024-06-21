@@ -1,6 +1,7 @@
-const HistoryPage = () => {
+import { RecentlyViewed } from "@/page.components/history/recentlyView";
 
-  return <div>H</div>;
+const HistoryPage = () => {
+  return <RecentlyViewed  />;
 };
 
 export default HistoryPage;

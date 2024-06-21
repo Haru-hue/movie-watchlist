@@ -1,7 +1,8 @@
 'use client'
 import cn from "classnames";
 import { ReactNode, useState } from "react";
-import { Sidebar } from "../Sidebar";
+import Sidebar from "../common/Sidebar";
+import Header from "../common/Header";
 
 export default function LayoutView ({ children }: { children: ReactNode}) {
   // const router = useRouter();
@@ -11,22 +12,12 @@ export default function LayoutView ({ children }: { children: ReactNode}) {
 
   return (
     <section>
-      <div
-        className={cn({
-          "grid min-h-screen": true,
-          "grid-cols-sidebar": collapseSidebar,
-          "grid-cols-sidebar-collapsed": !collapseSidebar,
-          "transition-[grid-template-columns] duration-300 ease-in-out": true,
-        })}
-      >
-        <Sidebar
-            collapseSidebar={collapseSidebar}
-            setCollapseSidebar={setCollapseSidebar}
-          />
-        <div className="pb-4">
-          {/* <Header /> */}
+      <div className="flex h-screen overflow-hidden">
+        <Sidebar />
+        <div className="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden">
+          <Header sidebarOpen={collapseSidebar} setSidebarOpen={setCollapseSidebar} />
           {/* {searchTerm && <SearchModal/>} */}
-          {children}
+          <div className="p-2">{children}</div>
         </div>
       </div>
     </section>
