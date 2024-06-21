@@ -16,9 +16,9 @@ export const MovieBookmark = ({ movieData, handleVideoOpen }: any) => {
         src={`https://image.tmdb.org/t/p/original/${movieData.poster_path}`}
         alt={movieData.data?.title}
       />
-      <CircularProgress percentage={movieData.vote_average} />
+      {movieData.vote_average > 0 &&  <CircularProgress percentage={movieData.vote_average} />}
       <div className="flex items-center gap-4">
-        <button className="uppercase border-2 py-2 px-4 rounded-lg text-nowrap">
+        <button className="uppercase border-2 py-2 px-4 rounded-lg text-nowrap font-bold">
           Add to watchlist
         </button>
         <Icon

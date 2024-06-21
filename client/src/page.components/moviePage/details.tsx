@@ -26,7 +26,7 @@ export const MovieDetails = ({ movieData, handleVideoOpen }: any) => {
       </div>
       <div className="grid grid-cols-2 2xl:grid-cols-3 gap-12 w-1/3 ">
         <span className="flex flex-col">
-          <p className="text-slate-400 uppercase">Genre</p>
+          <p className="text-slate-400 uppercase font-semibold">Genre</p>
           <div className="flex gap-1 flex-wrap">
             {movieData.genres.map((genre: { id: Key; name: string }, index: number, array: []) => (
               <div key={genre.id}>
@@ -39,11 +39,11 @@ export const MovieDetails = ({ movieData, handleVideoOpen }: any) => {
           </div>
         </span>
         <span className="flex flex-col">
-          <p className="text-slate-400 uppercase">Runtime</p>
+          <p className="text-slate-400 uppercase font-semibold">Runtime</p>
           <p>{formatRuntime(movieData.runtime)}</p>
         </span>
         <span className="flex flex-col">
-          <p className="text-slate-400 uppercase">Country</p>
+          <p className="text-slate-400 uppercase font-semibold">Country</p>
           <span className="flex gap-1 flex-wrap">
             {movieData.production_countries?.map(
               (country: { id: Key; iso_3166_1: string }, index: number, array: []) => (
@@ -58,11 +58,11 @@ export const MovieDetails = ({ movieData, handleVideoOpen }: any) => {
           </span>
         </span>
         <span className="flex flex-col">
-          <p className="text-slate-400 uppercase">Release Date</p>
+          <p className="text-slate-400 uppercase font-semibold">Release Date</p>
           <p>{formatReleaseDate(movieData.release_date)}</p>
         </span>
         <span className="flex flex-col">
-          <p className="text-slate-400 uppercase">Director</p>
+          <p className="text-slate-400 uppercase font-semibold">Director</p>
           <span className="flex gap-1 flex-wrap">
             {directors?.map((crew: { id: Key; name: string }, index: number, array: []) => (
               <span key={crew.id}>
@@ -74,10 +74,10 @@ export const MovieDetails = ({ movieData, handleVideoOpen }: any) => {
             ))}
           </span>
         </span>
-        <span className="flex flex-col">
-          <p className="text-slate-400 uppercase">Revenue</p>
+        {movieData.revenue > 0 && <span className="flex flex-col">
+          <p className="text-slate-400 uppercase font-semibold">Revenue</p>
           <p>{formatToCurrency(movieData.revenue)}</p>
-        </span>
+        </span>}
       </div>
       <MovieBookmark movieData={movieData} handleVideoOpen={handleVideoOpen} />
     </div>

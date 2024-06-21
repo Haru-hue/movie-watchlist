@@ -24,16 +24,16 @@ function CastList({ cast }: any) {
                 className="w-72 object-cover"
                 alt=""
               />
-              <p className="text-lg 2xl:text-xl whitespace-nowrap">{crew?.name}</p>
-              <span className="text-slate-400 whitespace-nowrap">as {crew?.character}</span>
+              <p className="text-lg 2xl:text-xl font-semibold pt-4">{crew?.name}</p>
+              <span className="text-slate-400">as {crew?.character}</span>
             </div>
           ))}
         </div>
       </section>
-      <div className="flex items-center pt-10">
+      <div className="flex items-center pt-12">
         <div className="w-full h-1 bg-gradient-to-r from-[#262f66] to-[#0c1124] rounded-lg shadow-lg flex" />
         <button
-          className="uppercase border-2 py-2 px-4 rounded-lg text-nowrap"
+          className="uppercase border-2 py-2 px-4 rounded-lg text-nowrap font-semibold"
           onClick={handleSeeMoreClick}
         >
           {numCastMembers >= cast?.length ? "Show less" : "See full cast"}

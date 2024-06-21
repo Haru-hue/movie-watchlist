@@ -1,10 +1,7 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
 import { AppProvider } from "./providers";
-import { RouteChangeListener } from "@/utils/routeChanger";
-
-const inter = Inter({ subsets: ["latin"] });
+import { RouteChangeListener } from "@/utils/routeChanger"
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -18,7 +15,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body>
         <RouteChangeListener/>
         <AppProvider>
           {children}</AppProvider>

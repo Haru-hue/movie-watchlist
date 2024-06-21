@@ -35,7 +35,7 @@ function MovieRecsList({ movieRecs }: any) {
       <div className="flex items-center pt-10">
         <div className="w-full h-1 bg-gradient-to-r from-[#262f66] to-[#0c1124] rounded-lg shadow-lg flex" />
         <button
-          className="uppercase border-2 py-2 px-4 rounded-lg text-nowrap"
+          className="uppercase border-2 py-2 px-4 rounded-lg text-nowrap font-semibold"
           onClick={handleSeeMoreClick}
         >
           {numItemsToShow >= movieRecs?.length ? "Show less" : "See more"}

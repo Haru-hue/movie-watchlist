@@ -29,11 +29,11 @@ function VideoList({ videos, handleVideoOpen }: any) {
               <Icon icon="solar:play-bold" />
             </span>
           </div>
-          <h2 className="max-w-72 py-5">{video?.name}</h2>
+          <h2 className="max-w-72 py-5 font-medium">{video?.name}</h2>
         </div>
       ))}
       
-      <button className='uppercase border py-2 px-4 rounded-lg' onClick={handleSeeMoreClick}>
+      <button className='uppercase border py-2 px-4 rounded-lg font-bold' onClick={handleSeeMoreClick}>
         {numVideosToShow >= videos?.length ? 'Show less' : 'See more videos'}
       </button>
     </div>

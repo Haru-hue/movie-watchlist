@@ -84,7 +84,7 @@ const DropdownUser = () => {
         </span>
       </Link> : (
         <Link href='/auth/signin'>
-          <Icon icon="ph:user" className="text-3xl" />
+          <Icon icon="ph:user" className="text-2xl" />
         </Link>
       )}
 

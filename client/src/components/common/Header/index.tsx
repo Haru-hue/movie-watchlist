@@ -28,6 +28,18 @@ const Header = (props: {
           {/* <!-- Hamburger Toggle BTN --> */}
         </div>
         <div className="flex items-center gap-3 2xsm:gap-7">
+        <div className="relative w-full">
+          <input
+            type="text"
+            className="searchBox"
+            placeholder="Search for what you like"
+            // onChange={(e) => handleChange(e)}
+            // value={movie}
+          />
+          <div className="absolute inset-y-0 end-0 flex items-center pointer-events-none pe-4">
+            <Icon icon="iconoir:search" />
+          </div>
+        </div>
           <ul className="flex items-center gap-2 2xsm:gap-4">
             {/* <DarkModeSwitcher /> */}
           </ul>
