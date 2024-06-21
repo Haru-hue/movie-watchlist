@@ -7,11 +7,9 @@ import { useQueries } from "@tanstack/react-query";
 import Link from "next/link";
 
 export const AllFavourites = () => {
-  const [listOfMovies] = useLocalStorage("favourites") as string[];
-  const FAVOURITE_IDS =
-    listOfMovies?.map((m: string) => Number(m.replace("/movie/", ""))) || [];
+  const [listOfMovies = []] = useLocalStorage("favourites") as string[];
   const FAVOURITE_MOVIES = useQueries({
-    queries: FAVOURITE_IDS.map((id: number) => {
+    queries: listOfMovies?.map((id: number) => {
       return {
         queryKey: ["movies", id],
         queryFn: () => getMovieDetails(id),

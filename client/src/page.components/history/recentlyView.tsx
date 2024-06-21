@@ -39,13 +39,13 @@ export const RecentlyViewed = () => {
             {RECENTLY_VIEWED_MOVIES?.map((movie: any) => (
                 <Link
                   className="max-w-fit"
-                  key={movie.data.id}
-                  href={`/movie/${movie.data.id}`}
+                  key={movie?.data?.id}
+                  href={`/movie/${movie?.data?.id}`}
                 >
                   <img
                     className="rounded-lg w-60 h-80 object-cover"
-                    src={`https://image.tmdb.org/t/p/w500${movie.data.poster_path}`}
-                    alt={movie.data.title}
+                    src={`https://image.tmdb.org/t/p/w500${movie?.data?.poster_path}`}
+                    alt={movie?.data?.title}
                   />
                 </Link>
               ))

@@ -1,3 +1,4 @@
+'use client'
 import { useState } from "react";
 import VideoList from "./VideoList";
 import CircularProgress from "./circularProgressBar";
@@ -7,7 +8,25 @@ export const MovieBookmark = ({ movieData, handleVideoOpen }: any) => {
   const allVideos = movieData.misc[3]?.results;
   const [isHovered, setIsHovered] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
-  const icon = isHovered || isClicked ? "iconoir:star-solid" : "iconoir:star";
+  const userFavourites = JSON?.parse(localStorage.getItem('favourites') || '[]');
+  const icon = (isHovered || isClicked) ? "iconoir:star-solid" : "iconoir:star";
+
+  const toggleFavourites = () => {
+    const updatedFavourites = [...userFavourites];
+    const movieId = movieData.id;
+  
+    if (!updatedFavourites.includes(movieId)) {
+      updatedFavourites.push(movieId);
+      setIsClicked(true);
+    } else {
+      const indexToRemove = updatedFavourites.indexOf(movieId);
+      updatedFavourites.splice(indexToRemove, 1);
+      setIsClicked(false);
+    }
+  
+    localStorage.setItem('favourites', JSON.stringify(updatedFavourites));
+  };
+  
 
   return (
     <div className="flex flex-col items-center space-y-2 absolute right-0 top-40 mr-10 bg-[#171930] p-6 max-w-xs 2xl:max-w-sm z-50">
@@ -24,7 +43,7 @@ export const MovieBookmark = ({ movieData, handleVideoOpen }: any) => {
         <Icon
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
-          onClick={(prev) => setIsClicked(!prev)}
+          onClick={toggleFavourites}
           color="#FFC0CB"
           className="text-4xl cursor-pointer transition-all delay-75 ease-in-out"
           icon={icon}

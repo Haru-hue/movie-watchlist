@@ -1,3 +1,4 @@
+'use client'
 import { getMovies, getTrendingMovies } from "@/apis/movie";
 import { Spinner } from "@/components/common/Loader";
 import { LayoutView } from "@/components/layouts";

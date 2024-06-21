@@ -7,11 +7,26 @@ import { MovieDetails } from "@/page.components/moviePage/details";
 import ImageGrid from "@/page.components/moviePage/imageGrid";
 import MovieRecsList from "@/page.components/moviePage/movieRecs";
 import { useQueries, useQuery } from "@tanstack/react-query";
+import { Metadata, ResolvingMetadata } from "next";
+import Head from "next/head";
 import { useParams } from "next/navigation";
 import { useState } from "react";
 import ModalVideo from "react-modal-video";
 
-function MoviePage() {
+type Props = {
+  movieTitle: string
+}
+ 
+export async function generateMetadata(
+  { movieTitle }: Props,
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  return {
+    title: `${movieTitle} - The Movie Watch List`,
+  }
+}
+ 
+function MoviePage({ movieTitle }: Props) {
   const [isOpen, setIsOpen] = useState({
     key: "",
     open: false,
@@ -51,6 +66,9 @@ function MoviePage() {
 
   return (
     <section>
+      <Head>
+        <title>HHHH</title>
+      </Head>
       {isLoading ? (
         <Spinner />
       ) : (
