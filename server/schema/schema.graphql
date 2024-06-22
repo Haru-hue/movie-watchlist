@@ -31,7 +31,6 @@ type User {
   email: String!
   username: String
   password: String!
-  verificationCode: Int
   watchlist: [String]
   avatarURL: String
   backgroundURL: String
@@ -41,6 +40,7 @@ type UserResponse {
   message: String!
   success: Boolean!
   user: User
+  token: String
 }
 
 type Response {
@@ -51,5 +51,5 @@ type Response {
 type temporaryUser {
   message: String!
   success: Boolean!
-  verificationCode: Int
+  token: String
 }
