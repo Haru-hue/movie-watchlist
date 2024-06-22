@@ -46,7 +46,7 @@ export const MovieDetails = ({ movieData, handleVideoOpen }: any) => {
           <p className="text-slate-400 uppercase font-semibold">Country</p>
           <span className="flex gap-1 flex-wrap">
             {movieData.production_countries?.map(
-              (country: { id: Key; iso_3166_1: string }, index: number, array: []) => (
+              (country: { id: number; iso_3166_1: string }, index: number, array: []) => (
                 <div key={country.id}>
                   <p>
                     {country.iso_3166_1}
