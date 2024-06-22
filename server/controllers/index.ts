@@ -1,14 +1,17 @@
 import { GraphQLError } from "graphql";
 import bcrypt from "bcrypt";
 import processArgs from "../utils/processArgs";
+import jwt from "jsonwebtoken";
 
 export const addUser = async (args: Args, context: Context) => {
   const { name, email, password } = args;
   const hashedPassword = await bcrypt.hash(password as string, 10);
-
-  const verificationCode = Math.floor(Math.random() * 9000) + 1000;
-
-  console.log(args, hashedPassword)
+  
+  const token = jwt.sign(
+    { name, email },
+    'secret',
+    { expiresIn: "24h" }
+  );
 
   try {
     await context.prisma.user.create({
@@ -16,14 +19,13 @@ export const addUser = async (args: Args, context: Context) => {
         name,
         email,
         password: hashedPassword,
-        verificationCode,
       },
     });
 
     return {
       success: true,
       message: "User created successfully",
-      verificationCode,
+      token,
     };
   } catch (err) {
     throw new GraphQLError("An error occured", {
@@ -110,7 +112,11 @@ export const findUser = async (args: Args, context: Context) => {
   }
 
   const isValidPassword = bcrypt.compareSync(password as string, existingUser.password);
-
+  const token = jwt.sign(
+    { userId: existingUser.id, email: existingUser.email },
+    'secret',
+    { expiresIn: "24h" }
+  );
   if (!isValidPassword) {
     throw new GraphQLError("Invalid password");
   }
@@ -119,42 +125,8 @@ export const findUser = async (args: Args, context: Context) => {
     success: true,
     message: "Login successful",
     user: existingUser,
+    token
   };
-};
-
-export const verifyUser = async (args: Args, context: Context) => {
-  const { email, verificationCode } = args;
-
-  try {
-    const existingUser = await context.prisma.user.findUnique({
-      where: {
-        email,
-      },
-    });
-
-    if (!existingUser) {
-      throw new GraphQLError("Invalid e-mail address");
-    }
-
-    if (existingUser.verificationCode === verificationCode) {
-      await context.prisma.user.update({
-        where: { email },
-        data: { verificationCode: null },
-      });
-
-      return {
-        message: "User verified successfully",
-        success: true,
-      };
-    } 
-  } catch (error) {
-    throw new GraphQLError("An error occurred", {
-      extensions: {
-        message: "Invalid verification code",
-        success: false,
-      },
-    });
-  }
 };
 
 export const googleFindUser = async (args: Args, context: Context) => {

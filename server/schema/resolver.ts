@@ -4,7 +4,6 @@ import {
   findUser,
   googleFindUser,
   updateUser,
-  verifyUser,
 } from "../controllers";
 
 const resolvers = {
@@ -30,8 +29,6 @@ const resolvers = {
     ) => updateUser(args, context),
     deleteUser: async (_parent: any, args: { id: any }, context: any) =>
       deleteUser(args, context),
-    verifyUser: async (_parent: any, args: Args, context: Context) =>
-      verifyUser(args, context),
     login: async (_parent: any, args: Args, context: Context) =>
       findUser(args, context),
     findUser: async (_parent: any, args: Args, context: Context) =>
