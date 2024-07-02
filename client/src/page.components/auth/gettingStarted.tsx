@@ -1,5 +1,9 @@
 "use client"
+import { FormErrorMessage } from "@/components/common/ErrorMessage";
 import { LayoutView } from "@/components/layouts";
+import { LOGIN_USER } from "@/constants/queries";
+import { loginSchema, loginValues } from "@/lib/schema";
+import { useMutation } from "@apollo/client";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { Field, FormikProvider, useFormik } from "formik";
 import Image from "next/image";
@@ -7,15 +11,24 @@ import Link from "next/link";
 
 const GettingStarted = () => {
   const formik = useFormik({
-    initialValues: {
-      email: "",
-      password: "",
-    },
+    initialValues: loginValues,
+    validationSchema: loginSchema,
     onSubmit: (values) => {
-      console.log(values);
+      addUser({ variables: values})
+    },
+    validateOnMount: true
+  })
+
+  const [addUser, { data }] = useMutation(LOGIN_USER, {
+    onCompleted: (res) => {
+      console.log(res);
+    },
+    onError: (error) => {
+      console.error(error);
     },
   })
 
+  console.log(formik.errors, data)
   return (
     <LayoutView>
       <div className="rounded-sm border border-stroke shadow-default dark:border-strokedark dark:bg-boxdark">
@@ -53,14 +66,14 @@ const GettingStarted = () => {
                   </label>
                   <div className="relative">
                     <Field
-                      name="customerId"
-                      type="text"
+                      name="email"
+                      type="email"
                       placeholder="i.e joshdev (Your first name and last name)"
                       className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                       autoComplete="off"
                       autoSave='off'
                     />
-                    
+                    <FormErrorMessage name="email"/>
                     <span className="absolute right-4 top-4">
                     <Icon icon="ph:user" fontSize={22} />
                     </span>
@@ -87,7 +100,8 @@ const GettingStarted = () => {
               <div className="mb-5">
                 <button
                   className="w-full cursor-pointer rounded-lg border border-primary bg-primary p-4 text-white transition hover:bg-opacity-90"
-                  // disabled={!formik.isValid || mutation.isPending}
+                  disabled={!formik.isValid}
+                  onClick={() => formik.handleSubmit()}
                   // onClick={() => {
                   //   mutation.mutate(formik.values);
                   // }}

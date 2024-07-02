@@ -47,9 +47,9 @@ body {
   background: linear-gradient(to right, #ef4444, var(--background-start-rgb));
 }
 
-.movieBG {
+/* .movieBG {
   background: url('./../assets/movieBG.jpg');
-}
+} */
 
 .react-3d-carousel .slider-container .slider-left {
   right: 110% !important;
