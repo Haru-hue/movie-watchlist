@@ -8,8 +8,9 @@ import Link from "next/link";
 
 export const AllFavourites = () => {
   const [listOfMovies = []] = useLocalStorage("favourites") as string[];
+  const favouriteMovies = listOfMovies ?? [];
   const FAVOURITE_MOVIES = useQueries({
-    queries: listOfMovies?.map((id: number) => {
+    queries: (favouriteMovies as number[])?.map((id: number) => {
       return {
         queryKey: ["movies", id],
         queryFn: () => getMovieDetails(id),

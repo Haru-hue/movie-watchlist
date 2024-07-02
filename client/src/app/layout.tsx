@@ -1,6 +1,6 @@
 import "./globals.css";
 import { AppProvider } from "./providers";
-import { RouteChangeListener } from "@/utils/routeChanger"
+import { RouteChangeListener } from "@/utils/routeChanger";
 
 export default function RootLayout({
   children,
@@ -10,9 +10,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <RouteChangeListener/>
-        <AppProvider>
-          {children}</AppProvider>
+        <RouteChangeListener />
+        <AppProvider>{children}</AppProvider>
       </body>
     </html>
   );

@@ -6,7 +6,6 @@ export const metadata: Metadata = {
   description: "Powered by TMDB API",
 };
 
-
 export const BrowseMovies = () => {
   return <AllMovies />;
 };
