@@ -148,9 +148,16 @@ export const googleFindUser = async (args: Args, context: Context) => {
     });
   }
 
+  const token = jwt.sign(
+    { email },
+    'secret',
+    { expiresIn: "24h" }
+  );
+
   return {
     message: 'Login successful',
     success: true,
-    user: existingUser
+    user: existingUser,
+    token
   }
 };
