@@ -28,10 +28,10 @@ export const addUser = async (args: Args, context: Context) => {
       token,
     };
   } catch (err) {
-    throw new GraphQLError("An error occured", {
+    throw new GraphQLError("This user already exists", {
       extensions: {
-        message: "This user already exists",
-        success: false,
+        code: "BAD_REQUEST",
+        http: { status: 400 },
       },
     });
   }
@@ -46,7 +46,9 @@ export const updateUser = async (args: Args, context: Context) => {
     });
 
     if (!Boolean(existingUser)) {
-      throw new GraphQLError("User does not exist");
+      throw new GraphQLError("User does not exist", {
+        extensions: { code: "NOT_FOUND", http: { status: 404 } }
+      });
     }
 
     const data = await processArgs(args, existingUser, context)
@@ -108,7 +110,9 @@ export const findUser = async (args: Args, context: Context) => {
   });
 
   if (!existingUser) {
-    throw new GraphQLError("There is no e-mail associated with that account");
+    throw new GraphQLError("There is no e-mail associated with this account", {
+      extensions: { code: "NOT_FOUND", http: { status: 404 } }
+    });
   }
 
   const isValidPassword = bcrypt.compareSync(password as string, existingUser.password);
@@ -118,7 +122,9 @@ export const findUser = async (args: Args, context: Context) => {
     { expiresIn: "24h" }
   );
   if (!isValidPassword) {
-    throw new GraphQLError("Invalid password");
+    throw new GraphQLError("Invalid password", {
+      extensions: { code: "BAD_REQUEST", http: { status: 400 } }
+    });
   }
 
   return {
@@ -137,7 +143,9 @@ export const googleFindUser = async (args: Args, context: Context) => {
   });
 
   if (!existingUser) {
-    throw new GraphQLError("There is no e-mail associated with that account");
+    throw new GraphQLError("There is no e-mail associated with that account", {
+      extensions: { code: "NOT_FOUND", http: { status: 404 } }
+    });
   }
 
   return {
