@@ -1,5 +1,6 @@
-"use client"
+"use client";
 import { FormErrorMessage } from "@/components/common/ErrorMessage";
+import { Loader } from "@/components/common/Loader";
 import { LayoutView } from "@/components/layouts";
 import { LOGIN_USER } from "@/constants/queries";
 import { loginSchema, loginValues } from "@/lib/schema";
@@ -8,29 +9,40 @@ import { Icon } from "@iconify/react/dist/iconify.js";
 import { Field, FormikProvider, useFormik } from "formik";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import toast, { Toaster } from "react-hot-toast";
 
 const GettingStarted = () => {
+  const router = useRouter();
   const formik = useFormik({
     initialValues: loginValues,
     validationSchema: loginSchema,
     onSubmit: (values) => {
-      addUser({ variables: values})
+      addUser({ variables: values });
     },
-    validateOnMount: true
-  })
+    validateOnMount: true,
+  });
 
-  const [addUser, { data }] = useMutation(LOGIN_USER, {
+  const [addUser, { data, loading }] = useMutation(LOGIN_USER, {
     onCompleted: (res) => {
-      console.log(res);
+      const userInfo = {...res.login.user}
+      console.log(userInfo);
+      toast.success(res.login.message);
+      localStorage.setItem("userToken", res.login.token);
+      localStorage.setItem("localUser", JSON.stringify(userInfo));
+      formik.resetForm();
+      setTimeout(() => {
+        router.push('/')
+      }, 2000)
     },
     onError: (error) => {
-      console.error(error);
+      toast.error(`${error?.message}`);
     },
-  })
+  });
 
-  console.log(formik.errors, data)
   return (
     <LayoutView>
+      <Toaster position="top-right" containerClassName="font-bold bg-red" />
       <div className="rounded-sm border border-stroke shadow-default dark:border-strokedark dark:bg-boxdark">
         <div className="flex flex-wrap items-center">
           <div className="hidden w-full xl:block xl:w-1/2">
@@ -71,11 +83,11 @@ const GettingStarted = () => {
                       placeholder="i.e joshdev (Your first name and last name)"
                       className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                       autoComplete="off"
-                      autoSave='off'
+                      autoSave="off"
                     />
-                    <FormErrorMessage name="email"/>
+                    <FormErrorMessage name="email" />
                     <span className="absolute right-4 top-4">
-                    <Icon icon="ph:user" fontSize={22} />
+                      <Icon icon="ph:user" fontSize={22} />
                     </span>
                   </div>
                 </div>
@@ -99,14 +111,11 @@ const GettingStarted = () => {
               </FormikProvider>
               <div className="mb-5">
                 <button
-                  className="w-full cursor-pointer rounded-lg border border-primary bg-primary p-4 text-white transition hover:bg-opacity-90"
+                  className="w-full cursor-pointer rounded-lg border border-primary bg-primary p-4 text-white transition hover:bg-opacity-90 justify-center flex"
                   disabled={!formik.isValid}
                   onClick={() => formik.handleSubmit()}
-                  // onClick={() => {
-                  //   mutation.mutate(formik.values);
-                  // }}
                 >
-                  Sign In
+                  {loading ? <Loader /> : "Sign in"}
                 </button>
               </div>
               <div className="mt-6 text-center">
