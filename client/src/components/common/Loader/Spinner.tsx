@@ -18,3 +18,16 @@ function Spinner() {
 }
 
 export default Spinner;
+
+export const Loader = () => {
+  return  <Oval
+  visible={true}
+  height="20"
+  width="20"
+  color="#324c6e"
+  ariaLabel="oval-loading"
+  wrapperStyle={{}}
+  wrapperClass=""
+  secondaryColor="#1d2939"
+/>
+}

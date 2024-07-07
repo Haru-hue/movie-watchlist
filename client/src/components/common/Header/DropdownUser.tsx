@@ -3,6 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Icon } from "@iconify/react/dist/iconify.js";
+import { createImageFromInitials, getRandomColor } from "@/utils/createImageInitial";
 
 const DropdownUser = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -13,7 +14,7 @@ const DropdownUser = () => {
   const handleLogout = () => {
     localStorage.clear();
     setUserInfo(null)
-    router.push('/auth/signin')
+    router.push('/auth/login')
   }
   const localUser = localStorage.getItem('localUser');
   // close on click outside
@@ -66,24 +67,17 @@ const DropdownUser = () => {
         className="flex items-center gap-4"
         href="#"
       >
-        <span className="hidden text-right lg:block">
-          <span className="block text-sm font-medium text-black dark:text-white">
-            {userInfo.firstname} {userInfo.lastname}
-          </span>
-          <span className="block text-xs">Full Stack Developer</span>
-        </span>
-
-        <span className="h-12 w-12 rounded-full">
+       <span className="h-12 w-12 rounded-full">
           <Image
             className="rounded-full"
             width={112}
             height={112}
-            src={"/images/user/user-01.png"}
+            src={createImageFromInitials(500, userInfo.name, getRandomColor())}
             alt="User"
           />
         </span>
       </Link> : (
-        <Link href='/auth/signin'>
+        <Link href='/auth/login'>
           <Icon icon="ph:user" className="text-2xl" />
         </Link>
       )}
