@@ -1,11 +1,27 @@
 import { useState, useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
+import { encodeFileToBase64 } from '../encodeBase64.';
 
-const useImageDropzone = () => {
-  const [image, setImage] = useState<File | null>(null);
+const useImageDropzone = (userFile: string | null) => {
+  const [image, setImage] = useState<ImageObject[] | string | null>(userFile);
 
-  const handleDrop = useCallback((acceptedFiles: File[]) => {
-    setImage(acceptedFiles[0]);
+  const handleDrop =  useCallback((acceptedFiles: File[]) => {
+    acceptedFiles.forEach(file =>
+      encodeFileToBase64(file)
+        .then(res => {
+          setImage([
+            Object.assign(
+              {image: res},
+              {
+                preview: URL.createObjectURL(file),
+              }
+            ),
+          ]);
+        })
+        .catch(err => {
+          return err;
+        })
+    );
   }, []);
 
   const { getRootProps, getInputProps } = useDropzone({

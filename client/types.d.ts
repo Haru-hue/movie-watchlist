@@ -22,3 +22,17 @@ type SideBarProps = {
   navItems?: NavItem[];
   setCollapseSidebar: Dispatch<SetStateAction<boolean>>;
 };
+
+interface User {
+  email: string;
+  name?: string;
+  username?: string;
+  avatarURL: string;
+  backgroundURL: string;
+  watchlist?: string[]
+}
+
+interface ImageObject {
+  image: string;
+  preview: string;
+}
