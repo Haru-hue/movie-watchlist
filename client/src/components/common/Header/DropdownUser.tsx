@@ -4,6 +4,9 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { createImageFromInitials, getRandomColor } from "@/utils/createImageInitial";
+import useLocalStorage from "@/utils/hooks/useLocalStorage";
+import { useMutation } from "@apollo/client";
+import { UPDATE_USER } from "@/constants/queries";
 
 const DropdownUser = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -16,7 +19,20 @@ const DropdownUser = () => {
     setUserInfo(null)
     router.push('/auth/login')
   }
-  const localUser = localStorage.getItem('localUser');
+  const [updateUser, { data, loading, error }] = useMutation(UPDATE_USER)
+
+  const [localUser] = useLocalStorage('localUser') as User[];
+  useEffect(() => {
+    if (!localUser?.avatarURL && localUser) {
+      updateUser({
+        variables: {
+          email: localUser?.email,
+          avatarURL: createImageFromInitials(500, localUser?.name, getRandomColor()),
+        },
+      })
+    }
+  }, [localUser])
+
   // close on click outside
   useEffect(() => {
     const clickHandler = ({ target }: MouseEvent) => {
@@ -44,20 +60,14 @@ const DropdownUser = () => {
   });
   useEffect(() => {
     const handleStorageChange = () => {
-      // Update the userInfo state with the new value from local storage
-      setUserInfo(localUser ? JSON.parse(localUser) : null);
+      setUserInfo(localUser ? localUser : null);
     };
-
-    // Add event listener for local storage changes
     window.addEventListener('storage', handleStorageChange);
-
-    // Call the handler right away to populate the initial state
     handleStorageChange();
-
-    // Cleanup the event listener
     return () => window.removeEventListener('storage', handleStorageChange);
   }, [localUser]);
 
+  console.log(userInfo)
 
   return (
     <div className="relative">
@@ -69,10 +79,10 @@ const DropdownUser = () => {
       >
        <span className="h-12 w-12 rounded-full">
           <Image
-            className="rounded-full"
+            className="h-12 w-12 object-cover rounded-full"
             width={112}
             height={112}
-            src={createImageFromInitials(500, userInfo.name, getRandomColor())}
+            src={userInfo?.avatarURL ? userInfo.avatarURL : ''}
             alt="User"
           />
         </span>
@@ -87,7 +97,7 @@ const DropdownUser = () => {
         ref={dropdown}
         onFocus={() => setDropdownOpen(true)}
         onBlur={() => setDropdownOpen(false)}
-        className={`absolute right-0 mt-4 flex w-62.5 flex-col rounded-sm border bg-violet-500 border-stroke shadow-default dark:border-strokedark dark:bg-boxdark ${
+        className={`absolute right-0 mt-4 flex w-62.5 z-50 flex-col rounded-sm border bg-violet-500 border-stroke shadow-default dark:border-strokedark dark:bg-boxdark ${
           dropdownOpen === true ? "block" : "hidden"
         }`}
       >

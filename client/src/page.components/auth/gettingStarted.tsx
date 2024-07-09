@@ -26,7 +26,6 @@ const GettingStarted = () => {
   const [addUser, { data, loading }] = useMutation(LOGIN_USER, {
     onCompleted: (res) => {
       const userInfo = {...res.login.user}
-      console.log(userInfo);
       toast.success(res.login.message);
       localStorage.setItem("userToken", res.login.token);
       localStorage.setItem("localUser", JSON.stringify(userInfo));
