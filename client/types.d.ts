@@ -25,7 +25,7 @@ type SideBarProps = {
 
 interface User {
   email: string;
-  name?: string;
+  name: string;
   username?: string;
   avatarURL: string;
   backgroundURL: string;
@@ -33,6 +33,6 @@ interface User {
 }
 
 interface ImageObject {
-  image: string;
+  image?: string;
   preview: string;
 }

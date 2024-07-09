@@ -13,6 +13,7 @@ export const LOGIN_USER = gql`
         username
         avatarURL
         name
+        email
         watchlist
       }
     }
@@ -24,6 +25,10 @@ export const UPDATE_USER = gql`
     updateUser(email: $email, watchlist: $watchlist, avatarURL: $avatarURL, backgroundURL: $backgroundURL) {
       message
       success
+      user {
+        avatarURL
+        watchlist
+      }
     }
   }
 `

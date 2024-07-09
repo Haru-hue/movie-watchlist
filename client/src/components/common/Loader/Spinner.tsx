@@ -19,11 +19,11 @@ function Spinner() {
 
 export default Spinner;
 
-export const Loader = () => {
+export const Loader = ({ size }: { size?: number }) => {
   return  <Oval
   visible={true}
-  height="20"
-  width="20"
+  height={size ?? "20"}
+  width={size ?? "20"}
   color="#324c6e"
   ariaLabel="oval-loading"
   wrapperStyle={{}}
