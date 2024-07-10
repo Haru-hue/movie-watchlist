@@ -51,7 +51,7 @@ export const UserProfilePage = () => {
 
   return (
     <LayoutView>
-      <Toaster />
+      <Toaster position="top-right" containerClassName="font-bold" />
       <div className="flex flex-col gap-20">
         <div className="self-center -overflow-hidden rounded-sm border border-stroke shadow-default dark:border-strokedark dark:bg-boxdark w-full max-w-7xl">
           <Image

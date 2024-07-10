@@ -33,13 +33,6 @@ export const processArgs = async (
           }
           data[key] = args[key];
           break;
-        case "watchlist":
-            if (args[key] && Array.isArray(args[key])) {
-              const existingWatchlist = existingUser.watchlist as string[];
-              const newWatchlist = [...new Set([...existingWatchlist, ...args[key] as string[]])];
-              data[key] = newWatchlist;
-            }
-            break;
          case "avatarURL":
          case "backgroundURL":
             if (args[key] !== undefined) {
