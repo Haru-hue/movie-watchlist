@@ -1,10 +1,8 @@
 import { GraphQLResolveInfo } from "graphql";
 import {
   addUser,
-  deleteUser,
   findUser,
   googleFindUser,
-  toggleWatchlist,
   updateUser,
 } from "../controllers";
 
@@ -23,15 +21,11 @@ const resolvers = {
   Mutation: {
     addUser: async (_parent: User, args: Args, context: Context, _info: GraphQLResolveInfo) =>
       addUser(args, context),
-    updateUser: async (
-      args: Args,
-      context: Context,
-    ) => updateUser(args, context),
+    updateUser: async(_parent: User, args: Args, context: Context, _info: GraphQLResolveInfo) => updateUser(args, context),
     login: async (_parent: User, args: Args, context: Context, _info: GraphQLResolveInfo) =>
       findUser(args, context),
     findUser: async (_parent: User, args: Args, context: Context, _info: GraphQLResolveInfo) =>
       googleFindUser(args, context),
-    updateWatchlist: async (_parent: User, args: Args, context: Context, _info: GraphQLResolveInfo) => toggleWatchlist(args, context)
   },
 };
 

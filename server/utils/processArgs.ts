@@ -33,12 +33,25 @@ export const processArgs = async (
           }
           data[key] = args[key];
           break;
-         case "avatarURL":
-         case "backgroundURL":
-            if (args[key] !== undefined) {
-              const imageURL = await imageUpload(args[key] as string)
-              data[key] = imageURL;
+          case "watchlist":
+            if (args[key] && Array.isArray(args[key])) {
+              const existingWatchlist = existingUser.watchlist as string[];
+              const movieIdsToAdd = args[key] as string[];
+              const movieExists = existingWatchlist.some(item => movieIdsToAdd.includes(item))
+              const updatedWatchlist = existingWatchlist.filter(item => !movieIdsToAdd.includes(item));
+              const newWatchlist = movieExists ? [...updatedWatchlist] : [...updatedWatchlist, ...movieIdsToAdd];
+        
+              data[key] = newWatchlist;
             }
+            break;
+          
+          break;
+        case "avatarURL":
+        case "backgroundURL":
+          if (args[key] !== undefined) {
+            const imageURL = await imageUpload(args[key] as string);
+            data[key] = imageURL;
+          }
           break;
         default:
           data[key] = args[key];
