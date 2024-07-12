@@ -1,5 +1,4 @@
 import { useState } from "react";
-import NoImage from '@/assets/NoImage.png'
 
 function CastList({ cast }: any) {
   const [numCastMembers, setNumCastMembers] = useState(5);
@@ -20,7 +19,7 @@ function CastList({ cast }: any) {
           {cast?.slice(0, numCastMembers).map((crew: any) => (
             <div className="flex flex-col max-w-fit gap-1" key={crew?.id}>
               <img
-                src={crew?.profile_path ? `https://image.tmdb.org/t/p/original/${crew?.profile_path}`: NoImage.src}
+                src={crew?.profile_path ? `https://image.tmdb.org/t/p/original/${crew?.profile_path}`: '/images/noImage.png'}
                 className="w-72 object-cover"
                 alt=""
               />

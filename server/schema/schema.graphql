@@ -20,9 +20,9 @@ type Mutation {
     backgroundURL: String
   ): UserResponse
   deleteUser(email: String!): Response
-  verifyUser(email: String!, verificationCode: Int!): Response
   login(email: String!, password: String!): UserResponse
   findUser(email: String!): UserResponse
+  updateWatchlist(email: String!, watchlist: [String]!): UserResponse
 }
 
 type User {

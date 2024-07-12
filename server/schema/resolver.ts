@@ -1,6 +1,6 @@
+import { GraphQLResolveInfo } from "graphql";
 import {
   addUser,
-  deleteUser,
   findUser,
   googleFindUser,
   updateUser,
@@ -19,19 +19,12 @@ const resolvers = {
     },
   },
   Mutation: {
-    addUser: async (_parent: any, args: Args, context: Context, _info: any) =>
+    addUser: async (_parent: User, args: Args, context: Context, _info: GraphQLResolveInfo) =>
       addUser(args, context),
-    updateUser: async (
-      _parent: any,
-      args: Args,
-      context: Context,
-      _info: any
-    ) => updateUser(args, context),
-    deleteUser: async (_parent: any, args: { id: any }, context: any) =>
-      deleteUser(args, context),
-    login: async (_parent: any, args: Args, context: Context) =>
+    updateUser: async(_parent: User, args: Args, context: Context, _info: GraphQLResolveInfo) => updateUser(args, context),
+    login: async (_parent: User, args: Args, context: Context, _info: GraphQLResolveInfo) =>
       findUser(args, context),
-    findUser: async (_parent: any, args: Args, context: Context) =>
+    findUser: async (_parent: User, args: Args, context: Context, _info: GraphQLResolveInfo) =>
       googleFindUser(args, context),
   },
 };
