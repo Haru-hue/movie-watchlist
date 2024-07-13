@@ -9,7 +9,7 @@ type Mutation {
     name: String!
     email: String!
     password: String!
-  ): temporaryUser
+  ): UserResponse
   updateUser(
     name: String
     email: String!
@@ -40,16 +40,5 @@ type UserResponse {
   message: String!
   success: Boolean!
   user: User
-  token: String
-}
-
-type Response {
-  message: String!
-  success: Boolean!
-}
-
-type temporaryUser {
-  message: String!
-  success: Boolean!
   token: String
 }
