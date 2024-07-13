@@ -10,6 +10,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import toast, { Toaster } from "react-hot-toast";
+import { UserWatchlist } from "./watchlist";
 
 export const UserProfilePage = () => {
   const router = useRouter();
@@ -79,7 +80,7 @@ export const UserProfilePage = () => {
         </div>
         <section className="flex flex-col gap-6">
           {localUser?.watchlist && localUser?.watchlist.length > 0 ? (
-            <></>
+            <UserWatchlist/>
           ) : (
             <Link
               href="/browse"
