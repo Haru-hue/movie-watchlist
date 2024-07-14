@@ -1,11 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
 import { getMovies } from "@/apis/movie";
-import Spinner from "@/components/common/Loader";
 import Link from "next/link";
-import LayoutView from "../../layouts/view";
 import ReactPaginate from "react-paginate";
 import { useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
+import { Spinner } from "@/components/common/Loader";
+import { LayoutView } from "@/components/layouts";
 
 export const MovieBrowseLayout = ({ movieKey }: { movieKey: string }) => {
   const router = useRouter();
@@ -17,7 +17,7 @@ export const MovieBrowseLayout = ({ movieKey }: { movieKey: string }) => {
     queryFn: () => getMovies(movieKey, addedParam),
   });
 
-  const handlePagination = (event) => {
+  const handlePagination = (event: { selected: number }) => {
     const defaultQuery = {
       page: `${event.selected + 1}`,
     };
@@ -33,7 +33,7 @@ export const MovieBrowseLayout = ({ movieKey }: { movieKey: string }) => {
   };
 
   return (
-    <div>
+    <>
       {movies.isLoading ? (
         <Spinner />
       ) : (
@@ -77,6 +77,6 @@ export const MovieBrowseLayout = ({ movieKey }: { movieKey: string }) => {
           />
         </LayoutView>
       )}
-    </div>
+    </>
   );
 };

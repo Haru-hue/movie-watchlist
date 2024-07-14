@@ -7,7 +7,6 @@ import { MovieDetails } from "@/page.components/moviePage/details";
 import ImageGrid from "@/page.components/moviePage/imageGrid";
 import MovieRecsList from "@/page.components/moviePage/movieRecs";
 import { useQueries, useQuery } from "@tanstack/react-query";
-import Head from "next/head";
 import { useParams } from "next/navigation";
 import { useState } from "react";
 import ModalVideo from "react-modal-video";
@@ -18,15 +17,17 @@ function MoviePage() {
     open: false,
   });
   const params = useParams();
+  const movieId = params?.id?.toString()
+
   const movieInfo = useQuery({
     queryKey: ["movies", params.id],
-    queryFn: () => getMovieDetails(params.id),
+    queryFn: () => getMovieDetails(movieId),
   });
   const movieMisc = useQueries({
     queries: movieDetails.map((query) => {
       return {
         queryKey: [query, params.id],
-        queryFn: () => getMovieDetails(params.id, query),
+        queryFn: () => getMovieDetails(movieId, query),
       };
     }),
   });
@@ -75,9 +76,9 @@ function MoviePage() {
             />
           </div>
           <section className="p-10 max-w-4xl 2xl:max-w-[75%]">
-            <CastList cast={movieData.misc[0]?.cast} />
-            <ImageGrid images={movieData.misc[1]?.backdrops} />
-            {movieData.misc[2]?.results.length > 0 && <MovieRecsList movieRecs={movieData.misc[2]?.results} />}
+            {movieData?.misc[0]?.cast.length > 0 && <CastList cast={movieData.misc[0]?.cast} />}
+            {movieData?.misc[1]?.backdrops?.length > 0 && <ImageGrid images={movieData.misc[1]?.backdrops} />}
+            {movieData.misc[2]?.results?.length > 0 && <MovieRecsList movieRecs={movieData.misc[2]?.results} />}
           </section>
         </LayoutView>
       )}

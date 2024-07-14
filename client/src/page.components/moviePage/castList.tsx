@@ -24,12 +24,12 @@ function CastList({ cast }: any) {
                 alt=""
               />
               <p className="text-lg 2xl:text-xl font-semibold pt-4">{crew?.name}</p>
-              <span className="text-slate-400">as {crew?.character}</span>
+              {crew?.character && <span className="text-slate-400">as {crew?.character}</span>}
             </div>
           ))}
         </div>
       </section>
-      <div className="flex items-center pt-12">
+      {cast?.length < numCastMembers ? null : <div className="flex items-center pt-12">
         <div className="w-full h-1 bg-gradient-to-r from-[#262f66] to-[#0c1124] rounded-lg shadow-lg flex" />
         <button
           className="uppercase border-2 py-2 px-4 rounded-lg text-nowrap font-semibold"
@@ -37,7 +37,7 @@ function CastList({ cast }: any) {
         >
           {numCastMembers >= cast?.length ? "Show less" : "See full cast"}
         </button>
-      </div>
+      </div>}
     </div>
   );
 }
