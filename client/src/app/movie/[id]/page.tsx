@@ -76,9 +76,9 @@ function MoviePage() {
             />
           </div>
           <section className="p-10 max-w-4xl 2xl:max-w-[75%]">
-            <CastList cast={movieData.misc[0]?.cast} />
-            <ImageGrid images={movieData.misc[1]?.backdrops} />
-            {movieData.misc[2]?.results.length > 0 && <MovieRecsList movieRecs={movieData.misc[2]?.results} />}
+            {movieData?.misc[0]?.cast.length > 0 && <CastList cast={movieData.misc[0]?.cast} />}
+            {movieData?.misc[1]?.backdrops?.length > 0 && <ImageGrid images={movieData.misc[1]?.backdrops} />}
+            {movieData.misc[2]?.results?.length > 0 && <MovieRecsList movieRecs={movieData.misc[2]?.results} />}
           </section>
         </LayoutView>
       )}
