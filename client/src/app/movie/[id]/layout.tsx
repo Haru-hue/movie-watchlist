@@ -9,14 +9,22 @@ type Props = {
 
 export async function generateMetadata(
   { params }: Props): Promise<Metadata> {
-  const movie = await getMovieDetails(parseInt(params.id));
-  return {
-    title: `${movie.title} - The Movie Watch List`,
-  };
+    const movie = await getMovieDetails(params.id);
+    console.log(movie)
+    if (!movie) {
+        // Handle the case when movie is undefined (e.g., show a default title)
+        return {
+            title: 'Movie Details - The Movie Watch List',
+        };
+    }
+    return {
+        title: `${movie.title} - The Movie Watch List`,
+    };
 }
 
-export default function ProfileLayout({
+export default function MovieLayout({
   children,
 }: Props) {
+  
   return <div>{children}</div>;
 }

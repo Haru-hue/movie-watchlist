@@ -1,15 +1,18 @@
 import DarkModeSwitcher from "./DarkModeSwitcher";
 import DropdownUser from "./DropdownUser";
 import { useAppDispatch, useAppSelector } from "@/store";
+import { updateSearchTerm } from "@/store/features/search";
 import { toggleSidebar } from "@/store/features/sidebar";
 import { Icon } from "@iconify/react/dist/iconify.js";
 
-const Header = (props: {
-  sidebarOpen: string | boolean | undefined;
-  setSidebarOpen: (arg0: boolean) => void;
-}) => {
+const Header = () => {
   const isSidebarOpen = useAppSelector((state) => state.sidebar.isOpen);
+  const searchTerm = useAppSelector((state) => state.search)
   const dispatch = useAppDispatch()
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch(updateSearchTerm(e.target.value));
+  }
 
   return (
     <header className="top-0 z-999 flex w-full drop-shadow-1 dark:bg-boxdark dark:drop-shadow-none">
@@ -33,8 +36,8 @@ const Header = (props: {
             type="text"
             className="searchBox"
             placeholder="Search for what you like"
-            // onChange={(e) => handleChange(e)}
-            // value={movie}
+            onChange={(e) => handleChange(e)}
+            value={searchTerm}
           />
           <div className="absolute inset-y-0 end-0 flex items-center pointer-events-none pe-4">
             <Icon icon="iconoir:search" />

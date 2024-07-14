@@ -6,22 +6,18 @@ export const getMovies = async (key: string, params?: string) => {
     const response = await getData(
       `https://api.themoviedb.org/3/movie/${key}${queryString}`
     );
-    const newMovies = await response.results;
-    return newMovies;
+    return response.results;
   } catch (error) {
     console.error(error);
     return null;
   }
 };
 
-export const getMovieDetails = async (id: any, endpoint?: string) => {
-  const url = endpoint
-    ? `https://api.themoviedb.org/3/movie/${parseInt(id)}/${endpoint}`
-    : `https://api.themoviedb.org/3/movie/${parseInt(id)}`;
+export const getMovieDetails = async (id: string, params?: string) => {
+  const queryString = params ? `/${params}` : ""
   try {
-    const movieDetails = await getData(url);
-    const movie = await movieDetails;
-    return movie;
+    const movieDetails = await getData(`https://api.themoviedb.org/3/movie/${parseInt(id)}${queryString}`);
+    return movieDetails
   } catch (error) {
     console.error(error);
     return null;
@@ -33,10 +29,21 @@ export const getTrendingMovies = async (endpoint?: string) => {
     const response = await getData(
       `https://api.themoviedb.org/3/trending/movie/day?language=en-US${endpoint}`
     );
-    const movies = await response.results;
-    return movies;
+    return response.results;
   } catch (error) {
     console.error(error);
     return null;
   }
 };
+
+export const searchMovies = async (params: string, page?: number) => {
+  try {
+    const response = await getData(
+      `https://api.themoviedb.org/3/search/movie?query=${params}&include_adult=false&language=en-US&page=${page ?? 1}`
+    );
+    return response
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+}
