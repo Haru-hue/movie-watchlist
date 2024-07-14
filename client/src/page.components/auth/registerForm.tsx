@@ -2,8 +2,12 @@
 import { FormErrorMessage } from "@/components/common/ErrorMessage";
 import { Loader } from "@/components/common/Loader";
 import { LayoutView } from "@/components/layouts";
-import { LOGIN_USER } from "@/constants/queries";
-import { loginSchema, loginValues } from "@/lib/schema";
+import { REGISTER_USER } from "@/constants/queries";
+import { signupSchema, signupValues } from "@/lib/schema";
+import {
+  createImageFromInitials,
+  getRandomColor,
+} from "@/utils/createImageInitial";
 import { useMutation } from "@apollo/client";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { Field, FormikProvider, useFormik } from "formik";
@@ -12,27 +16,37 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import toast, { Toaster } from "react-hot-toast";
 
-const GettingStarted = () => {
+const RegisterForm = () => {
   const router = useRouter();
   const formik = useFormik({
-    initialValues: loginValues,
-    validationSchema: loginSchema,
+    initialValues: signupValues,
+    validationSchema: signupSchema,
     onSubmit: (values) => {
-      authenticateUser({ variables: values });
+      // console.log(values);
+      registerUser({
+        variables: {
+          ...values,
+          avatarURL: createImageFromInitials(
+            500,
+            values.name,
+            getRandomColor()
+          ),
+        },
+      });
     },
     validateOnMount: true,
   });
 
-  const [authenticateUser, { loading }] = useMutation(LOGIN_USER, {
+  const [registerUser, { loading }] = useMutation(REGISTER_USER, {
     onCompleted: (res) => {
-      const userInfo = {...res.login.user}
-      toast.success(res.login.message);
-      localStorage.setItem("userToken", res.login.token);
+      const userInfo = { ...res.addUser.user };
+      toast.success(res.addUser.message);
+      localStorage.setItem("userToken", res.addUser.token);
       localStorage.setItem("localUser", JSON.stringify(userInfo));
       formik.resetForm();
       setTimeout(() => {
-        router.push('/')
-      }, 2000)
+        router.push("/");
+      }, 2000);
     },
     onError: (error) => {
       toast.error(`${error?.message}`);
@@ -68,21 +82,60 @@ const GettingStarted = () => {
             <div className="w-full p-4 sm:p-12.5 xl:p-17.5">
               <span className="mb-1.5 block font-medium">Start for free</span>
               <h2 className="mb-9 text-2xl font-bold text-black dark:text-white sm:text-title-xl2">
-                Sign In to JoshDev Admin
+                Sign Up to JoshDev Admin
               </h2>
               <FormikProvider value={formik}>
                 <div className="mb-4">
                   <label className="mb-2.5 block font-medium text-black dark:text-white">
-                    Enter your customer ID
+                    Enter your name
+                  </label>
+                  <div className="relative">
+                    <Field
+                      name="name"
+                      type="text"
+                      placeholder="i.e James Bond (Your first name and last name)"
+                      className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
+                      autoComplete="off"
+                      autoSave="off"
+                    />
+                    <FormErrorMessage name="name" />
+                    <span className="absolute right-4 top-4">
+                      <Icon icon="ph:user" fontSize={22} />
+                    </span>
+                  </div>
+                </div>
+                <div className="mb-4">
+                  <label className="mb-2.5 block font-medium text-black dark:text-white">
+                    Enter your username
+                  </label>
+                  <div className="relative">
+                    <Field
+                      name="username"
+                      type="text"
+                      placeholder="i.e James Bond (Your first name and last name)"
+                      className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
+                      autoComplete="off"
+                      autoSave="off"
+                    />
+                    <FormErrorMessage name="username" />
+                    <span className="absolute right-4 top-4">
+                      <Icon icon="ph:user" fontSize={22} />
+                    </span>
+                  </div>
+                </div>
+                <div className="mb-4">
+                  <label className="mb-2.5 block font-medium text-black dark:text-white">
+                    Enter your e-mail
                   </label>
                   <div className="relative">
                     <Field
                       name="email"
                       type="email"
-                      placeholder="i.e joshdev (Your first name and last name)"
+                      placeholder="i.e abc@gmail.com"
                       className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
-                      autoComplete="off"
-                      autoSave="off"
+                      autoComplete="disabled"
+                      autocomplete="new-password"
+                      data-aviraignore
                     />
                     <FormErrorMessage name="email" />
                     <span className="absolute right-4 top-4">
@@ -100,8 +153,29 @@ const GettingStarted = () => {
                       type="password"
                       placeholder="6+ Characters, 1 Capital letter"
                       className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
-                      autoComplete="off"
+                      autoComplete="disabled"
+                      autocomplete="new-password"
                     />
+                    <FormErrorMessage name="password" />
+                    <span className="absolute right-4 top-4">
+                      {/* <CiLock size={22} /> */}
+                    </span>
+                  </div>
+                </div>
+                <div className="mb-6">
+                  <label className="mb-2.5 block font-medium text-black dark:text-white">
+                    Confirm Password
+                  </label>
+                  <div className="relative">
+                    <Field
+                      name="confirmPassword"
+                      type="password"
+                      placeholder="6+ Characters, 1 Capital letter"
+                      className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
+                      autoComplete="disabled"
+                      autocomplete="new-password"
+                    />
+                    <FormErrorMessage name="confirmPassword" />
                     <span className="absolute right-4 top-4">
                       {/* <CiLock size={22} /> */}
                     </span>
@@ -119,9 +193,9 @@ const GettingStarted = () => {
               </div>
               <div className="mt-6 text-center">
                 <p>
-                  Don&apos;t have any account?{" "}
-                  <Link href="/auth/register" className="text-primary">
-                    Sign Up
+                  Already have an account?{" "}
+                  <Link href="/auth/login" className="text-primary">
+                    Sign In
                   </Link>
                 </p>
               </div>
@@ -133,4 +207,4 @@ const GettingStarted = () => {
   );
 };
 
-export default GettingStarted;
+export default RegisterForm;

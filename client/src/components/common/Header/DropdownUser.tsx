@@ -3,14 +3,12 @@ import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Icon } from "@iconify/react/dist/iconify.js";
-import { createImageFromInitials, getRandomColor } from "@/utils/createImageInitial";
 import useLocalStorage from "@/utils/hooks/useLocalStorage";
-import { useMutation } from "@apollo/client";
-import { UPDATE_USER } from "@/constants/queries";
 
 const DropdownUser = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [userInfo, setUserInfo] = useState<any>(null);
+  const [localUser] = useLocalStorage('localUser') as User[];
+  const [userInfo, setUserInfo] = useState<User | null>(null);
   const trigger = useRef<any>(null);
   const dropdown = useRef<any>(null);
   const router = useRouter()
@@ -19,19 +17,7 @@ const DropdownUser = () => {
     setUserInfo(null)
     router.push('/auth/login')
   }
-  const [updateUser, { data, loading, error }] = useMutation(UPDATE_USER)
 
-  const [localUser] = useLocalStorage('localUser') as User[];
-  useEffect(() => {
-    if (!localUser?.avatarURL && localUser) {
-      updateUser({
-        variables: {
-          email: localUser?.email,
-          avatarURL: createImageFromInitials(500, localUser?.name, getRandomColor()),
-        },
-      })
-    }
-  }, [localUser])
 
   // close on click outside
   useEffect(() => {
@@ -66,8 +52,6 @@ const DropdownUser = () => {
     handleStorageChange();
     return () => window.removeEventListener('storage', handleStorageChange);
   }, [localUser]);
-
-  console.log(userInfo)
 
   return (
     <div className="relative">
