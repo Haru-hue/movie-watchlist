@@ -9,6 +9,7 @@ type Mutation {
     name: String!
     email: String!
     password: String!
+    username: String
   ): UserResponse
   updateUser(
     name: String
@@ -19,7 +20,6 @@ type Mutation {
     avatarURL: String
     backgroundURL: String
   ): UserResponse
-  deleteUser(email: String!): Response
   login(email: String!, password: String!): UserResponse
   findUser(email: String!): UserResponse
   updateWatchlist(email: String!, watchlist: [String]!): UserResponse
