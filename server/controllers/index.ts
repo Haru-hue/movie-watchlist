@@ -4,7 +4,7 @@ import processArgs from "../utils/processArgs";
 import jwt from "jsonwebtoken";
 
 export const addUser = async (args: Args, context: Context) => {
-  const { name, email, password, username } = args;
+  const { name, email, password, username, avatarURL } = args;
   const hashedPassword = await bcrypt.hash(password as string, 10);
   
   const token = jwt.sign(
@@ -19,7 +19,8 @@ export const addUser = async (args: Args, context: Context) => {
         name,
         email,
         password: hashedPassword,
-        username
+        username,
+        avatarURL
       },
     });
 
