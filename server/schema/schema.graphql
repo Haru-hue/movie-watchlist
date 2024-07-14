@@ -10,6 +10,7 @@ type Mutation {
     email: String!
     password: String!
     username: String
+    avatarURL: String
   ): UserResponse
   updateUser(
     name: String
