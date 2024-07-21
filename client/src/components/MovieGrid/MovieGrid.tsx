@@ -9,6 +9,7 @@ interface GridProps {
   initialItemsToShow?: number;
   title?: string;
   buttonText?: string;
+  noPaginations?: boolean;
 }
 export const MovieGrid = ({
   items,
@@ -17,6 +18,7 @@ export const MovieGrid = ({
   title,
   columns,
   buttonText,
+  noPaginations
 }: GridProps) => {
   const [itemsToShow, setItemsToShow] = useState(initialItemsToShow);
 
@@ -60,7 +62,7 @@ export const MovieGrid = ({
             {items?.slice(0, itemsToShow).map((item: any) => renderItem(item))}
           </div>
         </section>
-        {items?.length >= itemsToShow && (
+        {items?.length >= itemsToShow || !noPaginations && (
           <div className="flex items-center pt-12">
             <div className="w-full h-1 bg-gradient-to-r from-[#262f66] to-[#0c1124] rounded-lg shadow-lg flex" />
             <button

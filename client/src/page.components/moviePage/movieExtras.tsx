@@ -11,11 +11,11 @@ export const MovieExtras = ({
   movieRecommendations: Movie[];
 }) => {
   return (
-    <section className="p-4 2xl:p-10 w-full 2xl:max-w-[75%] space-y-4">
+    <section className="p-4 2xl:p-10 w-full lg:max-w-4xl 2xl:max-w-[75%] space-y-4">
       <MovieGrid
         items={castList}
         renderItem={(crew: Cast) => (
-          <div className="flex flex-col embla__slide gap-1" key={crew?.id}>
+          <div className="flex flex-col lg:max-w-fit embla__slide gap-1" key={crew?.id}>
             <img
               src={
                 crew?.profile_path

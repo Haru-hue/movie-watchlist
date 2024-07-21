@@ -10,6 +10,7 @@ export const EmblaCarousel = ({ children }: { children: ReactNode }) => {
           {children}
         </div>
       </div>
+    
     </div>
   );
 };

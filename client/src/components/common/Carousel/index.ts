@@ -1,1 +1,1 @@
-export { Carousel } from './carousel'
+export { MainPageCarousel } from './carousel'
