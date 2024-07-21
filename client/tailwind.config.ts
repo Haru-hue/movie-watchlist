@@ -17,7 +17,7 @@ const config: Config = {
         primary: '#0a1024',
         secondary: '#171930',
         tertiary: '#131329'
-      }
+      },
     },
   },
   plugins: [],

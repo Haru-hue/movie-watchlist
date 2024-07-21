@@ -17,6 +17,19 @@ interface Movie {
   vote_count: number;
 }
 
+interface Cast {
+  id: string;
+  name?: string;
+  profile_path?: string;
+  character?: string;
+}
+
+interface MovieBackrop {
+  id: string;
+  name?: string;
+  file_path?: string;
+}
+
 type SideBarProps = {
   collapseSidebar: boolean;
   navItems?: NavItem[];

@@ -17,7 +17,7 @@ const Sidebar = () => {
         `absolute left-0 top-0 z-50 bg-tertiary flex h-screen flex-col overflow-y-hidden transition-all duration-300 ease-linear dark:bg-boxdark lg:static lg:translate-x-0 `,
         {
           "w-70": isSidebarOpen,
-          "w-20 max-md:w-0": !isSidebarOpen,
+          "w-20 max-lg:w-0": !isSidebarOpen,
         }
       )}
     >
