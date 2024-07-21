@@ -22,7 +22,7 @@ function MovieRecsList({ movieRecs }: any) {
             <Link href={`/movie/${movie?.id}`} key={movie?.id}>
                 <div className="flex flex-col max-w-fit gap-1" key={movie?.id}>
                   <img
-                    src={`https://image.tmdb.org/t/p/original/${movie?.poster_path}`}
+                    src={movie?.poster_path ? `https://image.tmdb.org/t/p/original/${movie?.poster_path}` : '/images/noImage.png'}
                     className="w-full object-cover"
                     alt=""
                   />

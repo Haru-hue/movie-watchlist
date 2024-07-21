@@ -13,7 +13,7 @@
 @media (prefers-color-scheme: dark) {
   :root {
     --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 12, 17, 36;
+    --background-start-rgb: 10, 16, 36;
     --background-end-rgb: 0, 0, 0;
   }
 }
@@ -84,7 +84,7 @@ body {
     @apply bg-[#171930] p-6 rounded-xl
   }
   .rating {
-    @apply absolute right-7 top-9 rounded-l-full px-2 py-1 text-xl font-bold text-[#DC606B]
+    @apply absolute right-0 top-9 rounded-l-full px-2 py-1 text-xl font-bold text-[#DC606B]
   }
   .homeLayout {
     @apply flex flex-col gap-6 p-6
@@ -96,10 +96,10 @@ body {
     @apply h-96 w-full object-cover object-center rounded-xl
   }
   .searchBox {
-    @apply py-3 px-4 pe-11 block w-full border-gray-200 shadow-sm text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600 rounded-3xl
+    @apply py-3 px-4 pe-11 block w-96 border-gray-200 shadow-sm text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600 rounded-3xl
   }
   .movieBanner {
-    @apply h-screen 2xl:h-[75vh] w-full bg-cover
+    @apply 2xl:h-[75vh] w-full bg-cover
   }
 }
 

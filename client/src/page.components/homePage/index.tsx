@@ -6,6 +6,7 @@ import { MovieBox, RecBox } from "./movieBox";
 import Link from "next/link";
 import getColor from "@/utils/getColor";
 import { Spinner } from "@/components/common/Loader";
+import { Carousel } from "@/components/common/Carousel";
 
 export default function HomePage() {
   const allMovies = useQueries({
@@ -26,7 +27,7 @@ export default function HomePage() {
       ) : (
         <LayoutView>
           <div className="homeLayout ml-6">
-            {/* <Carousel /> */}
+            <Carousel />
             <div className="flex space-x-6">
               <section className="list-box w-[70%]">
                 <h4 className="text-slate-500 pb-6">New Movies</h4>

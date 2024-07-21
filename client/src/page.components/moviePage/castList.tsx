@@ -15,7 +15,7 @@ function CastList({ cast }: any) {
     <div>
       <section>
         <h1 className="font-bold text-3xl py-10">Cast</h1>
-        <div className="grid grid-cols-5 gap-10 max-w-fit">
+        <div className="grid grid-cols-5 gap-10 2xl:max-w-fit">
           {cast?.slice(0, numCastMembers).map((crew: any) => (
             <div className="flex flex-col max-w-fit gap-1" key={crew?.id}>
               <img

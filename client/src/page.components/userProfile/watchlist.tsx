@@ -11,7 +11,7 @@ export const UserWatchlist = () => {
     queries: listofMovies?.map((id: string) => {
       return {
         queryKey: ["movies", id],
-        queryFn: () => getMovieDetails(parseInt(id)),
+        queryFn: () => getMovieDetails(id),
       };
     }),
   });
@@ -21,7 +21,6 @@ export const UserWatchlist = () => {
   if (isLoading && USER_WATCHLIST.length > 0) {
     return <Spinner />;
   }
-  console.log(listofMovies)
 
   return (
     <section className="px-20">

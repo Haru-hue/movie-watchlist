@@ -9,31 +9,28 @@ import { NavItems } from "@/constants/navItems";
 
 const Sidebar = () => {
   const isSidebarOpen = useAppSelector((state) => state.sidebar.isOpen);
-  const dispatch = useAppDispatch()
+  const dispatch = useAppDispatch();
 
   return (
     <aside
       className={cn(
-        `absolute left-0 top-0 z-9999 flex h-screen flex-col overflow-y-hidden transition-all duration-300 ease-linear dark:bg-boxdark lg:static lg:translate-x-0 `,
+        `absolute left-0 top-0 z-50 bg-tertiary flex h-screen flex-col overflow-y-hidden transition-all duration-300 ease-linear dark:bg-boxdark lg:static lg:translate-x-0 `,
         {
           "w-70": isSidebarOpen,
           "w-20 max-md:w-0": !isSidebarOpen,
-        },
+        }
       )}
     >
       {/* <!-- SIDEBAR HEADER --> */}
-      <div className="relative flex w-full items-center justify-between gap-2 px-6 py-5">
-        <Link className="flex items-center" href="/">
-          {isSidebarOpen && (
-            <h1 className=" ml-2 text-xl font-semibold text-white">JoshDev</h1>
-          )}
-        </Link>
-        {isSidebarOpen && (
-          <Icon icon="iconoir:menu" className="text-2xl" onClick={() => dispatch(toggleSidebar())} />
-        )}
+      <div className="relative flex w-full items-center justify-center gap-2 px-6 py-5">
+      <Icon
+            icon={`akar-icons:chevron-${isSidebarOpen ? "left" : "right"}`}
+            className="text-3xl"
+            onClick={() => dispatch(toggleSidebar())}
+          />
       </div>
       <div className="no-scrollbar flex flex-col overflow-y-auto duration-300 ease-linear">
-        <nav className="px-4 py-4  lg:px-6">
+        <nav className="p-4 lg:px-6">
           <div>
             <ul
               className={cn("mb-6 flex flex-col  gap-1.5", {

@@ -23,7 +23,6 @@ export const MovieBookmark = ({ movieData, handleVideoOpen }: any) => {
 
   const [updateUser, { loading }] = useMutation(UPDATE_USER, {
     onCompleted: (res) => {
-      console.log(res);
       toast.success(res.updateUser.message);
       localUser
         ? localStorage.setItem(
@@ -77,7 +76,7 @@ export const MovieBookmark = ({ movieData, handleVideoOpen }: any) => {
   };
 
   return (
-    <div className="flex flex-col items-center space-y-2 absolute right-0 top-40 mr-10 bg-[#171930] p-6 max-w-xs 2xl:max-w-sm z-50">
+    <div className="flex flex-col max-2xl:hidden items-center space-y-2 absolute right-0 top-40 mr-10 bg-[#171930] p-6 max-w-xs 2xl:max-w-sm z-50">
       <Toaster position="top-right" containerClassName="font-bold" />
       <img
         className="p-6"

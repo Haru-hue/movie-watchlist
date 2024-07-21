@@ -10,9 +10,9 @@ export const MovieDetails = ({ movieData, handleVideoOpen }: any) => {
   );
   const movieTrailer = movieData.misc[3]?.results[0]?.key
   return (
-    <div className="flex h-full items-end p-20 gap-10">
-      <div className="flex gap-8 flex-col w-1/3">
-        <h2 className="text-4xl uppercase font-bold">{movieData.title}</h2>
+    <div className="flex max-2xl:flex-col max-2xl:justify-end h-full 2xl:items-end p-20 gap-10">
+      <div className="flex gap-8 flex-col 2xl:w-1/3">
+        <h2 className="text-4xl uppercase title-font font-bold">{movieData.title}</h2>
         <div className="font-light">{movieData.overview}</div>
         <span className="flex items-center gap-8">
           <p className="uppercase">Watch Trailer</p>
@@ -24,11 +24,11 @@ export const MovieDetails = ({ movieData, handleVideoOpen }: any) => {
           </span>
         </span>
       </div>
-      <div className="grid grid-cols-2 2xl:grid-cols-3 gap-12 w-1/3 ">
+      <div className="grid grid-cols-2 2xl:grid-cols-3 gap-12 2xl:w-1/3 ">
         <span className="flex flex-col">
           <p className="text-slate-400 uppercase font-semibold">Genre</p>
           <div className="flex gap-1 flex-wrap">
-            {movieData.genres.map((genre: { id: Key; name: string }, index: number, array: []) => (
+            {movieData?.genres?.map((genre: { id: Key; name: string }, index: number, array: []) => (
               <div key={genre.id}>
                 <p>
                   {genre.name}

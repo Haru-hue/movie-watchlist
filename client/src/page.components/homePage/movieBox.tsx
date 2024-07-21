@@ -3,11 +3,11 @@ import Link from "next/link";
 
 export const MovieBox = ({movieData}: any) => {
   return (
-    <div className="flex flex-col space-y-4" key={movieData.id}>
-      <div className="relative">
+    <div className="flex flex-col space-y-8" key={movieData.id}>
+      <div className="relative max-w-fit">
         <Link href={`/movie/${movieData.id}`}>
           <img
-            className="rounded-xl w-64 h-80 object-cover"
+            className="rounded-xl w-72 h-96 object-cover"
             src={`https://image.tmdb.org/t/p/original/${movieData.poster_path}`}
             alt={movieData.title}
           />
@@ -49,7 +49,7 @@ export const RecBox = ({movieData}: any) => {
           </div>
           <p className="text-2xl text-[#DC606B]">{rating}</p>
         </div>
-        <p className="text-slate-500">{truncateString(movieData.overview, 150)}</p>
+        <p className="text-slate-500 font-normal">{truncateString(movieData.overview, 150)}</p>
       </div>
     </div>
   );

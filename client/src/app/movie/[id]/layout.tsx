@@ -10,7 +10,6 @@ type Props = {
 export async function generateMetadata(
   { params }: Props): Promise<Metadata> {
     const movie = await getMovieDetails(params.id);
-    console.log(movie)
     if (!movie) {
         // Handle the case when movie is undefined (e.g., show a default title)
         return {
