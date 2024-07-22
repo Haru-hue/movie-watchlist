@@ -1,4 +1,3 @@
-'use client'
 import { MovieBrowseLayout } from "@/page.components/movies/movieBrowse";
 import { Metadata } from "next";
 export const metadata: Metadata = {

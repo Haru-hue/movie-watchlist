@@ -1,3 +1,4 @@
+'use client'
 import { useQuery } from "@tanstack/react-query";
 import { getMovies } from "@/apis/movie";
 import Link from "next/link";

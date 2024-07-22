@@ -23,21 +23,19 @@ function SearchModal() {
   };
 
   return (
-    <div>
-      <div className="fixed z-10 inset-0 overflow-auto">
+    <div className="fixed z-10 inset-0 overflow-auto w-full">
         <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
           <div className="fixed inset-0 transition-opacity" aria-hidden="true">
             <div className="absolute inset-0 bg-[#1D2939] opacity-80"></div>
           </div>
-          <ClickAwayListener onClickAway={handleClickAway}>
-            <div className="inline-flex flex-col relative min-h-screen z-50 justify-center gap-6 p-10 ">
+          <div className="inline-flex flex-col relative min-h-screen z-50 justify-center gap-6 p-10 ">
               <div className="relative w-full">
                 <input
                   type="text"
-                  className="searchBox py-6 ps-10 rounded-full text-3xl"
+                  className="searchBox w-full max-w-xl py-6 ps-10 rounded-full text-lg lg:text-3xl"
                   placeholder="Search for what you like"
                   onChange={handleChange}
-                  value={searchTerm}
+                  value={searchTerm.trim()}
                   autoFocus
                 />
                 <div className="absolute inset-y-0 end-0 flex items-center pointer-events-none z-20 pe-10">
@@ -72,7 +70,7 @@ function SearchModal() {
                       </div>
                     </Link>
                   ))}
-                  <div className="text-center py-4 hover:bg-slate-700">
+                  {searchTerm.trim() && <div className="text-center p-4 hover:bg-slate-700">
                     <Link
                       className="w-full contents"
                       href={`/search?=${searchTerm}`}
@@ -80,14 +78,12 @@ function SearchModal() {
                     >
                       View all results for {`'${searchTerm}'`}
                     </Link>
-                  </div>
+                  </div>}
                 </div>
               )}
             </div>
-          </ClickAwayListener>
         </div>
       </div>
-    </div>
   );
 }
 
