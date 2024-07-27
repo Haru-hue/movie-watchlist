@@ -34,7 +34,7 @@ export default function HomePage() {
               <section className="list-box w-full lg:w-3/4">
                 <h4 className="text-slate-500">New Movies</h4>
                 <MovieGrid
-                  items={allMovies[0]?.data}
+                  items={allMovies[0]?.data?.results}
                   renderItem={(movie: Movie) => <MovieBox movieData={movie} />}
                   columns={isNotLarge ? 3 : 4}
                   initialItemsToShow={isNotLarge ? 3 : 4}
@@ -47,7 +47,7 @@ export default function HomePage() {
                 </h4>
                 <div id="tRatedMovies">
                   <div className="flex flex-col space-y-11 lg:pt-8">
-                    {allMovies[1]?.data
+                    {allMovies[1]?.data?.results
                       ?.slice(0, 5)
                       .map((movie: Movie, index: number) => (
                         <Link href={`/movie/${movie.id}`}>
@@ -76,7 +76,7 @@ export default function HomePage() {
                 Recommended Movies
               </h4>
               <div className="grid md:grid-cols-2 2xl:grid-cols-3 gap-8">
-                {allMovies[2]?.data?.slice(0, 6).map((movie: Movie) => (
+                {allMovies[2]?.data?.results?.slice(0, 6).map((movie: Movie) => (
                   <RecBox movieData={movie} />
                 ))}
               </div>

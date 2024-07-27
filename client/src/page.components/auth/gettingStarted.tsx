@@ -41,7 +41,7 @@ const GettingStarted = () => {
 
   return (
     <LayoutView>
-      <Toaster position="top-right" containerClassName="font-bold bg-red" />
+      <Toaster position="top-right" containerClassName="font-bold" />
       <div className="rounded-sm border border-stroke shadow-default dark:border-strokedark dark:bg-boxdark">
         <div className="flex flex-wrap items-center">
           <div className="hidden w-full xl:block xl:w-1/2">

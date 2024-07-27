@@ -4,9 +4,9 @@ export const getMovies = async (key: string, params?: string) => {
   const queryString = params ?? "";
   try {
     const response = await getData(
-      `https://api.themoviedb.org/3/movie/${key}${queryString}`
+      `https://api.themoviedb.org/3/movie/${key}?language=en-US${queryString}`
     );
-    return response.results;
+    return response;
   } catch (error) {
     console.error(error);
     return null;
@@ -27,9 +27,9 @@ export const getMovieDetails = async (id: string, params?: string) => {
 export const getTrendingMovies = async (endpoint?: string) => {
   try {
     const response = await getData(
-      `https://api.themoviedb.org/3/trending/movie/day?language=en-US${endpoint}`
+      `https://api.themoviedb.org/3/trending/movie/day?language=en-US${endpoint ?? ''}`
     );
-    return response.results;
+    return response;
   } catch (error) {
     console.error(error);
     return null;

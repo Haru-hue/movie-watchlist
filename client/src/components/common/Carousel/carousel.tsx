@@ -25,7 +25,7 @@ export const MainPageCarousel = () => {
     queryFn: () => getMovies("upcoming"),
   });
   const isNotDesktop = useMediaQuery("(max-width: 1023px)");
-  const carouselImages = movieImagePaths?.data
+  const carouselImages = movieImagePaths?.data?.results
     ?.slice(0, isNotDesktop ? 10 : 6)
     .map((movie: Movie) => {
       return (

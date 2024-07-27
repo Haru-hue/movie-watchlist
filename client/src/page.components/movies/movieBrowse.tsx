@@ -1,83 +1,88 @@
 'use client'
-import { useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import { getMovies } from "@/apis/movie";
-import Link from "next/link";
-import ReactPaginate from "react-paginate";
-import { useState } from "react";
-import { usePathname, useRouter } from "next/navigation";
-import { Spinner } from "@/components/common/Loader";
+import { useEffect, useState } from "react";
+import { Loader, Spinner } from "@/components/common/Loader";
 import { LayoutView } from "@/components/layouts";
+import toast, { Toaster } from "react-hot-toast";
+import { Icon } from "@iconify/react/dist/iconify.js";
+import { MovieInfoBox } from "@/components/MovieInfoBox";
 
 export const MovieBrowseLayout = ({ movieKey }: { movieKey: string }) => {
-  const router = useRouter();
-  const pathname = usePathname();
-  const [page, setPage] = useState(1);
-  const [addedParam, setAddedParam] = useState("");
-  const movies = useQuery({
-    queryKey: ["movies", addedParam],
-    queryFn: () => getMovies(movieKey, addedParam),
+  const [layout, setLayout] = useState('grid')
+  const {
+    data: movies,
+    isError,
+    isLoading,
+    fetchNextPage,
+    hasNextPage,
+    isFetchNextPageError,
+    isFetchingNextPage,
+  } = useInfiniteQuery({
+    queryKey: ["movies", ""],
+    queryFn: ({ pageParam = "&page=1" }: { pageParam: string }) =>
+      getMovies(movieKey, pageParam),
+    getNextPageParam: (lastPage) => {
+      const maxPageNumber = lastPage?.total_pages;
+      const nextPageNumber = lastPage?.page + 1;
+      return nextPageNumber <= maxPageNumber
+        ? `&page=${nextPageNumber}`
+        : undefined;
+    },
+    initialPageParam: "&page=1",
   });
 
-  const handlePagination = (event: { selected: number }) => {
-    const defaultQuery = {
-      page: `${event.selected + 1}`,
+  const LIST_OF_MOVIES = movies?.pages?.flatMap((movie) =>
+    movie?.results?.map((item: Movie) => item)
+  );
+  const handleScroll = () => {
+    const wrap = document?.getElementById("newMovies");
+    if (wrap) {
+      const { clientHeight, scrollTop, scrollHeight } = wrap;
+      if (!isFetchingNextPage && clientHeight + scrollTop >= scrollHeight) {
+        return hasNextPage ? fetchNextPage() : null;
+      }
+    }
+  };  
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
     };
+  }, []);
 
-    setPage(event.selected + 1);
+  if (isError || isFetchNextPageError) {
+    toast.error('An error occurred while fetching data')
+  }
 
-    const mergedQuery = {
-      ...defaultQuery,
-    };
-    const routerQueries = new URLSearchParams(mergedQuery).toString();
-    setAddedParam(`?${routerQueries}`);
-    router.push(`${pathname}?${routerQueries}`);
-  };
-
+  console.log(isError)
   return (
-    <>
-      {movies.isLoading ? (
+    <div>
+      <Toaster position="top-right" containerClassName="font-bold" />
+      {isLoading ? (
         <Spinner />
-      ) : (
+      ) : isError ? <p>An error occurred </p> : (
         <LayoutView>
-          <div className="flex flex-col ml-6 px-6 space-y-10">
-            <section>
-              <div
-                className="grid grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-4"
-                id="newMovies"
-              >
-                {movies?.data.map((movie: Movie) => (
-                    <Link
-                      className="max-w-fit"
-                      key={movie.id}
-                      href={`/movie/${movie.id}`}
-                    >
-                      <img
-                        className="rounded-lg w-60 h-80 object-cover"
-                        src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}
-                        alt={movie.title}
-                      />
-                      <h3 className="font-bold text-base pt-4">
-                        {movie.title}
-                      </h3>
-                    </Link>
-                  ))}
-              </div>
-            </section>
+          <section
+            className="flex flex-col ml-6 px-6 space-y-10 h-screen overflow-y-scroll no-scrollbar"
+            onScroll={handleScroll}
+            id="newMovies"
+          >
+            <div className="flex justify-between">
+            <h1 className="text-3xl font-black capitalize">{movieKey} Movies</h1>
+            <span className="flex gap-4 text-2xl cursor-pointer">
+              <Icon icon="bxs:grid" onClick={() => setLayout('grid')} />
+              <Icon icon="eva:grid-fill" onClick={() => setLayout('gridStack')} />
+              <Icon icon="ic:baseline-list" onClick={() => setLayout('list')} />
+            </span>
           </div>
-          <ReactPaginate
-            breakLabel="..."
-            nextLabel="next >"
-            onPageChange={handlePagination}
-            // pageRangeDisplayed={5}
-            pageCount={movies.data.length}
-            previousLabel="< previous"
-            renderOnZeroPageCount={null}
-            className="flex justify-end gap-6 items-center"
-            activeClassName="bg-slate-800 w-10 h-10 flex justify-center items-center rounded-full"
-            forcePage={page - 1}
-          />
+             <MovieInfoBox layout={layout} movies={LIST_OF_MOVIES}/>
+              {isFetchingNextPage && <Loader size={30} />}
+              {isFetchingNextPage && <p>An error occurred</p>}
+          </section>
         </LayoutView>
       )}
-    </>
+    </div>
   );
 };
