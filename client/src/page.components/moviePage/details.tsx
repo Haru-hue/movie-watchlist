@@ -11,6 +11,7 @@ import toast, { Toaster } from "react-hot-toast";
 import { useMutation } from "@apollo/client";
 import { UPDATE_USER } from "@/constants/queries";
 import { Loader } from "@/components/common/Loader";
+import { useRouter } from "next/navigation";
 
 export const MovieDetails = ({ movieData, handleVideoOpen }: any) => {
   const directors = movieData.misc[0]?.crew.filter(
@@ -93,6 +94,7 @@ export const MovieDetails = ({ movieData, handleVideoOpen }: any) => {
 };
 
 const MovieBookmark = ({ movieData, handleVideoOpen }: any) => {
+  const router = useRouter()
   const allVideos = movieData.misc[3]?.results;
   const [isHovered, setIsHovered] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
@@ -132,6 +134,11 @@ const MovieBookmark = ({ movieData, handleVideoOpen }: any) => {
   };
 
   const toggleAddToWatchlist = () => {
+    if (!localUser) {
+      router.push("/auth/login");
+      return;
+    }
+
     const movieId = movieData.id.toString();
     if (isAddedtoWatchlist) {
       setUserWatchlist((prev) => prev.filter((id) => id !== movieId));

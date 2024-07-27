@@ -7,18 +7,17 @@ import { useQueries } from "@tanstack/react-query";
 import Link from "next/link";
 
 export const RecentlyViewed = () => {
-  const [listOfMovies] = useLocalStorage("navigationHistory") as string[];
-  const RECENT_MOVIE_IDS =
-    listOfMovies?.map((m: string) => Number(m.replace("/movie/", ""))) || [];
+  const [listOfMovies = []] = useLocalStorage("navigationHistory") as string[];
+  const MOVIE_HISTORY = listOfMovies ?? [];
+  const RECENT_MOVIE_IDS = MOVIE_HISTORY?.map((m: string) => m.replace("/movie/", ""));
   const RECENTLY_VIEWED_MOVIES = useQueries({
-    queries: RECENT_MOVIE_IDS.map((id: number) => {
+    queries: (RECENT_MOVIE_IDS as string[])?.map((id: string) => {
       return {
         queryKey: ["movies", id],
         queryFn: () => getMovieDetails(id),
       };
     }),
   });
-
   const isLoading = RECENTLY_VIEWED_MOVIES.every((query) => query.isLoading);
 
   if (isLoading && RECENTLY_VIEWED_MOVIES.length > 0) {
@@ -27,13 +26,13 @@ export const RecentlyViewed = () => {
 
   return (
     <LayoutView>
-      <section>
+      <section className="p-10">
         <h4 className="text-slate-300 pb-6 font-bold text-2xl">
           Recently Viewed
         </h4>
         {RECENTLY_VIEWED_MOVIES.length > 0 ? (
           <div
-            className="grid grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-4"
+            className="responsiveGrid gap-4"
             id="newMovies"
           >
             {RECENTLY_VIEWED_MOVIES?.map((movie: any) => (
@@ -43,7 +42,7 @@ export const RecentlyViewed = () => {
                   href={`/movie/${movie?.data?.id}`}
                 >
                   <img
-                    className="rounded-lg w-60 h-80 object-cover"
+                    className="rounded-xl"
                     src={`https://image.tmdb.org/t/p/w500${movie?.data?.poster_path}`}
                     alt={movie?.data?.title}
                   />
@@ -52,7 +51,7 @@ export const RecentlyViewed = () => {
             }
           </div>
         ): (
-          <h3 className="font-bold text-base pt-4">No movies to show</h3>
+          <h3 className="font-bold text-2xl pt-4">No movies to show</h3>
         )}
       </section>
     </LayoutView>

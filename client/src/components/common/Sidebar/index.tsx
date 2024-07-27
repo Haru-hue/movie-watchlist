@@ -14,9 +14,9 @@ const Sidebar = () => {
   return (
     <aside
       className={cn(
-        `absolute left-0 top-0 z-50 bg-tertiary flex h-screen flex-col overflow-y-hidden transition-all duration-300 ease-linear dark:bg-boxdark lg:static lg:translate-x-0 `,
+        `absolute left-0 top-0 z-50 bg-tertiary flex h-screen flex-col overflow-y-hidden transition-all duration-300 ease-linear lg:static lg:translate-x-0 `,
         {
-          "w-70": isSidebarOpen,
+          "w-80": isSidebarOpen,
           "w-20 max-lg:w-0": !isSidebarOpen,
         }
       )}
@@ -24,7 +24,7 @@ const Sidebar = () => {
       {/* <!-- SIDEBAR HEADER --> */}
       <div className="relative flex w-full items-center justify-center gap-2 px-6 py-5">
       <Icon
-            icon={`akar-icons:chevron-${isSidebarOpen ? "left" : "right"}`}
+            icon={`akar-icons:chevron-${isSidebarOpen ? "left" : "right"} cursor-pointer`}
             className="text-3xl"
             onClick={() => dispatch(toggleSidebar())}
           />
@@ -33,7 +33,7 @@ const Sidebar = () => {
         <nav className="p-4 lg:px-6">
           <div>
             <ul
-              className={cn("mb-6 flex flex-col  gap-1.5", {
+              className={cn("mb-6 flex flex-col gap-1.5", {
                 "items-center justify-center": !isSidebarOpen,
               })}
             >
