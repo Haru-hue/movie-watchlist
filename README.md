@@ -1,27 +1,26 @@
 # Movie Watchlist
-Welcome to the Movie Watchlist project! This application is designed to help users manage and track movies they wish to watch. It showcases a wide array of modern web development technologies and practices. Below you'll find detailed documentation on the setup, structure, and features of this fullstack application.
+Welcome to the Movie Watchlist project! This application is designed to help users manage and track movies they wish to watch. It showcases a wide array of modern web development technologies and practices. I've included for you below the detailed documentation on the setup, structure, and features of this full-stack application.
 
-#Table of Contents
-* Overview
-* Technologies Used
-* Client Side Setup
-* Server Side Setup
-* Running the Application
-* Project Structure
-* Key Features
-* Contributing
-* License
+# Table of Contents
+* [Overview](https://github.com/Haru-hue/movie-watchlist/edit/master/README.md#overview)
+* [Technologies Used](https://github.com/Haru-hue/movie-watchlist/edit/master/README.md#technologies-used)
+* [Client Side Setup](https://github.com/Haru-hue/movie-watchlist/edit/master/README.md#client-side-setup)
+* [Server Side Setup](https://github.com/Haru-hue/movie-watchlist/edit/master/README.md#server-side-setup)
+* [Running the Application](https://github.com/Haru-hue/movie-watchlist/edit/master/README.md#running-the-application)
+* [Project Structure](https://github.com/Haru-hue/movie-watchlist/edit/master/README.md#project-structure)
+* [Key Features](https://github.com/Haru-hue/movie-watchlist/edit/master/README.md#key-features)
+* [Contributing](https://github.com/Haru-hue/movie-watchlist/edit/master/README.md#contributing)
 
 ## Overview
-The Movie Watchlist is a fullstack web application that allows users to search for movies, add them to their personal watchlist, and manage their movie viewing preferences. It leverages both client-side and server-side technologies to deliver a seamless user experience.
+The Movie Watchlist is a full-stack web application that allows users to search for movies, add them to their watchlist, and manage their movie viewing preferences. It leverages both client-side and server-side technologies to deliver a seamless user experience.
 
-### Technologies Used
-#### Frontend
+## Technologies Used
+### Frontend
 * **Next.js:** React framework for server-side rendering and static site generation.
 * **TypeScript:** Superset of JavaScript that adds static types.
 * **TMDB API:** Used for fetching movie data.
 
-#### Backend
+### Backend
 * **Node.js:** JavaScript runtime for building server-side applications.
 * **GraphQL:** Query language for APIs, providing a more efficient, powerful, and flexible alternative to REST.
 * **Prisma:** Next-generation ORM for database interaction.
@@ -40,10 +39,9 @@ To set up the client side of the application, follow these steps:
 * Install Dependencies:
 ```npm install```
 
-* Configure Environment Variables:
-Create a .env.local file in the client directory and add:
+### Configure Environment Variables:
+* Create a .env.local file in the client directory and add:
 ```NEXT_PUBLIC_TMDB_API_KEY=your_tmdb_api_key```
-
 * Replace your_tmdb_api_key with your actual TMDB API key.
 
 * Run the Development Server:
@@ -59,13 +57,13 @@ To set up the server side of the application, follow these steps:
 
 * Install Dependencies:
 ```npm install```
-* Configure Environment Variables:
+### Configure Environment Variables:
 
-** Create a .env file in the server directory and add:
+* Create a .env file in the server directory and add:
 ```
 DATABASE_URL=postgresql://user:password@localhost:5432/moviedb
 ```
-Replace user, password, and moviedb with your PostgreSQL credentials and database name.
+* Replace user, password, and moviedb with your PostgreSQL credentials and database name.
 
 * Set Up the Database:
 ```
@@ -98,7 +96,7 @@ You can now access the application through the client interface, which interacts
 
 ## Project Structure
 ### Client Side
-* `app/:` Next.js pages, which are automatically routed based on the file structure.
+* `app/:` Next.js pages are automatically routed based on the file structure.
 * `components/:` Reusable React components for UI elements.
 * `styles/:` CSS modules and global styles.
 * `utils/:` Utilities and helper functions.
@@ -109,14 +107,14 @@ You can now access the application through the client interface, which interacts
 * `prisma/:` Prisma client setup for database interactions.
 
 ## Key Features
-* Watchlist Management: Users can add movies to their personal watchlist, mark movies as watched, and remove them as needed.
-* Movie Search and Details: Utilize the TMDB API to search for movies and view detailed information, including ratings, cast, and crew.
-* Responsive UI: The application is designed to be fully responsive and works seamlessly on both desktop and mobile devices.
-* GraphQL API: Efficient data fetching and mutations using GraphQL.
-* Database Management: Use Prisma ORM for database schema management and interactions with PostgreSQL.
+* **Watchlist Management:** Users can add movies to their watchlist, mark movies as watched, and remove them as needed.
+* **Movie Search and Details:** Utilize the TMDB API to search for movies and view detailed information, including ratings, cast, and crew.
+* **Responsive UI:** The application is designed to be fully responsive and works seamlessly on both desktop and mobile devices.
+* **GraphQL API:** Efficient data fetching and mutations using GraphQL.
+* **Database Management:** Use Prisma ORM for database schema management and interactions with PostgreSQL.
 
 ## Contributing
-I welcome contributions to the Movie Watchlist project! If you have suggestions for improvements or new features, feel free to create an issue or submit a pull request. Please ensure your code follows the existing style and passes all tests.
+I welcome contributions to the Movie Watchlist project! Feel free to create an issue or submit a pull request if you have suggestions for improvements or new features. Please ensure your code follows the existing style and passes all tests.
 
 * Steps to Contribute
 * Fork the repository.
