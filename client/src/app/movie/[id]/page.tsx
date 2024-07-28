@@ -76,6 +76,7 @@ function MoviePage() {
             />
           </div>
           <MovieExtras
+            isLoading={movieMisc.every((query) => query.isLoading)}
             movieBackdrops={movieBackdrops}
             castList={castList}
             movieRecommendations={movieRecommendations}

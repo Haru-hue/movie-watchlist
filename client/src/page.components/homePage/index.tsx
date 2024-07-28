@@ -32,7 +32,7 @@ export default function HomePage() {
             <MainPageCarousel />
             <div className="flex max-lg:flex-col max-lg:space-y-6 lg:space-x-6">
               <section className="list-box w-full lg:w-3/4">
-                <h4 className="text-slate-500">New Movies</h4>
+                <h4 className="text-slate-500 font-medium">New Movies</h4>
                 <MovieGrid
                   items={allMovies[0]?.data?.results}
                   renderItem={(movie: Movie) => <MovieBox movieData={movie} />}
