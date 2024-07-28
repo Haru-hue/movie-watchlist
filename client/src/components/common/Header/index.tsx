@@ -25,7 +25,7 @@ const Header = () => {
               onChange={(e) => dispatch(updateSearchTerm(e.target.value))}
               value={searchTerm}
             />
-            <div className="absolute inset-y-0 end-2 flex items-center sm:pointer-events-none sm:pe-4">
+            <div className="absolute inset-y-0 end-2 flex items-center sm:pointer-events-none sm:pe-5">
               <Icon className="max-sm:text-2xl" icon="iconoir:search" onClick={() => dispatch(updateSearchTerm(" "))} />
             </div>
           </div>
