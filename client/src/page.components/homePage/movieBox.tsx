@@ -59,7 +59,7 @@ export const RecBox = ({movieData}: {movieData: Movie}) => {
 };
 
 export const MovieRecBox = ({movieData}: {movieData: Movie}) => {
-  console.log(movieData)
+
   return (
     <div className="flex gap-4 bg-secondary p-6 rounded-2xl max-h-60" key={movieData.id}>
       <div className="relative w-full max-w-32">

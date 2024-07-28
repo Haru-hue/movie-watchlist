@@ -56,7 +56,6 @@ export const MovieBrowseLayout = ({ movieKey }: { movieKey: string }) => {
     toast.error('An error occurred while fetching data')
   }
 
-  console.log(isError)
   return (
     <div>
       <Toaster position="top-right" containerClassName="font-bold" />

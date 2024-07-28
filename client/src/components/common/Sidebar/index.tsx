@@ -22,12 +22,12 @@ const Sidebar = () => {
       )}
     >
       {/* <!-- SIDEBAR HEADER --> */}
-      <div className="relative flex w-full items-center justify-center gap-2 px-6 py-5">
-      <Icon
-            icon={`akar-icons:chevron-${isSidebarOpen ? "left" : "right"} cursor-pointer`}
-            className="text-3xl"
-            onClick={() => dispatch(toggleSidebar())}
-          />
+      <div className="relative flex w-full items-center justify-center gap-2 px-6 py-5 cursor-pointer">
+        <Icon
+          icon={`akar-icons:chevron-${isSidebarOpen ? "left" : "right"}`}
+          className="text-3xl"
+          onClick={() => dispatch(toggleSidebar())}
+        />
       </div>
       <div className="no-scrollbar flex flex-col overflow-y-auto duration-300 ease-linear">
         <nav className="p-4 lg:px-6">

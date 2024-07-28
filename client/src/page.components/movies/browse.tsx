@@ -43,7 +43,7 @@ export const AllMovies = () => {
   }, [isLargeDesktop, isScreenMd, isScreenXL, isScreenSm]);
 
   const isLoading = allMovies.every(query => query.isLoading) || trendingMovies.isLoading
-  console.log(allMovies, trendingMovies)
+
   return (
     <div>
       {isLoading ? (
