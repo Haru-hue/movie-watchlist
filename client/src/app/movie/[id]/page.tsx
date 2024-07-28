@@ -2,31 +2,30 @@
 import { getMovieDetails } from "@/apis/movie";
 import { Spinner } from "@/components/common/Loader";
 import { LayoutView } from "@/components/layouts";
-import CastList from "@/page.components/moviePage/castList";
 import { MovieDetails } from "@/page.components/moviePage/details";
-import ImageGrid from "@/page.components/moviePage/imageGrid";
-import MovieRecsList from "@/page.components/moviePage/movieRecs";
+import { MovieExtras } from "@/page.components/moviePage/movieExtras";
 import { useQueries, useQuery } from "@tanstack/react-query";
-import Head from "next/head";
 import { useParams } from "next/navigation";
 import { useState } from "react";
 import ModalVideo from "react-modal-video";
- 
+
 function MoviePage() {
   const [isOpen, setIsOpen] = useState({
     key: "",
     open: false,
   });
   const params = useParams();
+  const movieId = params?.id?.toString();
+
   const movieInfo = useQuery({
     queryKey: ["movies", params.id],
-    queryFn: () => getMovieDetails(params.id),
+    queryFn: () => getMovieDetails(movieId),
   });
   const movieMisc = useQueries({
     queries: movieDetails.map((query) => {
       return {
         queryKey: [query, params.id],
-        queryFn: () => getMovieDetails(params.id, query),
+        queryFn: () => getMovieDetails(movieId, query),
       };
     }),
   });
@@ -48,7 +47,9 @@ function MoviePage() {
   const handleVideoClose = () => {
     setIsOpen((prev) => ({ ...prev, open: false }));
   };
-
+  const castList = movieData?.misc[0]?.cast;
+  const movieBackdrops = movieData?.misc[1]?.backdrops;
+  const movieRecommendations = movieData.misc[2]?.results;
 
   return (
     <section>
@@ -74,11 +75,11 @@ function MoviePage() {
               handleVideoOpen={handleVideoOpen}
             />
           </div>
-          <section className="p-10 max-w-4xl 2xl:max-w-[75%]">
-            <CastList cast={movieData.misc[0]?.cast} />
-            <ImageGrid images={movieData.misc[1]?.backdrops} />
-            {movieData.misc[2]?.results.length > 0 && <MovieRecsList movieRecs={movieData.misc[2]?.results} />}
-          </section>
+          <MovieExtras
+            movieBackdrops={movieBackdrops}
+            castList={castList}
+            movieRecommendations={movieRecommendations}
+          />
         </LayoutView>
       )}
     </section>
@@ -87,9 +88,4 @@ function MoviePage() {
 
 export default MoviePage;
 
-const movieDetails = [
-  "credits",
-  "images",
-  "similar",
-  "videos",
-];
+const movieDetails = ["credits", "images", "similar", "videos"];

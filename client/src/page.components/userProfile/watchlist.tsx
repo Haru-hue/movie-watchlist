@@ -11,7 +11,7 @@ export const UserWatchlist = () => {
     queries: listofMovies?.map((id: string) => {
       return {
         queryKey: ["movies", id],
-        queryFn: () => getMovieDetails(parseInt(id)),
+        queryFn: () => getMovieDetails(id),
       };
     }),
   });
@@ -21,13 +21,12 @@ export const UserWatchlist = () => {
   if (isLoading && USER_WATCHLIST.length > 0) {
     return <Spinner />;
   }
-  console.log(listofMovies)
 
   return (
-    <section className="px-20">
+    <section className="px-4 md:px-10 2xl:px-20">
         <h2 className="text-3xl font-bold pb-4">Your Watchlist</h2>
         <div
-          className="grid grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-8"
+          className="responsiveGrid gap-4 2xl:gap-8"
           id="newMovies"
         >
           {USER_WATCHLIST?.map((movie: any) => (
@@ -37,7 +36,7 @@ export const UserWatchlist = () => {
               href={`/movie/${movie?.data?.id}`}
             >
               <img
-                className="rounded-lg w-60 h-80 object-cover"
+                className="rounded-xl"
                 src={movie?.data?.poster_path ? `https://image.tmdb.org/t/p/w500${movie?.data?.poster_path}` : '/images/NoImage.png'}
                 alt={movie?.data?.title}
               />

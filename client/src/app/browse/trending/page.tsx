@@ -1,4 +1,3 @@
-'use client'
 import { TrendingMovies } from "@/page.components/movies/trending";
 import { Metadata } from "next";
 export const metadata: Metadata = {

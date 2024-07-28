@@ -45,7 +45,6 @@ export const processArgs = async (
             }
             break;
           
-          break;
         case "avatarURL":
         case "backgroundURL":
           if (args[key] !== undefined) {

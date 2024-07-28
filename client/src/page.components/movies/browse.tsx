@@ -2,6 +2,7 @@
 import { getMovies, getTrendingMovies } from "@/apis/movie";
 import { Spinner } from "@/components/common/Loader";
 import { LayoutView } from "@/components/layouts";
+import useMediaQuery from "@/utils/hooks/useMediaQuery";
 import { useQueries, useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -20,24 +21,26 @@ export const AllMovies = () => {
     queryKey: ["movies"],
     queryFn: () => getTrendingMovies(),
   });
+  const isLargeDesktop = useMediaQuery('(min-width: 1536px)')
+  const isScreenXL = useMediaQuery('(min-width: 1280px')
+  const isScreenMd = useMediaQuery('(min-width: 768px)')
+  const isScreenSm = useMediaQuery('(max-width: 640px)')
   const [numItemsToShow, setNumItemsToShow] = useState(6);
 
   useEffect(() => {
     const updateNumItemsToShow = () => {
-      const width = window.innerWidth;
-      if (width <= 640) {
-        setNumItemsToShow(4);
-      } else if (width <= 1366) {
-        setNumItemsToShow(5);
-      } else {
+      if (isLargeDesktop || isScreenSm) {
         setNumItemsToShow(6);
+      } else if (isScreenXL) {
+        setNumItemsToShow(5);
+      } else if (isScreenMd) {
+        setNumItemsToShow(4);
+      } else {
+        setNumItemsToShow(3);
       }
     };
-    window.addEventListener("resize", updateNumItemsToShow);
     updateNumItemsToShow();
-
-    return () => window.removeEventListener("resize", updateNumItemsToShow);
-  }, []);
+  }, [isLargeDesktop, isScreenMd, isScreenXL, isScreenSm]);
 
   const isLoading = allMovies.every(query => query.isLoading) || trendingMovies.isLoading
 
@@ -58,21 +61,21 @@ export const AllMovies = () => {
                 </Link>
               </div>
               <div
-                className="grid grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-4"
+                className="responsiveGrid gap-4"
                 id="trendingMovies"
               >
-                {trendingMovies?.data?.slice(0, numItemsToShow).map((movie: any) => (
+                {trendingMovies?.data?.results?.slice(0, numItemsToShow).map((movie: Movie) => (
                   <Link
                     className="max-w-fit"
                     key={movie.id}
                     href={`/movie/${movie.id}`}
                   >
                     <img
-                      className="rounded-lg w-60 h-80 object-cover"
+                      className="rounded-lg object-cover"
                       src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}
                       alt={movie.title}
                     />
-                    <h3 className="font-bold text-base pt-4">{movie.title}</h3>
+                    <h3 className="font-medium max-sm:text-xs text-base pt-4">{movie.title}</h3>
                   </Link>
                 ))}
               </div>
@@ -87,21 +90,21 @@ export const AllMovies = () => {
                 </Link>
               </div>
               <div
-                className="grid grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-4"
+                className="responsiveGrid gap-4"
                 id="newMovies"
               >
-                {allMovies[0]?.data?.slice(0, numItemsToShow).map((movie: Movie) => (
+                {allMovies[0]?.data?.results?.slice(0, numItemsToShow).map((movie: Movie) => (
                   <Link
                     className="max-w-fit"
                     key={movie.id}
                     href={`/movie/${movie.id}`}
                   >
                     <img
-                      className="rounded-lg w-60 h-80 object-cover"
+                      className="rounded-lg object-cover"
                       src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}
                       alt={movie.title}
                     />
-                    <h3 className="font-bold text-base pt-4">{movie.title}</h3>
+                    <h3 className="font-medium max-sm:text-xs text-base pt-4">{movie.title}</h3>
                   </Link>
                 ))}
               </div>
@@ -116,10 +119,10 @@ export const AllMovies = () => {
                 </Link>
               </div>
               <div
-                className="grid grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-4"
+                className="responsiveGrid gap-4"
                 id="newMovies"
               >
-                {allMovies[1]?.data?.slice(0, numItemsToShow).map((movie: Movie) => (
+                {allMovies[1]?.data?.results?.slice(0, numItemsToShow).map((movie: Movie) => (
                   <Link
                     className="max-w-fit"
                     key={movie.id}
@@ -130,7 +133,7 @@ export const AllMovies = () => {
                       src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}
                       alt={movie.title}
                     />
-                    <h3 className="font-bold text-base pt-4">{movie.title}</h3>
+                    <h3 className="font-medium max-sm:text-xs text-base pt-4">{movie.title}</h3>
                   </Link>
                 ))}
               </div>
