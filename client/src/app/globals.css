@@ -3,6 +3,8 @@
 @tailwind utilities;
 @import '~react-modal-video/css/modal-video.css';
 @import url('./styles/fonts.css');
+@import 'swiper/css';
+@import 'swiper/css/effect-coverflow';
 
 :root {
   --foreground-rgb: 255, 255, 255;
@@ -47,6 +49,10 @@ body {
   background: url('/images/movieBG.jpg');
   background-position: center;
   background-size: cover;
+}
+
+.swiper-slide {
+  width: 60% !important;
 }
 
 .react-3d-carousel .slider-container .slider-left {

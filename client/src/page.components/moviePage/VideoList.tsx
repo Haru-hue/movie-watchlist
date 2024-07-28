@@ -1,19 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import { Icon } from "@iconify/react/dist/iconify.js";
 
 function VideoList({ videos, handleVideoOpen }: any) {
   const [numVideosToShow, setNumVideosToShow] = useState(5);
 
   const handleSeeMoreClick = () => {
-    if(numVideosToShow >= videos.length) {
+    if (numVideosToShow >= videos.length) {
       setNumVideosToShow(5);
     } else {
       setNumVideosToShow(numVideosToShow + 5);
     }
   };
 
+  console.log(numVideosToShow, videos.length);
   return (
-    <div className='flex flex-col items-center'>
+    <div className="flex flex-col items-center">
       {videos?.slice(0, numVideosToShow).map((video: any) => (
         <div key={video?.id}>
           <div className="flex flex-col items-center justify-center">
@@ -32,10 +33,15 @@ function VideoList({ videos, handleVideoOpen }: any) {
           <h2 className="max-w-72 py-5 font-medium">{video?.name}</h2>
         </div>
       ))}
-      
-      <button className='uppercase border py-2 px-4 rounded-lg font-bold' onClick={handleSeeMoreClick}>
-        {numVideosToShow >= videos?.length ? 'Show less' : 'See more videos'}
-      </button>
+
+      {videos?.length > numVideosToShow && (
+        <button
+          className="uppercase border py-2 px-4 rounded-lg font-bold"
+          onClick={handleSeeMoreClick}
+        >
+          {videos?.length >= numVideosToShow ? "Show less" : "See more videos"}
+        </button>
+      )}
     </div>
   );
 }

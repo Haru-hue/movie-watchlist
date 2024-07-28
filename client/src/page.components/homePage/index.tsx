@@ -30,7 +30,7 @@ export default function HomePage() {
         <LayoutView>
           <div className="homeLayout md:ml-6">
             <MainPageCarousel />
-            <div className="flex max-lg:flex-col max-lg:space-y-6 lg:space-x-6">
+            {/* <div className="flex max-lg:flex-col max-lg:space-y-6 lg:space-x-6">
               <section className="list-box w-full lg:w-3/4">
                 <h4 className="text-slate-500">New Movies</h4>
                 <MovieGrid
@@ -80,7 +80,7 @@ export default function HomePage() {
                   <RecBox movieData={movie} />
                 ))}
               </div>
-            </section>
+            </section> */}
           </div>
         </LayoutView>
       )}
