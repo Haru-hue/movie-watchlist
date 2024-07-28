@@ -36,7 +36,7 @@ export const SearchMovies = () => {
             results
           </div>
           <div className="grid grid-cols-6 gap-10 max-w-fit py-10">
-            {allMovies?.data?.results.map((movie: any) => (
+            {allMovies?.data?.results.map((movie: Movie) => (
               <Link href={`/movie/${movie?.id}`}>
                 <div className="flex flex-col max-w-fit gap-1" key={movie?.id}>
                   <img

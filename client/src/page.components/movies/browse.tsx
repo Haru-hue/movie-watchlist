@@ -64,7 +64,7 @@ export const AllMovies = () => {
                 className="responsiveGrid gap-4"
                 id="trendingMovies"
               >
-                {trendingMovies?.data?.results?.slice(0, numItemsToShow).map((movie: any) => (
+                {trendingMovies?.data?.results?.slice(0, numItemsToShow).map((movie: Movie) => (
                   <Link
                     className="max-w-fit"
                     key={movie.id}

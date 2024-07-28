@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   description: "Powered by TMDB API",
 };
 
-export const RegisterScreen = () => {
+const RegisterScreen = () => {
   return <RegisterForm/>
 };
 

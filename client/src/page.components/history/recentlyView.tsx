@@ -9,7 +9,7 @@ import Link from "next/link";
 export const RecentlyViewed = () => {
   const [listOfMovies = []] = useLocalStorage("navigationHistory") as string[];
   const MOVIE_HISTORY = listOfMovies ?? [];
-  const RECENT_MOVIE_IDS = MOVIE_HISTORY?.map((m: string) => m.replace("/movie/", ""));
+  const RECENT_MOVIE_IDS = (MOVIE_HISTORY as string[])?.map((m: string) => m.replace("/movie/", ""));
   const RECENTLY_VIEWED_MOVIES = useQueries({
     queries: (RECENT_MOVIE_IDS as string[])?.map((id: string) => {
       return {

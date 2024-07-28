@@ -46,7 +46,7 @@ function SearchModal() {
                 <Spinner />
               ) : (
                 <div className="grid gap-6 max-w-fit bg-slate-900 rounded-3xl max-h-96 overflow-auto">
-                  {allMovies?.data?.results?.slice(0, 9).map((movie: any) => (
+                  {allMovies?.data?.results?.slice(0, 9).map((movie: Movie) => (
                     <Link className="contents" href={`/movie/${movie?.id}`} onClick={handleClickAway}>
                       <div
                         className="flex hover:bg-slate-700 p-10 w-full gap-3"
